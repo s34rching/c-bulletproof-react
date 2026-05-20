@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="449cb45a-f3fb-48bb-9e99-3435f4cea464" name="Changes" comment="" />
+    <list default="true" id="449cb45a-f3fb-48bb-9e99-3435f4cea464" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/nextjs-app/e2e/fixtures/pages.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/nextjs-app/e2e/pages/base.page.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/nextjs-app/e2e/pages/hero.page.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/nextjs-app/e2e/tests/hero.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nextjs-app/playwright.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nextjs-app/playwright.config.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,7 +59,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779294588641</updated>
-      <workItem from="1779294590872" duration="435000" />
+      <workItem from="1779294590872" duration="6549000" />
     </task>
     <servers />
   </component>
