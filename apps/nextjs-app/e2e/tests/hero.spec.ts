@@ -1,5 +1,4 @@
 import { expect, test } from '../fixtures/pages';
-import { createUser } from '@/testing/data-generators';
 
 test.describe('"Hero" page', () => {
   test.beforeEach(async ({ heroPage }) => {
