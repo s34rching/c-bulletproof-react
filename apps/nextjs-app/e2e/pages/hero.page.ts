@@ -1,4 +1,3 @@
-
 import { BasePage } from './base.page';
 import { type Locator, type Page } from '@playwright/test';
 
