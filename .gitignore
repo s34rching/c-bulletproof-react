@@ -11,3 +11,6 @@
 
 # Claude Templates
 templates/
+
+# Claude configs
+.claude/settings.local.json
