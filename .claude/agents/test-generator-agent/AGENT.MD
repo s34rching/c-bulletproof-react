@@ -1,10 +1,10 @@
 ---
 name: test-generator-agent
-description: Using 'spec-analyzer-agent' agent generates list of manual test cases for the feature under development. Returns table with tests scenarios. Use it when user asks to create test cases/scenarios.
+description: “use proactively”. Using 'spec-analyzer-agent' agent generates list of manual test cases for the feature under development. Returns table with tests scenarios. Use it when user asks to create test cases/scenarios from ticket.
 tools: Read, Edit, Write, Bash, Grep
 disallowedTools: Notebook
 model: claude-sonnet-4-6
-permissionMode: auto
+permissionMode: default
 maxTurns: 10
 effort: medium
 memory: project
@@ -13,14 +13,16 @@ background: false
 
 ## Process
 
-1. If invoked with a ticket number (e.g. APP-1), first run "spec-analyzer-agent" sub-agent to get the structured summary, then proceed
-2. If invoked with a spec-analyzer summary already provided, use it directly
+1. If invoked with a ticket number (e.g. APP-1), first run `spec-analyzer-agent` sub-agent to get the structured summary, then proceed
+2. If invoked with a `spec-analyzer-agent` summary already provided, use it directly
 3. Read relevant source files to understand current implementation context (if ticket references specific features or components)
 4. Generate manual test scenarios covering all scope items and acceptance criteria
 
 ## Output format
 
 End with a summary table as below and expose table to chat conversation:
+
+**Ticket Number** - Ticket Title
 
 | ID     | Title              | Type       | Priority hint | Tier | Tool |
 |--------|--------------------|------------|---------------|------|------|
