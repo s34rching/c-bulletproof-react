@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": ["notion"],
+  "env": {
+    "NOTION_API_TOKEN": "${NOTION_API_TOKEN}"
+  }
+}

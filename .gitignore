@@ -8,3 +8,6 @@
 
 # Intellij
 .idea
+
+# Claude Templates
+templates/
