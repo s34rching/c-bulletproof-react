@@ -18,6 +18,7 @@ background: false
 4. Identify and read parent ticket (if any)
 5. Identify and read child/sub-tickets (if any)
 6. Identify and read related/linked tickets (if any)
+7. Prompt user to generate test scenarios with `test-generator-agent` sub-agent
 
 ## Output format
 

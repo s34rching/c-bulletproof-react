@@ -17,6 +17,7 @@ background: false
 2. If invoked with a `spec-analyzer-agent` summary already provided, use it directly
 3. Read relevant source files to understand current implementation context (if ticket references specific features or components)
 4. Generate and return summary table with scenarios
+5. Prompt user to save scenarios to Google Drive
 
 ## Output format
 
