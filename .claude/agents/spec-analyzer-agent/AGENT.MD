@@ -5,7 +5,7 @@ tools: Read
 model: claude-sonnet-4-6
 permissionMode: default
 maxTurns: 10
-effort: medium
+effort: medium  
 memory: project
 background: false
 ---
