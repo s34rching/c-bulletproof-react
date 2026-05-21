@@ -21,7 +21,7 @@ background: false
 
 ## Output format
 
-End with a summary table as below and expose table to chat conversation:
+End with a summary table as below and expose table to chat conversation
 
 **Ticket Number** - Ticket Title
 
