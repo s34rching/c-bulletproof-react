@@ -18,6 +18,6 @@ Project-level subagents are defined in `.claude/agents/`. Always delegate to the
 - Never generate test cases yourself. Always delegate to `test-generator-agent`.
 - Never read Notion tickets yourself for analysis. Always delegate to `spec-analyzer-agent`.
 - Never read from the Google Drive Specs spreadsheet yourself. Always delegate to `spec-reader-agent`.
-- Never write from the Google Drive Specs spreadsheet yourself. Always delegate to `spec-storage-agent`.
+- Never write to the Google Drive Specs spreadsheet yourself. Always delegate to `spec-storage-agent`.
 - Follow the chain: `spec-analyzer-agent` → `test-generator-agent` → `spec-storage-agent` (save).
 - If a ticket number is provided, pass it directly to the agent — do not look it up first.
