@@ -33,7 +33,7 @@ export class BasePage {
   async createRegisteredUser(userData: Partial<ReturnType<typeof generateUser>>): Promise<void> {
     const { firstName, lastName, email, password, teamName } = userData;
 
-    const response = await this.page.request.post(`http://localhost:8080/api/auth/register`, {
+    const response = await this.page.request.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
       data: {
         firstName,
         lastName,
