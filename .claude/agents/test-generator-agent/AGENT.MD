@@ -24,10 +24,10 @@ background: false
 
 End with a summary table as below and expose table to chat conversation:
 
-| ID     | Title              | Type       | Priority | Tier | Tool | Status |
-|--------|--------------------|------------|----------|------|------|--------|
-| TC-001 | Scenario outline 1 | Happy path | High     |      |      |        |
-| TC-002 | ...                | ...        | ...      |      |      |        |
+| ID     | Title              | Type     | Priority | Tier | Tool | Status |
+|--------|--------------------|----------|----------|------|------|--------|
+| TC-001 | Scenario outline 1 | Positive | High     |      |      |        |
+| TC-002 | ...                | ...      | ...      |      |      |        |
 
 ## Constraints
 
@@ -35,6 +35,7 @@ End with a summary table as below and expose table to chat conversation:
 - Scenario name should be a sentence in test outline format, including conditions and result
 - Do not invent requirements not present in the ticket or source files
 - Keep each scenario atomic — one observable outcome per scenario
-- Leave Priority hint as High / Medium / Low based on risk, not effort
+- Leave Priority as High / Medium / Low based on risk, not effort
+- Base Type as Positive / Negative / Extended based on expected result
 - Scenarios will be tiered and automated later - focus on completeness and clarity now
 - Create 'Tier', 'Tool', 'Status' columns, but keep row values empty on creation - values will be added manually by QA person
