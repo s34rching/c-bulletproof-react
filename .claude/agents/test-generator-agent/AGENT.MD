@@ -24,10 +24,10 @@ background: false
 
 End with a summary table as below and expose table to chat conversation:
 
-| ID     | Title              | Type       | Priority hint | Tier | Tool |
-|--------|--------------------|------------|---------------|------|------|
-| TC-001 | Scenario outline 1 | Happy path | High          |      |      |
-| TC-002 | ...                | ...        | ...           |      |      |
+| ID     | Title              | Type       | Priority hint | Tier | Tool | Status |
+|--------|--------------------|------------|---------------|------|------|--------|
+| TC-001 | Scenario outline 1 | Happy path | High          |      |      |        |
+| TC-002 | ...                | ...        | ...           |      |      |        |
 
 ## Constraints
 
@@ -37,4 +37,4 @@ End with a summary table as below and expose table to chat conversation:
 - Keep each scenario atomic — one observable outcome per scenario
 - Leave Priority hint as High / Medium / Low based on risk, not effort
 - Scenarios will be tiered and automated later - focus on completeness and clarity now
-- Create 'Tier', 'Tool' columns, but keep row values empty on creation - values will be added manually by QA person
+- Create 'Tier', 'Tool', 'Status' columns, but keep row values empty on creation - values will be added manually by QA person
