@@ -16,6 +16,9 @@ export const registerUser = async (
       teamName,
       teamId: null,
     },
+    {
+      timeout: 5000
+    },
   );
 
   if (response.status !== 200) {
