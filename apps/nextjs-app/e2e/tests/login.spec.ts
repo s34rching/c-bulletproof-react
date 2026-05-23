@@ -1,15 +1,16 @@
 import { expect, test } from '../fixtures/pages';
-import { createUser, generateUser } from '@/testing/data-generators';
+import { createUser } from '@/testing/data-generators';
+import { registerUser } from '../support/api/register-user';
 
 test.describe('"Login" page', () => {
   test.describe('Registered user', () => {
-    let userData: ReturnType<typeof generateUser>;
+    let userData = createUser();
+
+    test.beforeAll(async () => {
+      await registerUser(userData);
+    });
 
     test.beforeEach(async ({ loginPage }) => {
-      userData = createUser();
-
-      await loginPage.createRegisteredUser(userData);
-      await loginPage.resetPageState();
       await loginPage.open('/auth/login');
     });
 
@@ -84,7 +85,7 @@ test.describe('"Login" page', () => {
     test('TC-007: User should see validation error while submitting empty password', async ({
       loginPage,
     }) => {
-      const { email, password } = createUser();
+      const { email } = createUser();
 
       await loginPage.open('/auth/login');
       await loginPage.emailInput.fill(email);
