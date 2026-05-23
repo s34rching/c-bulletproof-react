@@ -8,7 +8,7 @@ import {
   randCatchPhrase,
 } from '@ngneat/falso';
 
-const generateUser = () => ({
+export const generateUser = () => ({
   id: randUuid() + Math.random(),
   firstName: randUserName({ withAccents: false }),
   lastName: randUserName({ withAccents: false }),
