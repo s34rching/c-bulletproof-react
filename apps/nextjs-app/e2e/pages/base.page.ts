@@ -38,9 +38,9 @@ export class BasePage {
         teamId: null,
       },
     });
-    expect(response.status()).toBe(200)
+    expect(response.status()).toBe(200);
 
-    await this.waitForComplete('User is being set in system', USER_SETTLE_TIMEOUT);
+    await this.waitForComplete('User is being set in the system', USER_SETTLE_TIMEOUT);
   }
 
   async resetPageState(): Promise<void> {
