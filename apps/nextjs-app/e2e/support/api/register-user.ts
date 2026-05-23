@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { generateUser } from '@/testing/data-generators';
 
-export const registerUser = async (userData: Partial<ReturnType<typeof generateUser>>): Promise<void> => {
+export const registerUser = async (
+  userData: ReturnType<typeof generateUser>,
+): Promise<void> => {
   const { firstName, lastName, email, password, teamName } = userData;
 
   const response = await axios.post(
