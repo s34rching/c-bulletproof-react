@@ -21,13 +21,8 @@ export class BasePage {
   }
 
   async waitForComplete(operation: string, timeout: number): Promise<void> {
-    setTimeout(async () => {
-      return new Promise((resolve) => {
-        console.log(`Waiting ${timeout}ms for "${operation}" to complete`);
-
-        resolve();
-      });
-    }, USER_SETTLE_TIMEOUT);
+    console.log(`Waiting ${timeout}ms for "${operation}" to complete`);
+    await new Promise<void>((resolve) => setTimeout(resolve, timeout));
   }
 
   async createRegisteredUser(userData: Partial<ReturnType<typeof generateUser>>): Promise<void> {
