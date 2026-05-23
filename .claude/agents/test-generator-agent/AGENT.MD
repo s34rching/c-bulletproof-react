@@ -24,10 +24,10 @@ background: false
 
 End with a summary table as below and expose table to chat conversation:
 
-| ID     | Title              | Type       | Priority hint | Tier | Tool | Status |
-|--------|--------------------|------------|---------------|------|------|--------|
-| TC-001 | Scenario outline 1 | Happy path | High          |      |      |        |
-| TC-002 | ...                | ...        | ...           |      |      |        |
+| ID     | Title              | Type       | Priority | Tier | Tool | Status |
+|--------|--------------------|------------|----------|------|------|--------|
+| TC-001 | Scenario outline 1 | Happy path | High     |      |      |        |
+| TC-002 | ...                | ...        | ...      |      |      |        |
 
 ## Constraints
 
