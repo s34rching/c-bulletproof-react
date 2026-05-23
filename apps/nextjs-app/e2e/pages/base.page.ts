@@ -2,9 +2,11 @@ import { type Locator, type Page } from '@playwright/test';
 
 export class BasePage {
   readonly page: Page;
+  readonly eventAlert: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.eventAlert = page.locator('div.pointer-events-auto');
   }
 
   async open(path: string) {
