@@ -8,7 +8,7 @@ permissionMode: default
 maxTurns: 20
 effort: high
 memory: project
-background: false
+background: true
 ---
 
 ## Process
@@ -59,8 +59,9 @@ Skip at E2E level (note the better tier in the report):
 - Request body / response payload shape verification → **integration / API test**
 - Accessibility attribute checks (`aria-*`, `role`, `htmlFor`) → **unit test with Testing Library**
 - Already-authenticated redirect scenarios that require pre-seeded browser auth state → **integration test**
-- Timing-sensitive race conditions (e.g. loading state before data arrives) unless reliably reproducible via `page.route()` delay
-- Network error scenarios (4xx / 5xx responses) surfaced as visible notifications — mock via `page.route()`
+- Timing-sensitive race conditions (e.g. loading state before data arrives) → **component integration test**
+- Network error scenarios (4xx / 5xx / timeout responses) → **component integration test** (mock at the component boundary, not at the network layer)
+- Any scenario that requires `page.route()` or `route.fulfill()` to intercept or stub the network → **component integration test**
 
 ### Implementation rules
 
@@ -68,6 +69,5 @@ Skip at E2E level (note the better tier in the report):
 - Use `page.getByLabel()`, `page.getByRole()`, `page.getByText()` — prefer semantic selectors over CSS/XPath
 - Use `createUser()` from `@/testing/data-generators` for all test data — never hardcode values
 - Happy path tests that need a pre-registered user: call `registerUser()` from `e2e/support/api/register-user.ts` in `beforeAll`
-- Happy path tests that hit the real API: use real network calls
+- All tests must use real API calls — never use `page.route()`, `route.fulfill()`, or any network mocking
 - One spec file per feature page; do not merge unrelated features into one spec
-- DO NOT mock anything unless it is explicitly asked
