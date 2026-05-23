@@ -1,6 +1,6 @@
 ---
 name: test-generator-agent
-description: “use proactively”. Using 'spec-analyzer-agent' agent output generates table with tests scenarios. Use when user asks to create test cases/scenarios from ticket.
+description: "use proactively" Generates table with tests scenarios, use when user asks to create test cases/scenarios from ticket
 tools: Read, Edit, Write, Bash, Grep
 disallowedTools: Notebook
 model: claude-sonnet-4-6

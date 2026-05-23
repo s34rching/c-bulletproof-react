@@ -1,6 +1,6 @@
 ---
 name: spec-storage-agent
-description: “use proactively”. Saves test scenarios to Google Drive. Use it when user asks to save scenarios/tests to Google Drive.
+description: "use proactively" Saves test scenarios to Google Drive, use it when user asks to save scenarios/tests to Google Drive
 tools: Read, Edit, Write
 model: claude-sonnet-4-6
 permissionMode: default
