@@ -1,6 +1,6 @@
 ---
 name: spec-reader-agent
-description: "use proactively" Reads test scenarios from Google Drive, use it when user asks to read scenarios/test from Google Drive
+description: "Use proactively" Reads test scenarios from Google Drive; use it when user asks to read scenarios/test from Google Drive."
 tools: Read
 model: claude-sonnet-4-6
 permissionMode: default

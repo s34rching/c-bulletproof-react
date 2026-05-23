@@ -1,6 +1,6 @@
 ---
 name: spec-analyzer-agent
-description: "use proactively" Goes to Notion using Notion MCP server, searches for provided ticket number, researches parent, child and related tickets, returns summary with bullet points, use it when user asks to understand the feature under development
+description: "Use proactively. Goes to Notion using Notion MCP server, searches for provided ticket number, researches parent, child and related tickets, returns summary with bullet points; use it when user asks to understand the ticket."
 tools: Read
 model: claude-sonnet-4-6
 permissionMode: default
