@@ -8,3 +8,12 @@
 
 # Intellij
 .idea
+
+# Claude templates
+templates/
+
+# Claude configs
+.claude/settings.local.json
+
+# Claude runtime output
+.claude/worktrees/
