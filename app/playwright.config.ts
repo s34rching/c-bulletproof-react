@@ -40,7 +40,6 @@ export default defineConfig({
       testMatch: /.*\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
-        storageState: 'e2e/.auth/user.json',
       },
       dependencies: ['setup'],
     },
