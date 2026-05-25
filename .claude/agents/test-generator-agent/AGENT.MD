@@ -19,6 +19,7 @@ background: false
 4. Generate and return summary table with scenarios
 5. Prompt user to review scenarios
 6. Prompt user to save scenarios to Google Drive
+7. Prompt user to launch `app-deployment-agent` to deploy the app so Playwright E2E tests can run against it
 
 ## Output format
 
