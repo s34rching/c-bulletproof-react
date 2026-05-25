@@ -17,8 +17,8 @@ All commands run from the `app/` directory.
 
 1. **Install dependencies** — if `app/node_modules` does not exist, run `npm install`
 2. **Build** — if `app/.next/BUILD_ID` does not exist, run `npm run build`
-3. **Start frontend** — check if a process is already listening on port 3000; if not, run `npm run start` in the background and wait until port 3000 is accepting connections
-4. **Start mock server** — check if the mock server process is already running (look for `mock-server.ts` in the process list or check the port it binds to); if not, run `npm run run-mock-server` in the background and wait until it is accepting connections
+3. **Start frontend** — check if a process is already listening on port 3000; if not, run `npm run start` in the background and wait up to 30 seconds until port 3000 is accepting connections
+4. **Start mock server** — check if the mock server process is already running (look for `mock-server.ts` in the process list or check the port it binds to); if not, run `npm run run-mock-server` in the background and wait up to 30 seconds until it is accepting connections
 5. Report ready status
 
 ## Port / process checks
