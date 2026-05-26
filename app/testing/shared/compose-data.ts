@@ -63,7 +63,7 @@ export const createTeamMemberComment = async (
 
   const comment = await createComment({
     discussionId: discussion.discussionId,
-    body: commentBody,
+    ...(commentBody !== undefined ? { body: commentBody } : {}),
   });
 
   return {
