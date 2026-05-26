@@ -12,7 +12,7 @@ import {
 } from '../../shared/compose-data';
 
 describe('Comments API', () => {
-  let user: any;
+  let user: ReturnType<typeof generateUser>;
 
   beforeEach(() => {
     user = generateUser();
