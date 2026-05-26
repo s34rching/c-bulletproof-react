@@ -24,7 +24,7 @@ beforeAll(() => {
     };
   });
 });
-afterAll(() => server.close());
+
 beforeEach(() => {
   const ResizeObserverMock = vi.fn(() => ({
     observe: vi.fn(),
@@ -39,7 +39,10 @@ beforeEach(() => {
 
   initializeDb();
 });
+
 afterEach(() => {
   server.resetHandlers();
   resetDb();
 });
+
+afterAll(() => server.close());
