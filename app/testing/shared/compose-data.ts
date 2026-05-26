@@ -5,6 +5,8 @@ import {
   createUser,
 } from '@/testing/test-utils';
 
+export type DiscussionType = 'private' | 'public';
+
 export type TeamMember = {
   userId: string;
   teamId: string;
@@ -38,12 +40,14 @@ export const createTeamMember = async (userData: any): Promise<TeamMember> => {
 
 export const createAuthoredTeamDiscussion = async (
   userData: any,
+  type: DiscussionType,
 ): Promise<TeamDiscussion> => {
   const teamMember = await createTeamMember(userData);
 
   const discussion = await createDiscussion({
     authorId: teamMember.userId,
     teamId: teamMember.teamId,
+    public: type === 'public',
   });
 
   return {
@@ -57,9 +61,13 @@ export const createAuthoredTeamDiscussion = async (
 
 export const createTeamMemberComment = async (
   userData: any,
+  discussionType: DiscussionType,
   commentBody?: string,
 ): Promise<TeamMemberComment> => {
-  const discussion = await createAuthoredTeamDiscussion(userData);
+  const discussion = await createAuthoredTeamDiscussion(
+    userData,
+    discussionType,
+  );
 
   const comment = await createComment({
     discussionId: discussion.discussionId,
