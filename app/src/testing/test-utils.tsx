@@ -11,6 +11,8 @@ import { AppProvider } from '@/app/provider';
 import {
   createDiscussion as generateDiscussion,
   createUser as generateUser,
+  createTeam as generateTeam,
+  createComment as generateComment,
 } from './data-generators';
 import { db } from './mocks/db';
 import { AUTH_COOKIE, authenticate, hash } from './mocks/utils';
@@ -24,6 +26,13 @@ export const waitForLoadingToFinish = () =>
     { timeout: 4000 },
   );
 
+export const createTeam = async (
+  teamProperties?: any,
+): Promise<ReturnType<typeof generateTeam>> => {
+  const team = generateTeam(teamProperties) as any;
+  return db.team.create(team);
+};
+
 export const createUser = async (userProperties?: any) => {
   const user = generateUser(userProperties) as any;
   await db.user.create({ ...user, password: hash(user.password) });
@@ -32,8 +41,12 @@ export const createUser = async (userProperties?: any) => {
 
 export const createDiscussion = async (discussionProperties?: any) => {
   const discussion = generateDiscussion(discussionProperties);
-  const res = await db.discussion.create(discussion);
-  return res;
+  return db.discussion.create(discussion);
+};
+
+export const createComment = async (commentProperties?: any) => {
+  const comment = generateComment(commentProperties) as any;
+  return db.comment.create(comment);
 };
 
 export const loginAsUser = async (user: any) => {
