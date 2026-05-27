@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 
-import { db } from '@/testing/mocks/db';
-import { AUTH_COOKIE, authenticate, hash } from '@/testing/mocks/utils';
+import { db } from '@/fake-api/db';
+import { AUTH_COOKIE, authenticate, hash } from '@/fake-api/utils';
 import {
   createDiscussion as generateDiscussion,
   createUser as generateUser,

@@ -4,7 +4,7 @@ import { expect, test, describe, beforeEach, afterEach } from 'vitest';
 import { createComment } from '@/features/comments/api/create-comment';
 import { deleteComment } from '@/features/comments/api/delete-comment';
 import { getComments } from '@/features/comments/api/get-comments';
-import { AUTH_COOKIE } from '@/testing/mocks/utils';
+import { AUTH_COOKIE } from '@/fake-api/utils';
 import {
   createComment as seedComment,
   createDiscussion,
