@@ -1,4 +1,4 @@
-import { createUser } from '@/testing/data-generators';
+import { createUser } from '@testing/shared/data-generators';
 import { renderApp, screen, userEvent, waitFor } from '@/testing/test-utils';
 
 import { RegisterForm } from '../register-form';

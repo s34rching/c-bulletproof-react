@@ -13,7 +13,7 @@ import {
   createUser as generateUser,
   createTeam as generateTeam,
   createComment as generateComment,
-} from './data-generators';
+} from '@testing/shared/data-generators';
 import { db } from './mocks/db';
 import { AUTH_COOKIE, authenticate, hash } from './mocks/utils';
 

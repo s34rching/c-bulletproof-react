@@ -1,6 +1,6 @@
 import type { Mock } from 'vitest';
 
-import { createDiscussion } from '@/testing/data-generators';
+import { createDiscussion } from '@testing/shared/data-generators';
 import {
   renderApp,
   screen,
