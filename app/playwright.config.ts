@@ -3,16 +3,8 @@ import 'dotenv/config';
 
 const PORT = 3000;
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './testing/e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -34,14 +26,12 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
     {
       name: 'chromium',
       testMatch: /.*\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
       },
-      dependencies: ['setup'],
     },
   ],
 

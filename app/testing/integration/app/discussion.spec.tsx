@@ -1,17 +1,15 @@
 import { useParams } from 'next/navigation';
 
+import { Discussion } from '@/app/app/discussions/[discussionId]/_components/discussion';
+import { createDiscussion, createUser } from '@testing/shared/test-utils';
 import {
   renderApp,
   screen,
   userEvent,
   waitFor,
-  createDiscussion,
-  createUser,
-  within,
   waitForLoadingToFinish,
-} from '@/testing/test-utils';
-
-import { Discussion } from '../_components/discussion';
+  within,
+} from '@testing/integration/render';
 
 vi.mock('next/navigation', async () => {
   const actual = await vi.importActual('next/navigation');
@@ -78,10 +76,7 @@ test('should update discussion', async () => {
   const newTitle = `${fakeDiscussion.title}${titleUpdate}`;
   const newBody = `${fakeDiscussion.body}${bodyUpdate}`;
 
-  // replacing the title with the new title
   await userEvent.type(titleField, newTitle);
-
-  // appending updated to the body
   await userEvent.type(bodyField, bodyUpdate);
 
   const submitButton = within(drawer).getByRole('button', {
@@ -140,7 +135,6 @@ test(
 
     const deleteCommentButton = within(commentElement).getByRole('button', {
       name: /delete comment/i,
-      // exact: false,
     });
 
     await userEvent.click(deleteCommentButton);

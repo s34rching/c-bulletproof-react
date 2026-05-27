@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 
-import { initializeDb, resetDb } from '@/testing/mocks/db';
-import { server } from '@/testing/mocks/server';
+import { initializeDb, resetDb } from '@/fake-api/db';
+import { server } from '@/fake-api/server';
 
 vi.mock('zustand');
 
@@ -24,7 +24,7 @@ beforeAll(() => {
     };
   });
 });
-afterAll(() => server.close());
+
 beforeEach(() => {
   const ResizeObserverMock = vi.fn(() => ({
     observe: vi.fn(),
@@ -39,7 +39,10 @@ beforeEach(() => {
 
   initializeDb();
 });
+
 afterEach(() => {
   server.resetHandlers();
   resetDb();
 });
+
+afterAll(() => server.close());

@@ -1,7 +1,6 @@
-import { createUser } from '@/testing/data-generators';
-import { renderApp, screen, userEvent, waitFor } from '@/testing/test-utils';
-
-import { RegisterForm } from '../register-form';
+import { RegisterForm } from '@/features/auth/components/register-form';
+import { createUser } from '@testing/shared/data-generators';
+import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
 
 test('should register new user and call onSuccess cb which should navigate the user to the app', async () => {
   const newUser = createUser({});

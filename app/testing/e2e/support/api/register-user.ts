@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { generateUser } from '@/testing/data-generators';
+import { generateUser } from '@testing/shared/data-generators';
 
 export const registerUser = async (
   userData: ReturnType<typeof generateUser>,
