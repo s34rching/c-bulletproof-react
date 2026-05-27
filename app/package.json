@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
+    "test-api": "vitest ./testing/api",
     "test-e2e": "pm2 start \"yarn run-mock-server\" --name server && yarn playwright test",
     "prepare": "husky",
     "check-types": "tsc --project tsconfig.json --pretty --noEmit",
