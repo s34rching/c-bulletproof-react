@@ -1,12 +1,6 @@
-import {
-  createUser,
-  renderApp,
-  screen,
-  userEvent,
-  waitFor,
-} from '@testing/shared/test-utils';
-
-import { LoginForm } from '../login-form';
+import { LoginForm } from '@/features/auth/components/login-form';
+import { createUser } from '@testing/shared/test-utils';
+import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
 
 test('should login new user and call onSuccess cb which should navigate the user to the app', async () => {
   const newUser = await createUser({ teamId: undefined });

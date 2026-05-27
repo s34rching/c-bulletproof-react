@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { rtlRender, screen, userEvent, waitFor } from '@testing/shared/test-utils';
-
-import { ConfirmationDialog } from '../confirmation-dialog';
+import { ConfirmationDialog } from '@/components/ui/dialog/confirmation-dialog';
+import { rtlRender, screen, userEvent, waitFor } from '@testing/integration/render';
 
 test('should handle confirmation flow', async () => {
   const titleText = 'Are you sure?';

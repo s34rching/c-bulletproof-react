@@ -1,30 +1,13 @@
-import {
-  render as rtlRender,
-  waitForElementToBeRemoved,
-  screen,
-} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Cookies from 'js-cookie';
 
-import { AppProvider } from '@/app/provider';
-
+import { db } from '@/testing/mocks/db';
+import { AUTH_COOKIE, authenticate, hash } from '@/testing/mocks/utils';
 import {
   createDiscussion as generateDiscussion,
   createUser as generateUser,
   createTeam as generateTeam,
   createComment as generateComment,
 } from '@testing/shared/data-generators';
-import { db } from '@/testing/mocks/db';
-import { AUTH_COOKIE, authenticate, hash } from '@/testing/mocks/utils';
-
-export const waitForLoadingToFinish = () =>
-  waitForElementToBeRemoved(
-    () => [
-      ...screen.queryAllByTestId(/loading/i),
-      ...screen.queryAllByText(/loading/i),
-    ],
-    { timeout: 4000 },
-  );
 
 export const createTeam = async (
   teamProperties?: any,
@@ -54,35 +37,3 @@ export const loginAsUser = async (user: any) => {
   Cookies.set(AUTH_COOKIE, authUser.jwt);
   return authUser;
 };
-
-const initializeUser = async (user: any) => {
-  if (typeof user === 'undefined') {
-    const newUser = await createUser();
-    return loginAsUser(newUser);
-  } else if (user) {
-    return loginAsUser(user);
-  } else {
-    return null;
-  }
-};
-
-export const renderApp = async (
-  ui: any,
-  { user, ...renderOptions }: Record<string, any> = {},
-) => {
-  // if you want to render the app unauthenticated then pass "null" as the user
-  const initializedUser = await initializeUser(user);
-
-  const returnValue = {
-    ...rtlRender(ui, {
-      wrapper: AppProvider,
-      ...renderOptions,
-    }),
-    user: initializedUser,
-  };
-
-  return returnValue;
-};
-
-export * from '@testing-library/react';
-export { userEvent, rtlRender };
