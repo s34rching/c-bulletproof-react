@@ -3,7 +3,7 @@ import {
   createDiscussion,
   createTeam,
   createUser,
-} from '@/testing/test-utils';
+} from '@testing/shared/test-utils';
 
 export type DiscussionType = 'private' | 'public';
 

@@ -10,7 +10,7 @@ import {
   createDiscussion,
   createUser,
   loginAsUser,
-} from '@/testing/test-utils';
+} from '@testing/shared/test-utils';
 import { generateUser } from '@testing/shared/data-generators';
 
 import {

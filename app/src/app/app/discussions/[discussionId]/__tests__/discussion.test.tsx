@@ -9,7 +9,7 @@ import {
   createUser,
   within,
   waitForLoadingToFinish,
-} from '@/testing/test-utils';
+} from '@testing/shared/test-utils';
 
 import { Discussion } from '../_components/discussion';
 

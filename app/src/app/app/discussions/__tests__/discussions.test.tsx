@@ -1,5 +1,6 @@
 import type { Mock } from 'vitest';
 
+import { formatDate } from '@/utils/format';
 import { createDiscussion } from '@testing/shared/data-generators';
 import {
   renderApp,
@@ -8,8 +9,7 @@ import {
   waitFor,
   waitForLoadingToFinish,
   within,
-} from '@/testing/test-utils';
-import { formatDate } from '@/utils/format';
+} from '@testing/shared/test-utils';
 
 import { Discussions } from '../_components/discussions';
 

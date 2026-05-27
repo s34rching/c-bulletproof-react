@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { rtlRender, screen, userEvent, waitFor } from '@/testing/test-utils';
+import { rtlRender, screen, userEvent, waitFor } from '@testing/shared/test-utils';
 
 import {
   Drawer,
