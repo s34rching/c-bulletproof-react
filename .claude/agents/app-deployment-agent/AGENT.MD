@@ -1,6 +1,6 @@
 ---
 name: app-deployment-agent
-description: "Use proactively. Verifies dependencies, builds the Next.js app, and starts the mock API server and/or the frontend; delegate to this agent when user asks to run, start, or deploy the app for for E2E testing, or to launch the API server API testing."
+description: "Use proactively. Manages the mock API server and Next.js frontend lifecycle — start and stop; delegate to this agent when user asks to run, start, deploy, stop, or kill the app or API server."
 tools: Read, Bash
 model: claude-sonnet-4-6
 permissionMode: default
@@ -84,10 +84,52 @@ bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check
 
   Then report `Frontend is up and running`
 
+## Step 5 — Stop API server (when user asks to stop / kill the API server)
+
+Check whether the mock API port is in use:
+
+```bash
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_MOCK_API_PORT>
+```
+
+- **Exit 0 (port in use):** kill the process, then report `API server is stopped`:
+
+  ```bash
+  bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/kill-port.sh" <NEXT_PUBLIC_MOCK_API_PORT>
+  ```
+
+- **Exit 1 (port free):** report `Nothing is running on <NEXT_PUBLIC_MOCK_API_PORT> port, API server seems never been launched`
+
+## Step 6 — Stop app / frontend (when user asks to stop / kill the app or frontend)
+
+### 6.1 — API server
+
+Run the same port check and kill as Step 5.
+
+- **Port in use:** kill the process, then report `API server is stopped`
+- **Port free:** report `Nothing is running on <NEXT_PUBLIC_MOCK_API_PORT> port, API server seems never been launched`
+
+### 6.2 — Frontend
+
+Check whether the frontend port is in use:
+
+```bash
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_UI_PORT>
+```
+
+- **Exit 0 (port in use):** kill the process, then report `Frontend server is stopped`:
+
+  ```bash
+  bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/kill-port.sh" <NEXT_PUBLIC_UI_PORT>
+  ```
+
+- **Exit 1 (port free):** report `Nothing is running on <NEXT_PUBLIC_UI_PORT> port, Frontend server seems never been launched`
+
 ## Constraints
 
-- Steps 1 and 2 must always run before any server action
+- Steps 1 and 2 must always run before any server start action (Steps 3 and 4); skip them for stop actions (Steps 5 and 6)
 - When deploying the full app (Step 4), always start the API server (4.1) before the frontend (4.2)
+- When stopping the full app (Step 6), always stop the API server (6.1) before the frontend (6.2)
 - Run servers as background processes — do not block waiting for them to exit
 - Always use `$(git rev-parse --show-toplevel)` to anchor paths — never rely on the current working directory
-- Substitute real port values read from `app/.env` in every notification and `check-port.sh` invocation
+- Substitute real port values read from `app/.env` in every notification, `check-port.sh`, and `kill-port.sh` invocation
