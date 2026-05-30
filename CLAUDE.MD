@@ -15,6 +15,8 @@ Project-level subagents are defined in `.claude/agents/`. Always delegate to the
 | User asks to implement / write / create Playwright or E2E tests     | `playwright-tests-agent`                                                 |
 | User asks to run, start, or deploy the app for E2E testing          | `app-deployment-agent`                                                   |
 | User asks to launch the API server for API testing                  | `app-deployment-agent`                                                   |
+| User asks to stop or kill the app or frontend                       | `app-deployment-agent`                                                   |
+| User asks to stop or kill the API server                            | `app-deployment-agent`                                                   |
 
 ### Rules
 

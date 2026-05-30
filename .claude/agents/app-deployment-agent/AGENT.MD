@@ -14,7 +14,7 @@ background: false
 
 The app lives in `app/`. Port values come from `app/.env`:
 - `NEXT_PUBLIC_MOCK_API_PORT` — mock API server port
-- `NEXT_PUBLIC_UI_PORT` — Next.js frontend port
+- `NEXT_PUBLIC_APP_PORT` — Next.js frontend port
 
 Read `app/.env` at the start of every run to extract these two values. Use the actual values in every port check and notification — never hardcode port numbers.
 
@@ -72,10 +72,10 @@ Run the same port check as Step 3.
 Check whether the frontend port is already in use:
 
 ```bash
-bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_UI_PORT>
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_APP_PORT>
 ```
 
-- **Exit 0 (port in use):** report `Port <NEXT_PUBLIC_UI_PORT> is already in use, looks like the frontend is already running`
+- **Exit 0 (port in use):** report `Port <NEXT_PUBLIC_APP_PORT> is already in use, looks like the frontend is already running`
 - **Exit 1 (port free):** start the Next.js dev server as a background process:
 
   ```bash
@@ -114,16 +114,16 @@ Run the same port check and kill as Step 5.
 Check whether the frontend port is in use:
 
 ```bash
-bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_UI_PORT>
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_APP_PORT>
 ```
 
 - **Exit 0 (port in use):** kill the process, then report `Frontend server is stopped`:
 
   ```bash
-  bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/kill-port.sh" <NEXT_PUBLIC_UI_PORT>
+  bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/kill-port.sh" <NEXT_PUBLIC_APP_PORT>
   ```
 
-- **Exit 1 (port free):** report `Nothing is running on <NEXT_PUBLIC_UI_PORT> port, Frontend server seems never been launched`
+- **Exit 1 (port free):** report `Nothing is running on <NEXT_PUBLIC_APP_PORT> port, Frontend server seems never been launched`
 
 ## Constraints
 
