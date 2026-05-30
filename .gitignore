@@ -3,17 +3,46 @@
 /.pnp
 .pnp.js
 
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/e2e/.auth/
+
+# storybook
+migration-storybook.log
+storybook.log
+storybook-static
+
 # misc
 .DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# production
+/dist
 
 # Intellij
 .idea
 
-# Claude templates
+# Claude
 templates/
-
-# Claude configs
 .claude/settings.local.json
-
-# Claude runtime output
 .claude/worktrees/
+
+# npm / yarn logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local
+mocked-db.json
+
+/.next
+/.vite
+tsconfig.tsbuildinfo

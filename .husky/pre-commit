@@ -1,2 +1,2 @@
 #!/bin/sh
-# yarn --cwd app lint-staged
+# yarn lint-staged

@@ -12,31 +12,31 @@ background: false
 
 ## Environment
 
-The app lives in `app/`. Port values come from `app/.env`:
+The app lives in the project root. Port values come from `.env`:
 - `NEXT_PUBLIC_MOCK_API_PORT` — mock API server port
 - `NEXT_PUBLIC_APP_PORT` — Next.js frontend port
 
-Read `app/.env` at the start of every run to extract these two values. Use the actual values in every port check and notification — never hardcode port numbers.
+Read `.env` at the start of every run to extract these two values. Use the actual values in every port check and notification — never hardcode port numbers.
 
-Because the Bash tool's working directory can drift (e.g. after `cd app`), always resolve the project root dynamically with `$(git rev-parse --show-toplevel)` instead of using relative paths.
+Because the Bash tool's working directory can drift, always resolve the project root dynamically with `$(git rev-parse --show-toplevel)` instead of using relative paths.
 
 ## Step 1 — Check dependencies (always)
 
 ```bash
-test -d "$(git rev-parse --show-toplevel)/app/node_modules"
+test -d "$(git rev-parse --show-toplevel)/node_modules"
 ```
 
 - **Directory exists:** report `App dependencies are installed`
 - **Directory missing:** run the following, then report `App dependencies have just been installed`:
 
   ```bash
-  cd "$(git rev-parse --show-toplevel)/app" && yarn install
+  cd "$(git rev-parse --show-toplevel)" && yarn install
   ```
 
 ## Step 2 — Build (always, after Step 1)
 
 ```bash
-cd "$(git rev-parse --show-toplevel)/app" && yarn build
+cd "$(git rev-parse --show-toplevel)" && yarn build
 ```
 
 Stop and report the error if the build fails.
@@ -53,7 +53,7 @@ bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check
 - **Exit 1 (port free):** start the mock API server as a background process:
 
   ```bash
-  cd "$(git rev-parse --show-toplevel)/app" && yarn run-mock-server
+  cd "$(git rev-parse --show-toplevel)" && yarn run-mock-server
   ```
 
   Then report `Mock API server is up and running`
@@ -79,7 +79,7 @@ bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check
 - **Exit 1 (port free):** start the Next.js dev server as a background process:
 
   ```bash
-  cd "$(git rev-parse --show-toplevel)/app" && yarn dev
+  cd "$(git rev-parse --show-toplevel)" && yarn dev
   ```
 
   Then report `Frontend is up and running`
@@ -132,4 +132,4 @@ bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check
 - When stopping the full app (Step 6), always stop the API server (6.1) before the frontend (6.2)
 - Run servers as background processes — do not block waiting for them to exit
 - Always use `$(git rev-parse --show-toplevel)` to anchor paths — never rely on the current working directory
-- Substitute real port values read from `app/.env` in every notification, `check-port.sh`, and `kill-port.sh` invocation
+- Substitute real port values read from `.env` in every notification, `check-port.sh`, and `kill-port.sh` invocation

@@ -15,11 +15,11 @@ background: true
 
 1. Accept a ticket number and/or a test scenario table from the conversation
 2. If only a ticket number is provided, delegate to `spec-reader-agent` to fetch scenarios from Google Drive first
-3. Read the existing E2E structure: `e2e/pages/`, `e2e/fixtures/`, `e2e/tests/`, `e2e/support/` to understand established patterns
+3. Read the existing E2E structure: `testing/e2e/pages/`, `testing/e2e/fixtures/`, `testing/e2e/tests/`, testing/e2e/support/` to understand established patterns
 4. Apply Test Pyramid filtering — select only scenarios eligible for the E2E tier (see Constraints)
-5. Create a Page Object file under `e2e/pages/` for the feature if one does not already exist
-6. Update `e2e/fixtures/pages.ts` to expose the new Page Object as a fixture
-7. Write the spec file under `e2e/tests/` named after the feature (e.g. `register.spec.ts`)
+5. Create a Page Object file under `testing/e2e/pages/` for the feature if one does not already exist
+6. Update `testing/e2e/fixtures/pages.ts` to expose the new Page Object as a fixture
+7. Write the spec file under `testing/e2e/tests/` named after the feature (e.g. `register.spec.ts`)
 8. Group tests into `test.describe` blocks that match scenario type (Happy path, Validations, UI / State, UX, Network errors, Edge cases)
 9. Report: list of implemented TC-IDs with file paths, and list of skipped TC-IDs with the reason for each
 
@@ -28,9 +28,9 @@ background: true
 End with a summary report:
 
 **Files created / modified:**
-- `e2e/pages/<feature>.page.ts` — new Page Object
-- `e2e/fixtures/pages.ts` — updated fixture
-- `e2e/tests/<feature>.spec.ts` — new spec
+- `testing/e2e/pages/<feature>.page.ts` — new Page Object
+- `testing/e2e/fixtures/pages.ts` — updated fixture
+- `testing/e2e/tests/<feature>.spec.ts` — new spec
 
 **Implemented scenarios:**
 | TC-ID  | Describe block | Strategy |
@@ -68,6 +68,6 @@ Skip at E2E level (note the better tier in the report):
 - Follow the Page Object Model: all locators live in the page class, never inline in specs
 - Use `page.getByLabel()`, `page.getByRole()`, `page.getByText()` — prefer semantic selectors over CSS/XPath
 - Use `createUser()` from `@/testing/data-generators` for all test data — never hardcode values
-- Happy path tests that need a pre-registered user: call `registerUser()` from `e2e/support/api/register-user.ts` in `beforeAll`
+- Happy path tests that need a pre-registered user: call `registerUser()` from `testing/e2e/support/api/register-user.ts` in `beforeAll`
 - All tests must use real API calls — never use `page.route()`, `route.fulfill()`, or any network mocking
 - One spec file per feature page; do not merge unrelated features into one spec
