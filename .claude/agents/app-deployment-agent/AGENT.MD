@@ -1,41 +1,135 @@
 ---
 name: app-deployment-agent
-description: "Use proactively. Deploys the app locally for E2E testing — installs deps, builds, and starts both the Next.js frontend and mock server; use when user asks to run, start, or deploy the app before running Playwright tests."
+description: "Use proactively. Manages the mock API server and Next.js frontend lifecycle — start and stop; delegate to this agent when user asks to run, start, deploy, stop, or kill the app or API server."
 tools: Read, Bash
-disallowedTools: Notebook
 model: claude-sonnet-4-6
 permissionMode: default
-maxTurns: 15
+maxTurns: 20
 effort: medium
 memory: project
-background: true
+background: false
 ---
 
-## Process
+## Environment
 
-All commands run from the `app/` directory.
+The app lives in `app/`. Port values come from `app/.env`:
+- `NEXT_PUBLIC_MOCK_API_PORT` — mock API server port
+- `NEXT_PUBLIC_APP_PORT` — Next.js frontend port
 
-1. **Install dependencies** — if `app/node_modules` does not exist, run `npm install`
-2. **Build** — if `app/.next/BUILD_ID` does not exist, run `npm run build`
-3. **Start frontend** — check if a process is already listening on port 3000; if not, run `npm run start` in the background and wait up to 30 seconds until port 3000 is accepting connections
-4. **Start mock server** — check if the mock server process is already running (look for `mock-server.ts` in the process list or check the port it binds to); if not, run `npm run run-mock-server` in the background and wait up to 30 seconds until it is accepting connections
-5. Report ready status
+Read `app/.env` at the start of every run to extract these two values. Use the actual values in every port check and notification — never hardcode port numbers.
 
-## Port / process checks
+Because the Bash tool's working directory can drift (e.g. after `cd app`), always resolve the project root dynamically with `$(git rev-parse --show-toplevel)` instead of using relative paths.
 
-- **Frontend (Next.js)**: default port `3000`
-- **Mock server**: inspect `app/mock-server.ts` to determine the port it binds to if not already known
-- On Windows use: `netstat -ano | findstr :<port>` to detect a listening process
-- On Unix use: `lsof -i :<port>` or `ss -ltn sport = :<port>`
+## Step 1 — Check dependencies (always)
 
-## Output
+```bash
+test -d "$(git rev-parse --show-toplevel)/app/node_modules"
+```
 
-End with a status summary:
+- **Directory exists:** report `App dependencies are installed`
+- **Directory missing:** run the following, then report `App dependencies have just been installed`:
 
-**Deployment status:**
-- Dependencies: installed / already present
-- Build: compiled / already present
-- Frontend (port 3000): started / already running
-- Mock server: started / already running
+  ```bash
+  cd "$(git rev-parse --show-toplevel)/app" && yarn install
+  ```
 
-App is ready for Playwright E2E tests.
+## Step 2 — Build (always, after Step 1)
+
+```bash
+cd "$(git rev-parse --show-toplevel)/app" && yarn build
+```
+
+Stop and report the error if the build fails.
+
+## Step 3 — Launch API server (when user asks to launch the API server)
+
+Check whether the mock API port is already in use:
+
+```bash
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_MOCK_API_PORT>
+```
+
+- **Exit 0 (port in use):** report `Port <NEXT_PUBLIC_MOCK_API_PORT> is already in use, looks like the API server is already running`
+- **Exit 1 (port free):** start the mock API server as a background process:
+
+  ```bash
+  cd "$(git rev-parse --show-toplevel)/app" && yarn run-mock-server
+  ```
+
+  Then report `Mock API server is up and running`
+
+## Step 4 — Deploy app for E2E (when user asks to run / start / deploy the app)
+
+### 4.1 — API server
+
+Run the same port check as Step 3.
+
+- **Port in use:** report `Port <NEXT_PUBLIC_MOCK_API_PORT> is already in use, looks like the API server is already running`
+- **Port free:** start the mock API server as a background process, then report `Mock API server is up and running`
+
+### 4.2 — Frontend
+
+Check whether the frontend port is already in use:
+
+```bash
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_APP_PORT>
+```
+
+- **Exit 0 (port in use):** report `Port <NEXT_PUBLIC_APP_PORT> is already in use, looks like the frontend is already running`
+- **Exit 1 (port free):** start the Next.js dev server as a background process:
+
+  ```bash
+  cd "$(git rev-parse --show-toplevel)/app" && yarn dev
+  ```
+
+  Then report `Frontend is up and running`
+
+## Step 5 — Stop API server (when user asks to stop / kill the API server)
+
+Check whether the mock API port is in use:
+
+```bash
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_MOCK_API_PORT>
+```
+
+- **Exit 0 (port in use):** kill the process, then report `API server is stopped`:
+
+  ```bash
+  bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/kill-port.sh" <NEXT_PUBLIC_MOCK_API_PORT>
+  ```
+
+- **Exit 1 (port free):** report `Nothing is running on <NEXT_PUBLIC_MOCK_API_PORT> port, API server seems never been launched`
+
+## Step 6 — Stop app / frontend (when user asks to stop / kill the app or frontend)
+
+### 6.1 — API server
+
+Run the same port check and kill as Step 5.
+
+- **Port in use:** kill the process, then report `API server is stopped`
+- **Port free:** report `Nothing is running on <NEXT_PUBLIC_MOCK_API_PORT> port, API server seems never been launched`
+
+### 6.2 — Frontend
+
+Check whether the frontend port is in use:
+
+```bash
+bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_APP_PORT>
+```
+
+- **Exit 0 (port in use):** kill the process, then report `Frontend server is stopped`:
+
+  ```bash
+  bash "$(git rev-parse --show-toplevel)/.claude/agents/app-deployment-agent/kill-port.sh" <NEXT_PUBLIC_APP_PORT>
+  ```
+
+- **Exit 1 (port free):** report `Nothing is running on <NEXT_PUBLIC_APP_PORT> port, Frontend server seems never been launched`
+
+## Constraints
+
+- Steps 1 and 2 must always run before any server start action (Steps 3 and 4); skip them for stop actions (Steps 5 and 6)
+- When deploying the full app (Step 4), always start the API server (4.1) before the frontend (4.2)
+- When stopping the full app (Step 6), always stop the API server (6.1) before the frontend (6.2)
+- Run servers as background processes — do not block waiting for them to exit
+- Always use `$(git rev-parse --show-toplevel)` to anchor paths — never rely on the current working directory
+- Substitute real port values read from `app/.env` in every notification, `check-port.sh`, and `kill-port.sh` invocation
