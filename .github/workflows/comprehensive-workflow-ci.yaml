@@ -1,7 +1,7 @@
 name: Comprehensive CI Workflow
 on:
-  pull_request:
-    branches: [ "master" ]
+  push:
+    branches: [ "*" ]
 
 jobs:
   install-dependencies:
