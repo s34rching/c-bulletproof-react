@@ -57,8 +57,11 @@ jobs:
       - run: yarn --frozen-lockfile
       - name: Start API server
         uses: actions/setup-node@v4
+      - run:
+          yarn run-mock-server &
+      - name: Wait for server to be ready
+        uses: actions/setup-node@v4
       - run: |
-          yarn run-mock-server
           echo "Waiting for server on port 8080..."
           npx wait-on http://localhost:8080 --timeout 60000
       - name: Run API tests
