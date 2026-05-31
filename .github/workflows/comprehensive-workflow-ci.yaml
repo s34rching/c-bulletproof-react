@@ -14,6 +14,7 @@ jobs:
           node-version: 24.15.0
           cache: 'yarn'
       - run: yarn --frozen-lockfile
+
   unit-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
@@ -36,6 +37,7 @@ jobs:
         with:
           node-version: 24.15.0
       - run: yarn test-unit
+
   api-tests:
     needs: [install-dependencies, unit-tests]
     runs-on: ubuntu-latest
@@ -67,3 +69,42 @@ jobs:
         with:
           node-version: 24.15.0
       - run: yarn test-api
+
+  e2e-tests:
+    needs: [ install-dependencies, unit-tests ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set environment variables
+        uses: actions/setup-node@v4
+      - run: mv .env.example .env
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Install dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+      - run: yarn --frozen-lockfile
+      - name: Build app
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+      - run: yarn build
+      - name: Start API server
+        uses: actions/setup-node@v4
+      - run: yarn run-mock-server &
+      - name: Wait for API server to be ready
+        uses: actions/setup-node@v4
+      - run: |
+          echo "Waiting for server on port 8080..."
+          npx wait-on http://localhost:8080/api/health --timeout 60000
+      - name: Start App frontend
+        uses: actions/setup-node@v4
+      - run: yarn start
+      - name: Wait for App fontend to be ready
+        uses: actions/setup-node@v4
+      - run: |
+          echo "Waiting for app on port 3000..."
+          npx wait-on http://localhost:3000 --timeout 60000
