@@ -38,3 +38,31 @@ jobs:
         with:
           node-version: 24.15.0
       - run: yarn test-unit
+  api-tests:
+    needs: [install-dependencies, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set environment variables
+        uses: actions/setup-node@v4
+      - run: mv .env.example .env
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Install dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+      - run: yarn --frozen-lockfile
+      - name: Start API server
+        uses: actions/setup-node@v4
+      - run: |
+          yarn run-mock-server
+          echo "Waiting for server on port 8080..."
+          npx wait-on http://localhost:8080 --timeout 60000
+      - name: Run API tests
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+      - run: yarn test-api
