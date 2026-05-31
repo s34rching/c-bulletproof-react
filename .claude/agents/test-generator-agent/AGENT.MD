@@ -1,6 +1,5 @@
 ---
 name: test-generator-agent
-color: yellow
 description: "Use proactively. Generates table with tests scenarios; use when user asks to create test cases/scenarios from ticket."
 tools: Read, Edit, Write, Bash, Grep
 disallowedTools: Notebook
