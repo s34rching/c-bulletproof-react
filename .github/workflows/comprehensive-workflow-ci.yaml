@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Set environment variables
+        uses: actions/setup-node@v4
       - run: mv .env.example .env
       - name: Install dependencies
         uses: actions/setup-node@v4
