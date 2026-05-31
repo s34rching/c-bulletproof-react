@@ -23,20 +23,20 @@ jobs:
           node-version: 24.15.0
           cache: 'yarn'
       - run: yarn --frozen-lockfile
-      - name: Upload node_modules
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-modules-folder
-          path: node_modules/
   unit-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
     steps:
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
         with:
-          name: node-modules-folder
-          path: node_modules/
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Install dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+      - run: yarn --frozen-lockfile
       - name: Run unit tests
         uses: actions/setup-node@v4
         with:
