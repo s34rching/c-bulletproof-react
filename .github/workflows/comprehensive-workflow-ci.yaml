@@ -107,4 +107,4 @@ jobs:
           npx wait-on http://localhost:3000 --timeout 60000
       - name: Run e2e tests
         uses: actions/setup-node@v4
-      - run: playwright test
+      - run: yarn test-e2e
