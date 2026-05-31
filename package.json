@@ -10,10 +10,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest",
+    "test-unit": "vitest ./src",
     "test-api": "vitest ./testing/api",
     "test-integration": "vitest ./testing/integration",
-    "test-e2e": "pm2 start \"yarn run-mock-server\" --name server && yarn playwright test",
+    "test-e2e": "playwright test",
     "prepare": "husky",
     "check-types": "tsc --project tsconfig.json --pretty --noEmit",
     "generate": "plop",
@@ -113,7 +113,8 @@
     "tsx": "^4.17.0",
     "typescript": "^5.4.5",
     "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.4",
+    "wait-on": "^9.0.10"
   },
   "msw": {
     "workerDirectory": "public"
