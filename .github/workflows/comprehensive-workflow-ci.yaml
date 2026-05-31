@@ -1,7 +1,5 @@
 name: Comprehensive CI Workflow
 on:
-  push:
-    branches: [ "*" ]
   pull_request:
     branches: [ "master" ]
 
