@@ -63,7 +63,7 @@ jobs:
         uses: actions/setup-node@v4
       - run: |
           echo "Waiting for server on port 8080..."
-          npx wait-on http://localhost:8080/api --timeout 60000
+          npx wait-on http://localhost:8080/api/healthcheck --timeout 60000
       - name: Run API tests
         uses: actions/setup-node@v4
         with:
