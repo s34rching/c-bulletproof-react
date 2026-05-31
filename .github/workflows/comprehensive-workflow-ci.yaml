@@ -102,7 +102,7 @@ jobs:
           npx wait-on http://localhost:8080/api/health --timeout 60000
       - name: Start App frontend
         uses: actions/setup-node@v4
-      - run: yarn start
+      - run: yarn start &
       - name: Wait for App frontend to be ready
         uses: actions/setup-node@v4
       - run: |
