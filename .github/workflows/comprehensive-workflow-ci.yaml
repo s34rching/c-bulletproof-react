@@ -6,17 +6,12 @@ on:
     branches: [ "*" ]
 
 jobs:
-  set-environment-variables:
+  setup-environment:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - name: Set environment variables
-        uses: actions/setup-node@v4
       - run: mv .env.example .env
-  install-dependencies:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
       - name: Install dependencies
         uses: actions/setup-node@v4
         with:
@@ -24,7 +19,7 @@ jobs:
           cache: 'yarn'
       - run: yarn --frozen-lockfile
   unit-tests:
-    needs: [install-dependencies, set-environment-variables]
+    needs: [setup-environment]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
