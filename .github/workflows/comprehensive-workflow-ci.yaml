@@ -11,6 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Set environment variables
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
       - run: mv .env.example .env
       - name: Install dependencies
         uses: actions/setup-node@v4
