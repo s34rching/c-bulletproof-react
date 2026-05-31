@@ -29,6 +29,7 @@ app.use(
     },
   }),
 );
+app.get('/api/health', (_req, res) => res.sendStatus(200));
 app.use(createMiddleware(...handlers));
 
 initializeDb().then(() => {
