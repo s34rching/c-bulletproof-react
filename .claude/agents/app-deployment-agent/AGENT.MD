@@ -1,5 +1,6 @@
 ---
 name: app-deployment-agent
+color: green
 description: "Use proactively. Manages the mock API server and Next.js frontend lifecycle — start and stop; delegate to this agent when user asks to run, start, deploy, stop, or kill the app or API server."
 tools: Read, Bash
 model: claude-sonnet-4-6

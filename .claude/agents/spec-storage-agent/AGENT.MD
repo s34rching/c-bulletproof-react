@@ -1,5 +1,6 @@
 ---
 name: spec-storage-agent
+color: orange
 description: "Use proactively. Saves test scenarios to Google Drive; use it when user asks to save scenarios/tests to Google Drive."
 tools: Read, Edit, Write
 model: claude-sonnet-4-6

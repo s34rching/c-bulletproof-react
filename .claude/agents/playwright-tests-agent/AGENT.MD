@@ -1,5 +1,6 @@
 ---
 name: playwright-tests-agent
+color: purple
 description: "Use proactively. Generates Playwright E2E test files from test scenarios; use when user asks to implement/create/write E2E or Playwright tests for a ticket."
 tools: Read, Edit, Write, Bash, Grep
 disallowedTools: Notebook
