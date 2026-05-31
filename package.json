@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest",
+    "test-unit": "vitest",
     "test-api": "vitest ./testing/api",
     "test-integration": "vitest ./testing/integration",
     "test-e2e": "pm2 start \"yarn run-mock-server\" --name server && yarn playwright test",
