@@ -24,6 +24,7 @@ jobs:
           cache: 'yarn'
       - run: yarn --frozen-lockfile
   unit-tests:
+    needs: [install-dependencies]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
