@@ -6,18 +6,27 @@ on:
     branches: [ "*" ]
 
 jobs:
-  unit-tests:
+  set-environment-variables:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - name: Set environment variables
         uses: actions/setup-node@v4
       - run: mv .env.example .env
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
       - name: Install dependencies
         uses: actions/setup-node@v4
         with:
           node-version: 24.15.0
+          cache: 'yarn'
       - run: yarn --frozen-lockfile
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
       - name: Run unit tests
         uses: actions/setup-node@v4
         with:
