@@ -71,7 +71,7 @@ jobs:
       - run: yarn test-api
 
   e2e-tests:
-    needs: [ install-dependencies, unit-tests ]
+    needs: [ install-dependencies, unit-tests, api-tests ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -103,7 +103,7 @@ jobs:
       - name: Start App frontend
         uses: actions/setup-node@v4
       - run: yarn start
-      - name: Wait for App fontend to be ready
+      - name: Wait for App frontend to be ready
         uses: actions/setup-node@v4
       - run: |
           echo "Waiting for app on port 3000..."
