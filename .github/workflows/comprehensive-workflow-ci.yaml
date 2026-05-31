@@ -81,6 +81,6 @@ jobs:
           echo "Waiting for app on port 3000..."
           npx wait-on http://localhost:3000 --timeout 60000
       - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
       - name: Run e2e tests
         run: yarn test-e2e
