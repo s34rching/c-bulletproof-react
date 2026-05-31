@@ -13,7 +13,7 @@
     "test-unit": "vitest ./src",
     "test-api": "vitest ./testing/api",
     "test-integration": "vitest ./testing/integration",
-    "test-e2e": "pm2 start \"yarn run-mock-server\" --name server && yarn playwright test",
+    "test-e2e": "playwright test",
     "prepare": "husky",
     "check-types": "tsc --project tsconfig.json --pretty --noEmit",
     "generate": "plop",
