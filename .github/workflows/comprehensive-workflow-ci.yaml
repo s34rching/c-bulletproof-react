@@ -2,6 +2,10 @@ name: Comprehensive CI Workflow
 on:
   push:
     branches: [ "*" ]
+    paths-ignore:
+      - ".claude/**"
+      - "**.md"
+      - "docs/**"
 
 jobs:
   install-dependencies:
@@ -11,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
@@ -23,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
@@ -39,7 +43,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
@@ -48,14 +52,14 @@ jobs:
         run: yarn test-integration
 
   api-tests:
-    needs: [install-dependencies, unit-tests]
+    needs: [install-dependencies, unit-tests, component-integration-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
@@ -78,7 +82,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
