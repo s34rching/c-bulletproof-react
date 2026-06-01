@@ -9,9 +9,9 @@ test.describe('"Hero" page', () => {
     await heroPage.getStartedButton.click();
     await heroPage.waitUrlContains(/\/auth\/login$/);
     await expect(heroPage.getStartedButton).toBeHidden();
-  });
+  })
 
   test('user should be able to see author\'s "Github" profile', async ({ heroPage }) => {
     await expect(heroPage.alanRepoButton).toBeVisible();
-  });
+  })
 })
