@@ -3,8 +3,9 @@ on:
   push:
     branches: [ "*" ]
     paths-ignore:
-      - '.claude/**'
-      - '**.md'
+      - ".claude/**"
+      - "**.md"
+      - "docs/**"
 
 jobs:
   install-dependencies:
@@ -14,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
@@ -26,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
@@ -42,7 +43,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
@@ -58,7 +59,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
@@ -81,7 +82,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24.15.0
-          cache: 'yarn'
+          cache: "yarn"
       - name: Set environment variables
         run: mv .env.example .env
       - name: Install dependencies
