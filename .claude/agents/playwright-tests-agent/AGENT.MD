@@ -4,7 +4,7 @@ description: "Use proactively. Generates Playwright E2E test files from test sce
 tools: Read, Edit, Write, Bash, Grep
 disallowedTools: Notebook
 model: claude-sonnet-4-6
-permissionMode: default
+permissionMode: acceptEdits
 maxTurns: 20
 effort: high
 memory: project
