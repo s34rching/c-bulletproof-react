@@ -1,8 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import 'dotenv/config';
 
-const PORT = 3000;
-
 export default defineConfig({
   testDir: './testing/e2e',
   /* Run tests in files in parallel */
@@ -34,12 +32,4 @@ export default defineConfig({
       },
     },
   ],
-
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: `yarn dev --port ${PORT}`,
-    timeout: 10 * 1000,
-    port: PORT,
-    reuseExistingServer: !process.env.CI,
-  },
 });

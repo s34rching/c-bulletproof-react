@@ -1,0 +1,109 @@
+name: Comprehensive CI Workflow
+on:
+  push:
+    branches: [ "*" ]
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+  unit-tests:
+    needs: [install-dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Set environment variables
+        run: mv .env.example .env
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run unit tests
+        run: yarn test-unit
+
+  component-integration-tests:
+    needs: [ install-dependencies ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Set environment variables
+        run: mv .env.example .env
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run unit tests
+        run: yarn test-integration
+
+  api-tests:
+    needs: [install-dependencies, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Set environment variables
+        run: mv .env.example .env
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Start API server
+        run: yarn run-mock-server &
+      - name: Wait for server to be ready
+        run: |
+          echo "Waiting for server on port 8080..."
+          npx wait-on http://localhost:8080/api/health --timeout 60000
+      - name: Run API tests
+        run: yarn test-api
+
+  e2e-tests:
+    timeout-minutes: 60
+    needs: [ install-dependencies, unit-tests, api-tests ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.15.0
+          cache: 'yarn'
+      - name: Set environment variables
+        run: mv .env.example .env
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Build app
+        run: yarn build
+      - name: Start API server
+        run: yarn run-mock-server &
+      - name: Wait for API server to be ready
+        run: |
+          echo "Waiting for server on port 8080..."
+          npx wait-on http://localhost:8080/api/health --timeout 60000
+      - name: Start App frontend
+        run: yarn start &
+      - name: Wait for App frontend to be ready
+        run: |
+          echo "Waiting for app on port 3000..."
+          npx wait-on http://localhost:3000 --timeout 60000
+      - name: Install Playwright browser
+        run: npx playwright install chromium
+      - name: Run e2e tests
+        run: yarn test-e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
