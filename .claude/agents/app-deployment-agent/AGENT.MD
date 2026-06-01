@@ -131,4 +131,3 @@ bash ".claude/agents/app-deployment-agent/check-port.sh" <NEXT_PUBLIC_APP_PORT>
 - Run servers as background processes — do not block waiting for them to exit
 - Always use relative paths from the project root — the Bash tool's working directory is the project root
 - Substitute real port values read from `.env` in every notification, `check-port.sh`, and `kill-port.sh` invocation
-
