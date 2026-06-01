@@ -52,7 +52,7 @@ jobs:
         run: yarn test-integration
 
   api-tests:
-    needs: [install-dependencies, unit-tests]
+    needs: [install-dependencies, unit-tests, component-integration-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
