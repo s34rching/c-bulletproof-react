@@ -2,6 +2,9 @@ name: Comprehensive CI Workflow
 on:
   push:
     branches: [ "*" ]
+    paths-ignore:
+      - '.claude/**'
+      - '**.md'
 
 jobs:
   install-dependencies:
