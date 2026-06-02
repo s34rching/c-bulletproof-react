@@ -7,7 +7,7 @@ test.describe('"Hero" page', () => {
 
   test('user should be able to open auth page', async ({ heroPage }) => {
     await heroPage.getStartedButton.click();
-    await heroPage.waitUrlContains(/\/auth\/login1$/);
+    await heroPage.waitUrlContains(/\/auth\/login$/);
     await expect(heroPage.getStartedButton).toBeHidden();
   })
 
