@@ -6,13 +6,10 @@ on:
       - ".claude/**"
       - "**.md"
       - "docs/**"
-  pull_request_review:
-    types:
-      - submitted
+  workflow_dispatch:
 
 jobs:
   cli-checks:
-    if: github.event_name == 'push' || github.event.review.state == 'approved'
     uses: ./.github/workflows/unit-tests-workflow-ci.yml
 
   api-tests:
