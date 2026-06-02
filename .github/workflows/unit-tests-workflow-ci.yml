@@ -1,7 +1,8 @@
 name: Unit Tests CI Workflow
 on:
   push:
-    branches: [ "*" ]
+    branches-ignore:
+      - "master"
     paths-ignore:
       - ".claude/**"
       - "**.md"
