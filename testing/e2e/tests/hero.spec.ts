@@ -15,4 +15,3 @@ test.describe('"Hero" page', () => {
     await expect(heroPage.alanRepoButton).toBeVisible();
   })
 })
-
