@@ -1,61 +1,24 @@
 name: Comprehensive CI Workflow
 on:
   push:
-    branches: [ "*" ]
+    branches: [ "master" ]
     paths-ignore:
       - ".claude/**"
       - "**.md"
       - "docs/**"
+  pull_request_review:
+    types:
+      - submitted
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 jobs:
-  install-dependencies:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 24.15.0
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-
-  unit-tests:
-    needs: [install-dependencies]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 24.15.0
-          cache: "yarn"
-      - name: Set environment variables
-        run: mv .env.example .env
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Run unit tests
-        run: yarn test-unit
-
-  component-integration-tests:
-    needs: [ install-dependencies ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 24.15.0
-          cache: "yarn"
-      - name: Set environment variables
-        run: mv .env.example .env
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Run unit tests
-        run: yarn test-integration
+  cli-checks:
+    uses: ./.github/workflows/unit-tests-workflow-ci.yml
 
   api-tests:
-    needs: [install-dependencies, unit-tests, component-integration-tests]
+    needs: [cli-checks]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -78,7 +41,7 @@ jobs:
 
   e2e-tests:
     timeout-minutes: 60
-    needs: [ install-dependencies, unit-tests, api-tests ]
+    needs: [ cli-checks, api-tests ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
