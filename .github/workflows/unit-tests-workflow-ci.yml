@@ -9,7 +9,7 @@ on:
       - "docs/**"
   workflow_call:
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.event_name == 'workflow_call' && github.run_id || format('{0}-{1}', github.workflow, github.ref) }}
   cancel-in-progress: true
 permissions:
   contents: read
