@@ -12,6 +12,7 @@ on:
 
 jobs:
   cli-checks:
+    if: github.event_name == 'push' || github.event.review.state == 'approved'
     uses: ./.github/workflows/unit-tests-workflow-ci.yml
 
   api-tests:
