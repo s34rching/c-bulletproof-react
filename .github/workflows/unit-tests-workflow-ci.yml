@@ -10,7 +10,7 @@ on:
   workflow_call:
 concurrency:
   group: ${{ github.event_name == 'workflow_call' && github.run_id || format('{0}-{1}', github.workflow, github.ref) }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name != 'workflow_call' }}
 permissions:
   contents: read
 
