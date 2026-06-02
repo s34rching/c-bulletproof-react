@@ -1,15 +1,13 @@
 name: Unit Tests CI Workflow
 on:
   push:
-    branches: [ "*" ]
+    branches-ignore:
+      - "master"
     paths-ignore:
       - ".claude/**"
       - "**.md"
       - "docs/**"
   workflow_call:
-concurrency:
-  group: ${{ github.event_name == 'workflow_call' && github.run_id || format('{0}-{1}', github.workflow, github.ref) }}
-  cancel-in-progress: ${{ github.event_name != 'workflow_call' }}
 permissions:
   contents: read
 
