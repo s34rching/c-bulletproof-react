@@ -17,6 +17,7 @@ Project-level subagents are defined in `.claude/agents/`. Always delegate to the
 | User asks to launch the API server for API testing                  | `app-deployment-agent`                                                   |
 | User asks to stop or kill the app or frontend                       | `app-deployment-agent`                                                   |
 | User asks to stop or kill the API server                            | `app-deployment-agent`                                                   |
+| User asks to create a ticket in Notion                              | `notion-tickets-agent`                                                   |
 
 ### Rules
 
@@ -26,5 +27,6 @@ Project-level subagents are defined in `.claude/agents/`. Always delegate to the
 - Never write to the Google Drive Specs spreadsheet yourself. Always delegate to `spec-storage-agent`.
 - Never write Playwright E2E tests yourself. Always delegate to `playwright-tests-agent`.
 - Never deploy or start the app yourself. Always delegate to `app-deployment-agent`.
+- Never create Notion tickets yourself. Always delegate to `notion-tickets-agent`.
 - Follow the chain: `spec-analyzer-agent` → `test-generator-agent` → `spec-storage-agent` (save) → `playwright-tests-agent` → `app-deployment-agent` (deploy).
 - If a ticket number is provided, pass it directly to the agent — do not look it up first.
