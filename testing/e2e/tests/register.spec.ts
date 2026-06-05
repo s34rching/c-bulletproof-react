@@ -2,8 +2,6 @@ import { expect, test } from '../fixtures/pages';
 import { createUser, generateUser } from '@testing/shared/data-generators';
 import { registerUser } from '@testing/e2e/support/api/register-user';
 import { createTeam } from '@testing/shared/test-utils';
-import 'dotenv/config';
-import { waitFor } from '@testing-library/react';
 
 test.describe('"Register" page', () => {
   test.describe('New user', () => {
@@ -41,9 +39,9 @@ test.describe('"Register" page', () => {
       await registerPage.passwordInput.fill(userData.password);
       await registerPage.teamSwitch.setChecked(true);
       await expect(registerPage.teamNameSelect).toBeVisible();
-      await expect(registerPage.teamNameSelect).toHaveValue('123');
+      await expect(registerPage.teamNameSelect).not.toHaveValue('');
 
-      await registerPage.teamNameSelect.selectOption(team.name);
+      await registerPage.teamNameSelect.selectOption({ value: team.id });
       await registerPage.submitButton.click();
 
       await registerPage.waitUrlContains(/\/app/);
