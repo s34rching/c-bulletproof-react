@@ -41,7 +41,7 @@ test.describe('"Register" page', () => {
       await registerPage.passwordInput.fill(userData.password);
       await registerPage.teamSwitch.setChecked(true);
       await expect(registerPage.teamNameSelect).toBeVisible();
-      await expect(registerPage.teamNameSelect).not.toHaveValue('');
+      await expect(registerPage.teamNameSelect).not.toHaveValue('123');
 
       await registerPage.teamNameSelect.selectOption(team.name);
       await registerPage.submitButton.click();
