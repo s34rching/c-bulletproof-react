@@ -1,7 +1,7 @@
 import { expect, test } from '../fixtures/pages';
 import { createUser, generateUser } from '@testing/shared/data-generators';
 import { registerUser } from '@testing/e2e/support/api/register-user';
-import { createTeam } from '@testing/shared/test-utils';
+import { createTeamViaApi } from '@testing/e2e/support/api/create-team';
 
 test.describe('"Register" page', () => {
   test.describe('New user', () => {
@@ -30,7 +30,7 @@ test.describe('"Register" page', () => {
     test('TC-E-004: Selecting a team from the dropdown and submitting valid data registers the user under the selected team', async ({
       registerPage,
     }) => {
-      const team = await createTeam({id: userData.teamId});
+      const team = await createTeamViaApi(userData.teamName);
       await registerPage.open('/auth/register');
 
       await registerPage.firstNameInput.fill(userData.firstName);
@@ -41,7 +41,7 @@ test.describe('"Register" page', () => {
       await expect(registerPage.teamNameSelect).toBeVisible();
       await expect(registerPage.teamNameSelect).not.toHaveValue('');
 
-      await registerPage.teamNameSelect.selectOption({ value: team.id });
+      await registerPage.teamNameSelect.selectOption({ label: team.name });
       await registerPage.submitButton.click();
 
       await registerPage.waitUrlContains(/\/app/);
