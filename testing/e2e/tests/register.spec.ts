@@ -30,10 +30,6 @@ test.describe('"Register" page', () => {
     test('TC-E-004: Selecting a team from the dropdown and submitting valid data registers the user under the selected team', async ({
       registerPage,
     }) => {
-      const teamsRequest = registerPage.page.waitForRequest(
-        `${process.env.NEXT_PUBLIC_URL}/api/teams`,
-      );
-
       const team = await createTeam({id: userData.teamId});
       await registerPage.open('/auth/register');
 
@@ -41,6 +37,10 @@ test.describe('"Register" page', () => {
       await registerPage.lastNameInput.fill(userData.lastName);
       await registerPage.emailInput.fill(userData.email);
       await registerPage.passwordInput.fill(userData.password);
+
+      const teamsRequest = registerPage.page.waitForRequest(
+        `${process.env.NEXT_PUBLIC_URL}/api/teams`,
+      );
       await registerPage.teamSwitch.setChecked(true);
       await teamsRequest;
 
