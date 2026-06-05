@@ -8,6 +8,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
+  outputDir: 'test-results',
   use: {
     baseURL: process.env.NEXT_PUBLIC_URL,
     screenshot: 'only-on-failure',
