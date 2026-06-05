@@ -2,6 +2,7 @@ import { expect, test } from '../fixtures/pages';
 import { createUser, generateUser } from '@testing/shared/data-generators';
 import { registerUser } from '@testing/e2e/support/api/register-user';
 import { createTeam } from '@testing/shared/test-utils';
+import 'dotenv/config';
 
 test.describe('"Register" page', () => {
   test.describe('New user', () => {
