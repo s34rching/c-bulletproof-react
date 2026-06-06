@@ -74,7 +74,7 @@ const loginWithEmailAndPassword = (data: LoginInput): Promise<AuthResponse> => {
 
 export const registerInputSchema = z
   .object({
-    email: z.string().min(1, 'Required'),
+    email: z.string().min(1, 'Required').email('Invalid email'),
     firstName: z.string().min(1, 'Required'),
     lastName: z.string().min(1, 'Required'),
     password: z.string().min(5, 'Required'),
