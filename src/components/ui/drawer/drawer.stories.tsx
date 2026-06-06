@@ -43,9 +43,7 @@ const DemoDrawer = () => {
         <div className="flex flex-col">
           <DrawerHeader>
             <DrawerTitle>Drawer Header</DrawerTitle>
-            <DrawerDescription>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </DrawerDescription>
+            <DrawerDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</DrawerDescription>
           </DrawerHeader>
           <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
         </div>

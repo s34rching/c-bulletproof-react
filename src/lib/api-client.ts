@@ -11,20 +11,13 @@ type RequestOptions = {
   next?: NextFetchRequestConfig;
 };
 
-function buildUrlWithParams(
-  url: string,
-  params?: RequestOptions['params'],
-): string {
+function buildUrlWithParams(url: string, params?: RequestOptions['params']): string {
   if (!params) return url;
   const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(
-      ([, value]) => value !== undefined && value !== null,
-    ),
+    Object.entries(params).filter(([, value]) => value !== undefined && value !== null),
   );
   if (Object.keys(filteredParams).length === 0) return url;
-  const queryString = new URLSearchParams(
-    filteredParams as Record<string, string>,
-  ).toString();
+  const queryString = new URLSearchParams(filteredParams as Record<string, string>).toString();
   return `${url}?${queryString}`;
 }
 
@@ -47,19 +40,8 @@ export function getServerCookies() {
   });
 }
 
-async function fetchApi<T>(
-  url: string,
-  options: RequestOptions = {},
-): Promise<T> {
-  const {
-    method = 'GET',
-    headers = {},
-    body,
-    cookie,
-    params,
-    cache = 'no-store',
-    next,
-  } = options;
+async function fetchApi<T>(url: string, options: RequestOptions = {}): Promise<T> {
+  const { method = 'GET', headers = {}, body, cookie, params, cache = 'no-store', next } = options;
 
   // Get cookies from the request when running on server
   let cookieHeader = cookie;

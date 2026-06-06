@@ -14,11 +14,7 @@ export const Discussion = ({ discussionId }: { discussionId: string }) => {
     <ContentLayout title={discussion?.data?.data?.title}>
       <DiscussionView discussionId={discussionId} />
       <div className="mt-8">
-        <ErrorBoundary
-          fallback={
-            <div>Failed to load comments. Try to refresh the page.</div>
-          }
-        >
+        <ErrorBoundary fallback={<div>Failed to load comments. Try to refresh the page.</div>}>
           <Comments discussionId={discussionId} />
         </ErrorBoundary>
       </div>

@@ -42,11 +42,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               registration={register('password')}
             />
             <div>
-              <Button
-                isLoading={login.isPending}
-                type="submit"
-                className="w-full"
-              >
+              <Button isLoading={login.isPending} type="submit" className="w-full">
                 Log in
               </Button>
             </div>

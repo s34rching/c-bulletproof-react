@@ -10,11 +10,7 @@ export type LinkProps = {
 
 export const Link = ({ className, children, href, ...props }: LinkProps) => {
   return (
-    <NextLink
-      href={href}
-      className={cn('text-slate-600 hover:text-slate-900', className)}
-      {...props}
-    >
+    <NextLink href={href} className={cn('text-slate-600 hover:text-slate-900', className)} {...props}>
       {children}
     </NextLink>
   );

@@ -14,9 +14,7 @@ test.describe('"Login" page', () => {
       await loginPage.open('/auth/login');
     });
 
-    test('TC-001: User should be able to login with valid credentials', async ({
-      loginPage,
-    }) => {
+    test('TC-001: User should be able to login with valid credentials', async ({ loginPage }) => {
       await loginPage.emailInput.fill(userData.email);
       await loginPage.passwordInput.fill(userData.password);
       await loginPage.loginButton.click();
@@ -25,9 +23,7 @@ test.describe('"Login" page', () => {
       await expect(loginPage.emailInput).toBeHidden();
     });
 
-    test('TC-018: User should be able to submit login with "Enter"', async ({
-      loginPage,
-    }) => {
+    test('TC-018: User should be able to submit login with "Enter"', async ({ loginPage }) => {
       await loginPage.emailInput.fill(userData.email);
       await loginPage.passwordInput.fill(userData.password);
       await loginPage.passwordInput.press('Enter');
@@ -36,25 +32,19 @@ test.describe('"Login" page', () => {
       await expect(loginPage.emailInput).toBeHidden();
     });
 
-    test('TC-009: User should NOT be able to login with wrong password', async ({
-      loginPage,
-    }) => {
+    test('TC-009: User should NOT be able to login with wrong password', async ({ loginPage }) => {
       const { password: randomPassword } = createUser();
 
       await loginPage.emailInput.fill(userData.email);
       await loginPage.passwordInput.fill(randomPassword);
       await loginPage.loginButton.click();
       await expect(loginPage.eventAlert).toBeVisible();
-      await expect(loginPage.eventAlert).toContainText(
-        'Invalid username or password',
-      );
+      await expect(loginPage.eventAlert).toContainText('Invalid username or password');
     });
-  })
+  });
 
   test.describe('Validations', () => {
-    test('TC-005: User should see validation error while submitting empty email', async ({
-      loginPage,
-    }) => {
+    test('TC-005: User should see validation error while submitting empty email', async ({ loginPage }) => {
       const { password } = createUser();
 
       await loginPage.open('/auth/login');
@@ -64,9 +54,7 @@ test.describe('"Login" page', () => {
       await expect(loginPage.emailInputAlert).toContainText('Required');
     });
 
-    test('TC-006: User should see validation error while submitting email in wrong format', async ({
-      loginPage,
-    }) => {
+    test('TC-006: User should see validation error while submitting email in wrong format', async ({ loginPage }) => {
       const { password } = createUser();
       const withoutAtEmail = 'some.address';
 
@@ -75,16 +63,12 @@ test.describe('"Login" page', () => {
       await loginPage.passwordInput.fill(password);
       await loginPage.loginButton.click();
 
-      const message = await loginPage.emailInput.evaluate(
-        (el: HTMLInputElement) => el.validationMessage,
-      );
+      const message = await loginPage.emailInput.evaluate((el: HTMLInputElement) => el.validationMessage);
 
       expect(message).toContain(withoutAtEmail);
     });
 
-    test('TC-007: User should see validation error while submitting empty password', async ({
-      loginPage,
-    }) => {
+    test('TC-007: User should see validation error while submitting empty password', async ({ loginPage }) => {
       const { email } = createUser();
 
       await loginPage.open('/auth/login');
@@ -94,9 +78,7 @@ test.describe('"Login" page', () => {
       await expect(loginPage.passwordInputAlert).toContainText('Required');
     });
 
-    test('TC-010: User should NOT be able to login with non-existing email', async ({
-      loginPage,
-    }) => {
+    test('TC-010: User should NOT be able to login with non-existing email', async ({ loginPage }) => {
       const { email: nonExistingEmail, password } = createUser();
 
       await loginPage.open('/auth/login');
@@ -104,9 +86,7 @@ test.describe('"Login" page', () => {
       await loginPage.passwordInput.fill(password);
       await loginPage.loginButton.click();
       await expect(loginPage.eventAlert).toBeVisible();
-      await expect(loginPage.eventAlert).toContainText(
-        'Invalid username or password',
-      );
+      await expect(loginPage.eventAlert).toContainText('Invalid username or password');
     });
   });
 

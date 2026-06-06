@@ -14,11 +14,7 @@ export const createCommentInputSchema = z.object({
 
 export type CreateCommentInput = z.infer<typeof createCommentInputSchema>;
 
-export const createComment = ({
-  data,
-}: {
-  data: CreateCommentInput;
-}): Promise<Comment> => {
+export const createComment = ({ data }: { data: CreateCommentInput }): Promise<Comment> => {
   return api.post('/comments', data);
 };
 
@@ -27,10 +23,7 @@ type UseCreateCommentOptions = {
   mutationConfig?: MutationConfig<typeof createComment>;
 };
 
-export const useCreateComment = ({
-  mutationConfig,
-  discussionId,
-}: UseCreateCommentOptions) => {
+export const useCreateComment = ({ mutationConfig, discussionId }: UseCreateCommentOptions) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};

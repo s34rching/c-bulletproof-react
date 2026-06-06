@@ -19,7 +19,8 @@
     "generate": "plop",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "run-mock-server": "tsx ./mock-server.ts"
+    "run-mock-server": "tsx ./mock-server.ts",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}' 'testing/**/*.{ts,tsx,js,jsx,json,css,md}'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

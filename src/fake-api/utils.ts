@@ -5,17 +5,13 @@ import { db } from './db';
 
 export const encode = (obj: any) => {
   const btoa =
-    typeof window === 'undefined'
-      ? (str: string) => Buffer.from(str, 'binary').toString('base64')
-      : window.btoa;
+    typeof window === 'undefined' ? (str: string) => Buffer.from(str, 'binary').toString('base64') : window.btoa;
   return btoa(JSON.stringify(obj));
 };
 
 export const decode = (str: string) => {
   const atob =
-    typeof window === 'undefined'
-      ? (str: string) => Buffer.from(str, 'base64').toString('binary')
-      : window.atob;
+    typeof window === 'undefined' ? (str: string) => Buffer.from(str, 'base64').toString('binary') : window.atob;
   return JSON.parse(atob(str));
 };
 
@@ -30,9 +26,7 @@ export const hash = (str: string) => {
 };
 
 export const networkDelay = () => {
-  const delayTime = process.env.TEST
-    ? 200
-    : Math.floor(Math.random() * 700) + 300;
+  const delayTime = process.env.TEST ? 200 : Math.floor(Math.random() * 700) + 300;
   return delay(delayTime);
 };
 
@@ -47,16 +41,9 @@ const omit = <T extends object>(obj: T, keys: string[]): T => {
   return result;
 };
 
-export const sanitizeUser = <O extends object>(user: O) =>
-  omit<O>(user, ['password', 'iat']);
+export const sanitizeUser = <O extends object>(user: O) => omit<O>(user, ['password', 'iat']);
 
-export function authenticate({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) {
+export function authenticate({ email, password }: { email: string; password: string }) {
   const user = db.user.findFirst({
     where: {
       email: {

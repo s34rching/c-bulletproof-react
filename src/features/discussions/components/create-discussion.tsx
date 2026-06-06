@@ -3,22 +3,12 @@
 import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormDrawer,
-  Input,
-  Label,
-  Switch,
-  Textarea,
-} from '@/components/ui/form';
+import { Form, FormDrawer, Input, Label, Switch, Textarea } from '@/components/ui/form';
 import { useNotifications } from '@/components/ui/notifications';
 import { useUser } from '@/lib/auth';
 import { canCreateDiscussion } from '@/lib/authorization';
 
-import {
-  createDiscussionInputSchema,
-  useCreateDiscussion,
-} from '../api/create-discussion';
+import { createDiscussionInputSchema, useCreateDiscussion } from '../api/create-discussion';
 
 export const CreateDiscussion = () => {
   const { addNotification } = useNotifications();
@@ -49,12 +39,7 @@ export const CreateDiscussion = () => {
       }
       title="Create Discussion"
       submitButton={
-        <Button
-          form="create-discussion"
-          type="submit"
-          size="sm"
-          isLoading={createDiscussionMutation.isPending}
-        >
+        <Button form="create-discussion" type="submit" size="sm" isLoading={createDiscussionMutation.isPending}>
           Submit
         </Button>
       }
@@ -75,17 +60,9 @@ export const CreateDiscussion = () => {
       >
         {({ register, formState, setValue, watch }) => (
           <>
-            <Input
-              label="Title"
-              error={formState.errors['title']}
-              registration={register('title')}
-            />
+            <Input label="Title" error={formState.errors['title']} registration={register('title')} />
 
-            <Textarea
-              label="Body"
-              error={formState.errors['body']}
-              registration={register('body')}
-            />
+            <Textarea label="Body" error={formState.errors['body']} registration={register('body')} />
 
             <div className="flex items-center space-x-2">
               <Switch

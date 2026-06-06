@@ -48,16 +48,10 @@ export const WithCheckboxItems = () => {
         <Button>Open Menu</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuCheckboxItem
-          checked={checked}
-          onCheckedChange={setChecked}
-        >
+        <DropdownMenuCheckboxItem checked={checked} onCheckedChange={setChecked}>
           Option One
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={checked2}
-          onCheckedChange={setChecked2}
-        >
+        <DropdownMenuCheckboxItem checked={checked2} onCheckedChange={setChecked2}>
           Option Two
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
@@ -79,9 +73,7 @@ export const WithRadioItems = () => {
         <DropdownMenuRadioGroup value={value} onValueChange={setValue}>
           <DropdownMenuRadioItem value="one">Option One</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="two">Option Two</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="three">
-            Option Three
-          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="three">Option Three</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

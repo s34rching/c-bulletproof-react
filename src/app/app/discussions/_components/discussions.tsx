@@ -19,9 +19,7 @@ export const Discussions = () => {
         <DiscussionsList
           onDiscussionPrefetch={(id) => {
             // Prefetch the comments data when the user hovers over the link in the list
-            queryClient.prefetchInfiniteQuery(
-              getInfiniteCommentsQueryOptions(id),
-            );
+            queryClient.prefetchInfiniteQuery(getInfiniteCommentsQueryOptions(id));
           }}
         />
       </div>

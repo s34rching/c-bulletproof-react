@@ -1,21 +1,10 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import { Discussion } from '@/app/app/discussions/[discussionId]/_components/discussion';
 import { getInfiniteCommentsQueryOptions } from '@/features/comments/api/get-comments';
-import {
-  getDiscussion,
-  getDiscussionQueryOptions,
-} from '@/features/discussions/api/get-discussion';
+import { getDiscussion, getDiscussionQueryOptions } from '@/features/discussions/api/get-discussion';
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: Promise<{ discussionId: string }>;
-}) => {
+export const generateMetadata = async ({ params }: { params: Promise<{ discussionId: string }> }) => {
   const discussionId = (await params).discussionId;
 
   const discussion = await getDiscussion({ discussionId });
@@ -31,9 +20,7 @@ const preloadData = async (discussionId: string) => {
 
   await Promise.all([
     queryClient.prefetchQuery(getDiscussionQueryOptions(discussionId)),
-    queryClient.prefetchInfiniteQuery(
-      getInfiniteCommentsQueryOptions(discussionId),
-    ),
+    queryClient.prefetchInfiniteQuery(getInfiniteCommentsQueryOptions(discussionId)),
   ]);
 
   return {

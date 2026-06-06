@@ -15,11 +15,7 @@ export const createDiscussionInputSchema = z.object({
 
 export type CreateDiscussionInput = z.infer<typeof createDiscussionInputSchema>;
 
-export const createDiscussion = ({
-  data,
-}: {
-  data: CreateDiscussionInput;
-}): Promise<Discussion> => {
+export const createDiscussion = ({ data }: { data: CreateDiscussionInput }): Promise<Discussion> => {
   return api.post(`/discussions`, data);
 };
 
@@ -27,9 +23,7 @@ type UseCreateDiscussionOptions = {
   mutationConfig?: MutationConfig<typeof createDiscussion>;
 };
 
-export const useCreateDiscussion = ({
-  mutationConfig,
-}: UseCreateDiscussionOptions = {}) => {
+export const useCreateDiscussion = ({ mutationConfig }: UseCreateDiscussionOptions = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
