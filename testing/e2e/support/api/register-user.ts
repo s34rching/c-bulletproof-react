@@ -17,7 +17,7 @@ export const registerUser = async (
       teamId: null,
     },
     {
-      timeout: 5000
+      timeout: 5000,
     },
   );
 

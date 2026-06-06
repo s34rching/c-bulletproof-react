@@ -1,4 +1,8 @@
-import { render as rtlRender, waitForElementToBeRemoved, screen } from '@testing-library/react';
+import {
+  render as rtlRender,
+  waitForElementToBeRemoved,
+  screen,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { AppProvider } from '@/app/provider';
