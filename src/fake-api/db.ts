@@ -62,9 +62,7 @@ export const loadDb = async () => {
     }
   }
   // If we are running in a browser environment
-  return Object.assign(
-    JSON.parse(window.localStorage.getItem('msw-db') || '{}'),
-  );
+  return Object.assign(JSON.parse(window.localStorage.getItem('msw-db') || '{}'));
 };
 
 export const storeDb = async (data: string) => {

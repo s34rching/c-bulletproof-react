@@ -9,9 +9,7 @@ import {
   createComment as generateComment,
 } from '@testing/shared/data-generators';
 
-export const createTeam = async (
-  teamProperties?: any,
-): Promise<ReturnType<typeof generateTeam>> => {
+export const createTeam = async (teamProperties?: any): Promise<ReturnType<typeof generateTeam>> => {
   const team = generateTeam(teamProperties) as any;
   return db.team.create(team);
 };

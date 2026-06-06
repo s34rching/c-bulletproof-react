@@ -1,9 +1,4 @@
-import {
-  createComment,
-  createDiscussion,
-  createTeam,
-  createUser,
-} from '@testing/shared/test-utils';
+import { createComment, createDiscussion, createTeam, createUser } from '@testing/shared/test-utils';
 
 export type DiscussionType = 'private' | 'public';
 
@@ -38,10 +33,7 @@ export const createTeamMember = async (userData: any): Promise<TeamMember> => {
   };
 };
 
-export const createAuthoredTeamDiscussion = async (
-  userData: any,
-  type: DiscussionType,
-): Promise<TeamDiscussion> => {
+export const createAuthoredTeamDiscussion = async (userData: any, type: DiscussionType): Promise<TeamDiscussion> => {
   const teamMember = await createTeamMember(userData);
 
   const discussion = await createDiscussion({
@@ -64,10 +56,7 @@ export const createTeamMemberComment = async (
   discussionType: DiscussionType,
   commentBody?: string,
 ): Promise<TeamMemberComment> => {
-  const discussion = await createAuthoredTeamDiscussion(
-    userData,
-    discussionType,
-  );
+  const discussion = await createAuthoredTeamDiscussion(userData, discussionType);
 
   const comment = await createComment({
     discussionId: discussion.discussionId,

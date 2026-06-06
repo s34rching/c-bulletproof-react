@@ -22,9 +22,7 @@ type UseUpdateProfileOptions = {
   mutationConfig?: MutationConfig<typeof updateProfile>;
 };
 
-export const useUpdateProfile = ({
-  mutationConfig,
-}: UseUpdateProfileOptions = {}) => {
+export const useUpdateProfile = ({ mutationConfig }: UseUpdateProfileOptions = {}) => {
   const { refetch: refetchUser } = useUser();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};

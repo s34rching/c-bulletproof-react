@@ -5,13 +5,9 @@ import { AppProvider } from '@/app/provider';
 import { createUser, loginAsUser } from '@testing/shared/test-utils';
 
 export const waitForLoadingToFinish = () =>
-  waitForElementToBeRemoved(
-    () => [
-      ...screen.queryAllByTestId(/loading/i),
-      ...screen.queryAllByText(/loading/i),
-    ],
-    { timeout: 4000 },
-  );
+  waitForElementToBeRemoved(() => [...screen.queryAllByTestId(/loading/i), ...screen.queryAllByText(/loading/i)], {
+    timeout: 4000,
+  });
 
 const initializeUser = async (user: any) => {
   if (typeof user === 'undefined') {
@@ -23,10 +19,7 @@ const initializeUser = async (user: any) => {
   return null;
 };
 
-export const renderApp = async (
-  ui: any,
-  { user, ...renderOptions }: Record<string, any> = {},
-) => {
+export const renderApp = async (ui: any, { user, ...renderOptions }: Record<string, any> = {}) => {
   const initializedUser = await initializeUser(user);
 
   return {

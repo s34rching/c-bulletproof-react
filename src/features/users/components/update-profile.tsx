@@ -7,10 +7,7 @@ import { Form, FormDrawer, Input, Textarea } from '@/components/ui/form';
 import { useNotifications } from '@/components/ui/notifications';
 import { useUser } from '@/lib/auth';
 
-import {
-  updateProfileInputSchema,
-  useUpdateProfile,
-} from '../api/update-profile';
+import { updateProfileInputSchema, useUpdateProfile } from '../api/update-profile';
 
 export const UpdateProfile = () => {
   const user = useUser();
@@ -36,12 +33,7 @@ export const UpdateProfile = () => {
       }
       title="Update Profile"
       submitButton={
-        <Button
-          form="update-profile"
-          type="submit"
-          size="sm"
-          isLoading={updateProfileMutation.isPending}
-        >
+        <Button form="update-profile" type="submit" size="sm" isLoading={updateProfileMutation.isPending}>
           Submit
         </Button>
       }
@@ -63,16 +55,8 @@ export const UpdateProfile = () => {
       >
         {({ register, formState }) => (
           <>
-            <Input
-              label="First Name"
-              error={formState.errors['firstName']}
-              registration={register('firstName')}
-            />
-            <Input
-              label="Last Name"
-              error={formState.errors['lastName']}
-              registration={register('lastName')}
-            />
+            <Input label="First Name" error={formState.errors['firstName']} registration={register('firstName')} />
+            <Input label="Last Name" error={formState.errors['lastName']} registration={register('lastName')} />
             <Input
               label="Email Address"
               type="email"
@@ -80,11 +64,7 @@ export const UpdateProfile = () => {
               registration={register('email')}
             />
 
-            <Textarea
-              label="Bio"
-              error={formState.errors['bio']}
-              registration={register('bio')}
-            />
+            <Textarea label="Bio" error={formState.errors['bio']} registration={register('bio')} />
           </>
         )}
       </Form>

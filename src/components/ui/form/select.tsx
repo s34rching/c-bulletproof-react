@@ -20,8 +20,7 @@ type SelectFieldProps = FieldWrapperPassThroughProps & {
 };
 
 export const Select = (props: SelectFieldProps) => {
-  const { label, options, error, className, defaultValue, registration } =
-    props;
+  const { label, options, error, className, defaultValue, registration } = props;
   return (
     <FieldWrapper label={label} error={error}>
       <select

@@ -3,23 +3,13 @@
 import { Pen } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormDrawer,
-  Input,
-  Label,
-  Switch,
-  Textarea,
-} from '@/components/ui/form';
+import { Form, FormDrawer, Input, Label, Switch, Textarea } from '@/components/ui/form';
 import { useNotifications } from '@/components/ui/notifications';
 import { useUser } from '@/lib/auth';
 import { canUpdateDiscussion } from '@/lib/authorization';
 
 import { useDiscussion } from '../api/get-discussion';
-import {
-  updateDiscussionInputSchema,
-  useUpdateDiscussion,
-} from '../api/update-discussion';
+import { updateDiscussionInputSchema, useUpdateDiscussion } from '../api/update-discussion';
 
 type UpdateDiscussionProps = {
   discussionId: string;
@@ -57,12 +47,7 @@ export const UpdateDiscussion = ({ discussionId }: UpdateDiscussionProps) => {
       }
       title="Update Discussion"
       submitButton={
-        <Button
-          form="update-discussion"
-          type="submit"
-          size="sm"
-          isLoading={updateDiscussionMutation.isPending}
-        >
+        <Button form="update-discussion" type="submit" size="sm" isLoading={updateDiscussionMutation.isPending}>
           Submit
         </Button>
       }
@@ -86,16 +71,8 @@ export const UpdateDiscussion = ({ discussionId }: UpdateDiscussionProps) => {
       >
         {({ register, formState, setValue, watch }) => (
           <>
-            <Input
-              label="Title"
-              error={formState.errors['title']}
-              registration={register('title')}
-            />
-            <Textarea
-              label="Body"
-              error={formState.errors['body']}
-              registration={register('body')}
-            />
+            <Input label="Title" error={formState.errors['title']} registration={register('title')} />
+            <Textarea label="Body" error={formState.errors['body']} registration={register('body')} />
 
             <div className="flex items-center space-x-2">
               <Switch

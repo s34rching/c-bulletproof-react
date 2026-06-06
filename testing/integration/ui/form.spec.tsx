@@ -20,11 +20,7 @@ test('should render and submit a basic Form component', async () => {
     <Form onSubmit={handleSubmit} schema={schema} id="my-form">
       {({ register, formState }) => (
         <>
-          <Input
-            label="Title"
-            error={formState.errors['title']}
-            registration={register('title')}
-          />
+          <Input label="Title" error={formState.errors['title']} registration={register('title')} />
 
           <Button name="submit" type="submit" className="w-full">
             Submit
@@ -38,9 +34,7 @@ test('should render and submit a basic Form component', async () => {
 
   await userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-  await waitFor(() =>
-    expect(handleSubmit).toHaveBeenCalledWith(testData, expect.anything()),
-  );
+  await waitFor(() => expect(handleSubmit).toHaveBeenCalledWith(testData, expect.anything()));
 });
 
 test('should fail submission if validation fails', async () => {
@@ -50,11 +44,7 @@ test('should fail submission if validation fails', async () => {
     <Form onSubmit={handleSubmit} schema={schema} id="my-form">
       {({ register, formState }) => (
         <>
-          <Input
-            label="Title"
-            error={formState.errors['title']}
-            registration={register('title')}
-          />
+          <Input label="Title" error={formState.errors['title']} registration={register('title')} />
 
           <Button name="submit" type="submit" className="w-full">
             Submit

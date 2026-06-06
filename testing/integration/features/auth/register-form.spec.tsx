@@ -1,21 +1,15 @@
 import { RegisterForm } from '@/features/auth/components/register-form';
-import { createUser } from '@testing/shared/data-generators';
 import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
+import { createUser } from '@testing/shared/data-generators';
 
 test('should register new user and call onSuccess cb which should navigate the user to the app', async () => {
   const newUser = createUser({});
 
   const onSuccess = vi.fn();
 
-  await renderApp(
-    <RegisterForm
-      onSuccess={onSuccess}
-      chooseTeam={false}
-      setChooseTeam={() => {}}
-      teams={[]}
-    />,
-    { user: null },
-  );
+  await renderApp(<RegisterForm onSuccess={onSuccess} chooseTeam={false} setChooseTeam={() => {}} teams={[]} />, {
+    user: null,
+  });
 
   await userEvent.type(screen.getByLabelText(/first name/i), newUser.firstName);
   await userEvent.type(screen.getByLabelText(/last name/i), newUser.lastName);

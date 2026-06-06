@@ -28,9 +28,7 @@ test('should handle confirmation flow', async () => {
 
   await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
 
-  await waitFor(() =>
-    expect(screen.queryByText(titleText)).not.toBeInTheDocument(),
-  );
+  await waitFor(() => expect(screen.queryByText(titleText)).not.toBeInTheDocument());
 
   expect(screen.queryByText(bodyText)).not.toBeInTheDocument();
 });

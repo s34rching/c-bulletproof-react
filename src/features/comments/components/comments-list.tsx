@@ -57,9 +57,7 @@ export const CommentsList = ({ discussionId }: CommentsListProps) => {
           >
             <div className="flex justify-between">
               <div>
-                <span className="text-xs font-semibold">
-                  {formatDate(comment.createdAt)}
-                </span>
+                <span className="text-xs font-semibold">{formatDate(comment.createdAt)}</span>
                 {comment.author && (
                   <span className="text-xs font-bold">
                     {' '}
@@ -78,11 +76,7 @@ export const CommentsList = ({ discussionId }: CommentsListProps) => {
       {commentsQuery.hasNextPage && (
         <div className="flex items-center justify-center py-4">
           <Button onClick={() => commentsQuery.fetchNextPage()}>
-            {commentsQuery.isFetchingNextPage ? (
-              <Spinner />
-            ) : (
-              'Load More Comments'
-            )}
+            {commentsQuery.isFetchingNextPage ? <Spinner /> : 'Load More Comments'}
           </Button>
         </div>
       )}

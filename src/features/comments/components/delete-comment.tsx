@@ -34,11 +34,7 @@ export const DeleteComment = ({ id, discussionId }: DeleteCommentProps) => {
       title="Delete Comment"
       body="Are you sure you want to delete this comment?"
       triggerButton={
-        <Button
-          variant="destructive"
-          size="sm"
-          icon={<Trash className="size-4" />}
-        >
+        <Button variant="destructive" size="sm" icon={<Trash className="size-4" />}>
           Delete Comment
         </Button>
       }
