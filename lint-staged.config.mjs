@@ -8,8 +8,9 @@ const buildEslintCommand = (filenames) => {
 };
 
 const config = {
-  '{src,testing}/**/*.{ts,tsx,js,jsx,json,css,md}': ['prettier --write'],
-  '*.{ts,tsx}': [buildEslintCommand, "bash -c 'yarn check-types'"],
+  'src/**/*.{ts,tsx}': ['prettier --write', buildEslintCommand, "bash -c 'yarn check-types'"],
+  'testing/**/*.{ts,tsx}': ['prettier --write'],
+  '{src,testing}/**/*.{js,jsx,json,css,md}': ['prettier --write'],
 };
 
 export default config;
