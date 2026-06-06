@@ -4,13 +4,7 @@ import { HttpResponse, http } from 'msw';
 import { env } from '@/config/env';
 
 import { db, persistDb } from '../db';
-import {
-  authenticate,
-  hash,
-  requireAuth,
-  AUTH_COOKIE,
-  networkDelay,
-} from '../utils';
+import { authenticate, hash, requireAuth, AUTH_COOKIE, networkDelay } from '../utils';
 
 type RegisterBody = {
   firstName: string;
@@ -41,10 +35,7 @@ export const authHandlers = [
       });
 
       if (existingUser) {
-        return HttpResponse.json(
-          { message: 'The user already exists' },
-          { status: 400 },
-        );
+        return HttpResponse.json({ message: 'The user already exists' }, { status: 400 });
       }
 
       let teamId;
@@ -102,10 +93,7 @@ export const authHandlers = [
         },
       });
     } catch (error: any) {
-      return HttpResponse.json(
-        { message: error?.message || 'Server Error' },
-        { status: 500 },
-      );
+      return HttpResponse.json({ message: error?.message || 'Server Error' }, { status: 500 });
     }
   }),
 
@@ -126,10 +114,7 @@ export const authHandlers = [
         },
       });
     } catch (error: any) {
-      return HttpResponse.json(
-        { message: error?.message || 'Server Error' },
-        { status: 500 },
-      );
+      return HttpResponse.json({ message: error?.message || 'Server Error' }, { status: 500 });
     }
   }),
 
@@ -156,10 +141,7 @@ export const authHandlers = [
       const { user } = requireAuth(cookies);
       return HttpResponse.json({ data: user });
     } catch (error: any) {
-      return HttpResponse.json(
-        { message: error?.message || 'Server Error' },
-        { status: 500 },
-      );
+      return HttpResponse.json({ message: error?.message || 'Server Error' }, { status: 500 });
     }
   }),
 ];

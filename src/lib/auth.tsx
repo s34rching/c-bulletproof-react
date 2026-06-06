@@ -1,9 +1,4 @@
-import {
-  queryOptions,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
 
 import { AuthResponse, User } from '@/types/api';
@@ -100,8 +95,6 @@ export const registerInputSchema = z
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
 
-const registerWithEmailAndPassword = (
-  data: RegisterInput,
-): Promise<AuthResponse> => {
+const registerWithEmailAndPassword = (data: RegisterInput): Promise<AuthResponse> => {
   return api.post('/auth/register', data);
 };

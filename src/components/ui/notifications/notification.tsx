@@ -5,9 +5,7 @@ import { Info, CircleAlert, CircleX, CircleCheck } from 'lucide-react';
 const icons = {
   info: <Info className="size-6 text-blue-500" aria-hidden="true" />,
   success: <CircleCheck className="size-6 text-green-500" aria-hidden="true" />,
-  warning: (
-    <CircleAlert className="size-6 text-yellow-500" aria-hidden="true" />
-  ),
+  warning: <CircleAlert className="size-6 text-yellow-500" aria-hidden="true" />,
   error: <CircleX className="size-6 text-red-500" aria-hidden="true" />,
 };
 
@@ -21,10 +19,7 @@ export type NotificationProps = {
   onDismiss: (id: string) => void;
 };
 
-export const Notification = ({
-  notification: { id, type, title, message },
-  onDismiss,
-}: NotificationProps) => {
+export const Notification = ({ notification: { id, type, title, message }, onDismiss }: NotificationProps) => {
   return (
     <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
       <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5">

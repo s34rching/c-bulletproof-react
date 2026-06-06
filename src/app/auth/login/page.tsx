@@ -13,9 +13,7 @@ const LoginPage = () => {
   return (
     <LoginForm
       onSuccess={() =>
-        router.replace(
-          `${redirectTo ? `${decodeURIComponent(redirectTo)}` : paths.app.dashboard.getHref()}`,
-        )
+        router.replace(`${redirectTo ? `${decodeURIComponent(redirectTo)}` : paths.app.dashboard.getHref()}`)
       }
     />
   );

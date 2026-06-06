@@ -17,12 +17,7 @@ type RegisterFormProps = {
   teams?: Team[];
 };
 
-export const RegisterForm = ({
-  onSuccess,
-  chooseTeam,
-  setChooseTeam,
-  teams,
-}: RegisterFormProps) => {
+export const RegisterForm = ({ onSuccess, chooseTeam, setChooseTeam, teams }: RegisterFormProps) => {
   const registering = useRegister({ onSuccess });
   const searchParams = useSearchParams();
   const redirectTo = searchParams?.get('redirectTo');
@@ -96,11 +91,7 @@ export const RegisterForm = ({
               />
             )}
             <div>
-              <Button
-                isLoading={registering.isPending}
-                type="submit"
-                className="w-full"
-              >
+              <Button isLoading={registering.isPending} type="submit" className="w-full">
                 Register
               </Button>
             </div>

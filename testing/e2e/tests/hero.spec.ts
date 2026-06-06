@@ -11,9 +11,7 @@ test.describe('"Hero" page', () => {
     await expect(heroPage.getStartedButton).toBeHidden();
   });
 
-  test('user should be able to see author\'s "Github" profile', async ({
-    heroPage,
-  }) => {
+  test('user should be able to see author\'s "Github" profile', async ({ heroPage }) => {
     await expect(heroPage.alanRepoButton).toBeVisible();
   });
 });

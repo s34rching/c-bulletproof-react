@@ -1,10 +1,5 @@
 import { LoginForm } from '@/features/auth/components/login-form';
-import {
-  renderApp,
-  screen,
-  userEvent,
-  waitFor,
-} from '@testing/integration/render';
+import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
 import { createUser } from '@testing/shared/test-utils';
 
 test('should login new user and call onSuccess cb which should navigate the user to the app', async () => {

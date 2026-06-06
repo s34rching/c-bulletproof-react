@@ -5,11 +5,7 @@ import { MutationConfig } from '@/lib/react-query';
 
 import { getDiscussionsQueryOptions } from './get-discussions';
 
-export const deleteDiscussion = ({
-  discussionId,
-}: {
-  discussionId: string;
-}) => {
+export const deleteDiscussion = ({ discussionId }: { discussionId: string }) => {
   return api.delete(`/discussions/${discussionId}`);
 };
 
@@ -17,9 +13,7 @@ type UseDeleteDiscussionOptions = {
   mutationConfig?: MutationConfig<typeof deleteDiscussion>;
 };
 
-export const useDeleteDiscussion = ({
-  mutationConfig,
-}: UseDeleteDiscussionOptions = {}) => {
+export const useDeleteDiscussion = ({ mutationConfig }: UseDeleteDiscussionOptions = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};

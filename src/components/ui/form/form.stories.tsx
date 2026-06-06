@@ -24,11 +24,7 @@ const MyForm = ({ hideSubmit = false }: { hideSubmit?: boolean }) => {
     >
       {({ register, formState }) => (
         <>
-          <Input
-            label="Title"
-            error={formState.errors['title']}
-            registration={register('title')}
-          />
+          <Input label="Title" error={formState.errors['title']} registration={register('title')} />
           <Textarea
             label="Description"
             error={formState.errors['description']}

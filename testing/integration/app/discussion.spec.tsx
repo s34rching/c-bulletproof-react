@@ -2,14 +2,7 @@ import { useParams } from 'next/navigation';
 
 import { Discussion } from '@/app/app/discussions/[discussionId]/_components/discussion';
 import { createDiscussion, createUser } from '@testing/shared/test-utils';
-import {
-  renderApp,
-  screen,
-  userEvent,
-  waitFor,
-  waitForLoadingToFinish,
-  within,
-} from '@testing/integration/render';
+import { renderApp, screen, userEvent, waitFor, waitForLoadingToFinish, within } from '@testing/integration/render';
 
 vi.mock('next/navigation', async () => {
   const actual = await vi.importActual('next/navigation');
@@ -31,14 +24,11 @@ const renderDiscussion = async () => {
 
   vi.mocked(useParams).mockReturnValue({ discussionId: fakeDiscussion.id });
 
-  const utils = await renderApp(
-    <Discussion discussionId={fakeDiscussion.id} />,
-    {
-      user: fakeUser,
-      path: `/app/discussions/:discussionId`,
-      url: `/app/discussions/${fakeDiscussion.id}`,
-    },
-  );
+  const utils = await renderApp(<Discussion discussionId={fakeDiscussion.id} />, {
+    user: fakeUser,
+    path: `/app/discussions/:discussionId`,
+    url: `/app/discussions/${fakeDiscussion.id}`,
+  });
 
   await waitForLoadingToFinish();
 
@@ -62,9 +52,7 @@ test('should update discussion', async () => {
   const titleUpdate = '-Updated';
   const bodyUpdate = '-Updated';
 
-  await userEvent.click(
-    screen.getByRole('button', { name: /update discussion/i }),
-  );
+  await userEvent.click(screen.getByRole('button', { name: /update discussion/i }));
 
   const drawer = await screen.findByRole('dialog', {
     name: /update discussion/i,
@@ -87,9 +75,7 @@ test('should update discussion', async () => {
 
   await waitFor(() => expect(drawer).not.toBeInTheDocument());
 
-  expect(
-    await screen.findByRole('heading', { name: newTitle }),
-  ).toBeInTheDocument();
+  expect(await screen.findByRole('heading', { name: newTitle })).toBeInTheDocument();
   expect(await screen.findByText(newBody)).toBeInTheDocument();
 });
 
@@ -100,9 +86,7 @@ test(
 
     const comment = 'Hello World';
 
-    await userEvent.click(
-      screen.getByRole('button', { name: /create comment/i }),
-    );
+    await userEvent.click(screen.getByRole('button', { name: /create comment/i }));
 
     const drawer = await screen.findByRole('dialog', {
       name: /create comment/i,
@@ -126,8 +110,7 @@ test(
       name: 'comments',
     });
 
-    const commentElements =
-      await within(commentsList).findAllByRole('listitem');
+    const commentElements = await within(commentsList).findAllByRole('listitem');
 
     const commentElement = commentElements[0];
 
@@ -143,9 +126,7 @@ test(
       name: /delete comment/i,
     });
 
-    const confirmationDeleteButton = await within(
-      confirmationDialog,
-    ).findByRole('button', {
+    const confirmationDeleteButton = await within(confirmationDialog).findByRole('button', {
       name: /delete/i,
     });
 

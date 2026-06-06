@@ -8,12 +8,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import {
-  rtlRender,
-  screen,
-  userEvent,
-  waitFor,
-} from '@testing/integration/render';
+import { rtlRender, screen, userEvent, waitFor } from '@testing/integration/render';
 
 const openButtonText = 'Open Drawer';
 const titleText = 'Drawer Title';
@@ -64,7 +59,5 @@ test('should handle basic drawer flow', async () => {
     }),
   );
 
-  await waitFor(() =>
-    expect(screen.queryByText(titleText)).not.toBeInTheDocument(),
-  );
+  await waitFor(() => expect(screen.queryByText(titleText)).not.toBeInTheDocument());
 });

@@ -1,8 +1,4 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import { getDiscussionsQueryOptions } from '@/features/discussions/api/get-discussions';
 
@@ -13,11 +9,7 @@ export const metadata = {
   description: 'Discussions',
 };
 
-const DiscussionsPage = async ({
-  searchParams,
-}: {
-  searchParams: { page: string | null };
-}) => {
+const DiscussionsPage = async ({ searchParams }: { searchParams: { page: string | null } }) => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(

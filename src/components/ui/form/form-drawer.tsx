@@ -5,15 +5,7 @@ import * as React from 'react';
 import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { Button } from '../button';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTrigger,
-  DrawerTitle,
-} from '../drawer';
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTrigger, DrawerTitle } from '../drawer';
 
 type FormDrawerProps = {
   isDone: boolean;
@@ -23,13 +15,7 @@ type FormDrawerProps = {
   children: React.ReactNode;
 };
 
-export const FormDrawer = ({
-  title,
-  children,
-  isDone,
-  triggerButton,
-  submitButton,
-}: FormDrawerProps) => {
+export const FormDrawer = ({ title, children, isDone, triggerButton, submitButton }: FormDrawerProps) => {
   const { close, open, isOpen } = useDisclosure();
 
   React.useEffect(() => {

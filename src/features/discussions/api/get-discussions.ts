@@ -17,9 +17,7 @@ export const getDiscussions = (
   });
 };
 
-export const getDiscussionsQueryOptions = ({
-  page = 1,
-}: { page?: number } = {}) => {
+export const getDiscussionsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
   return queryOptions({
     queryKey: ['discussions', { page }],
     queryFn: () => getDiscussions({ page }),
@@ -31,10 +29,7 @@ type UseDiscussionsOptions = {
   queryConfig?: QueryConfig<typeof getDiscussionsQueryOptions>;
 };
 
-export const useDiscussions = ({
-  queryConfig,
-  page,
-}: UseDiscussionsOptions) => {
+export const useDiscussions = ({ queryConfig, page }: UseDiscussionsOptions) => {
   return useQuery({
     ...getDiscussionsQueryOptions({ page }),
     ...queryConfig,

@@ -1,11 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ConfirmationDialog } from '@/components/ui/dialog/confirmation-dialog';
-import {
-  rtlRender,
-  screen,
-  userEvent,
-  waitFor,
-} from '@testing/integration/render';
+import { rtlRender, screen, userEvent, waitFor } from '@testing/integration/render';
 
 test('should handle confirmation flow', async () => {
   const titleText = 'Are you sure?';
@@ -33,9 +28,7 @@ test('should handle confirmation flow', async () => {
 
   await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
 
-  await waitFor(() =>
-    expect(screen.queryByText(titleText)).not.toBeInTheDocument(),
-  );
+  await waitFor(() => expect(screen.queryByText(titleText)).not.toBeInTheDocument());
 
   expect(screen.queryByText(bodyText)).not.toBeInTheDocument();
 });
