@@ -1,23 +1,15 @@
-import {
-  randCompanyName,
-  randUserName,
-  randEmail,
-  randParagraph,
-  randUuid,
-  randPassword,
-  randCatchPhrase,
-} from '@ngneat/falso';
+const getRandomString = () => Math.random().toString(36).slice(2, 10);
 
 export const generateUser = () => ({
-  id: randUuid() + Math.random(),
-  firstName: randUserName({ withAccents: false }),
-  lastName: randUserName({ withAccents: false }),
-  email: randEmail(),
-  password: randPassword(),
-  teamId: randUuid(),
-  teamName: randCompanyName(),
+  id: crypto.randomUUID() + Math.random(),
+  firstName: `User${getRandomString()}`,
+  lastName: `User${getRandomString()}`,
+  email: `${getRandomString()}@example.com`,
+  password: `Pwd${getRandomString()}!`,
+  teamId: crypto.randomUUID(),
+  teamName: `Company${getRandomString()}`,
   role: 'ADMIN',
-  bio: randParagraph(),
+  bio: `Bio text ${getRandomString()}`,
   createdAt: Date.now(),
 });
 
@@ -26,9 +18,9 @@ export const createUser = <T extends Partial<ReturnType<typeof generateUser>>>(o
 };
 
 const generateTeam = () => ({
-  id: randUuid(),
-  name: randCompanyName(),
-  description: randParagraph(),
+  id: crypto.randomUUID(),
+  name: `Company${getRandomString()}`,
+  description: `Description ${getRandomString()}`,
   createdAt: Date.now(),
 });
 
@@ -37,9 +29,9 @@ export const createTeam = <T extends Partial<ReturnType<typeof generateTeam>>>(o
 };
 
 const generateDiscussion = () => ({
-  id: randUuid(),
-  title: randCatchPhrase(),
-  body: randParagraph(),
+  id: crypto.randomUUID(),
+  title: `Discussion ${getRandomString()}`,
+  body: `Body text ${getRandomString()}`,
   createdAt: Date.now(),
   public: true,
 });
@@ -54,8 +46,8 @@ export const createDiscussion = <T extends Partial<ReturnType<typeof generateDis
 };
 
 const generateComment = () => ({
-  id: randUuid(),
-  body: randParagraph(),
+  id: crypto.randomUUID(),
+  body: `Comment ${getRandomString()}`,
   createdAt: Date.now(),
 });
 
