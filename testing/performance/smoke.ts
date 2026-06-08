@@ -18,8 +18,8 @@ export const options = {
   },
 };
 
-export function setup() {
-  abortEarly(API_URL);
+export async function setup() {
+  await abortEarly(API_URL);
 
   const user = generateUser();
   const res = http.post(`${API_URL}/auth/register`, JSON.stringify(user), {
