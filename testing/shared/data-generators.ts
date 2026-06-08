@@ -1,4 +1,4 @@
-const getRandomString = () => Math.random().toString(36).slice(2, 10);
+const getRandomString = (): string => Math.random().toString(36).slice(2, 10);
 
 export const generateUser = () => ({
   id: crypto.randomUUID() + Math.random(),
