@@ -31,7 +31,6 @@ export function setup() {
 
 export default function (data: { jwt: string }) {
   const res = http.get(`${API_URL}/teams`, { headers: { Cookie: `${AUTH_COOKIE}=${data.jwt}` } });
-  console.log(res);
 
   check(res, {
     'status is "200"': (res) => res.status === 200,
