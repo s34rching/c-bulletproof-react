@@ -1,4 +1,6 @@
-export const u100s3d21600s = {
+import { Options } from 'k6/options';
+
+export const u100s3d21600s: Options = {
   stages: [
     {
       target: 100,
