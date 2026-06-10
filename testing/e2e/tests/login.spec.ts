@@ -7,7 +7,7 @@ test.describe('"Login" page', () => {
     let userData = createUser();
 
     test.beforeAll(async () => {
-      await registerUser(userData);
+      await registerUser(userData, { team: 'new' });
     });
 
     test.beforeEach(async ({ loginPage }) => {
