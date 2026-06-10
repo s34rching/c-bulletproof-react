@@ -1,12 +1,14 @@
 const getRandomString = (): string => Math.random().toString(36).slice(2, 10);
 
+const getRandomId = (): string => crypto.randomUUID();
+
 export const generateUser = () => ({
-  id: crypto.randomUUID() + Math.random(),
+  id: getRandomId(),
   firstName: `User${getRandomString()}`,
   lastName: `User${getRandomString()}`,
   email: `${getRandomString()}@example.com`,
   password: `Pwd${getRandomString()}!`,
-  teamId: crypto.randomUUID(),
+  teamId: getRandomId(),
   teamName: `Company${getRandomString()}`,
   role: 'ADMIN',
   bio: `Bio text ${getRandomString()}`,
@@ -18,7 +20,7 @@ export const createUser = <T extends Partial<ReturnType<typeof generateUser>>>(o
 };
 
 const generateTeam = () => ({
-  id: crypto.randomUUID(),
+  id: getRandomId(),
   name: `Company${getRandomString()}`,
   description: `Description ${getRandomString()}`,
   createdAt: Date.now(),
@@ -29,7 +31,7 @@ export const createTeam = <T extends Partial<ReturnType<typeof generateTeam>>>(o
 };
 
 const generateDiscussion = () => ({
-  id: crypto.randomUUID(),
+  id: getRandomId(),
   title: `Discussion ${getRandomString()}`,
   body: `Body text ${getRandomString()}`,
   createdAt: Date.now(),
@@ -46,7 +48,7 @@ export const createDiscussion = <T extends Partial<ReturnType<typeof generateDis
 };
 
 const generateComment = () => ({
-  id: crypto.randomUUID(),
+  id: getRandomId(),
   body: `Comment ${getRandomString()}`,
   createdAt: Date.now(),
 });
