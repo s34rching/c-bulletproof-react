@@ -24,6 +24,7 @@
     "test-performance": "dotenv -e .env -- k6 run testing/performance/smoke.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "@hookform/resolvers": "^3.3.4",
     "@next/env": "^14.2.5",
     "@ngneat/falso": "^7.2.0",
@@ -39,7 +40,6 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
     "eslint-plugin-check-file": "^2.8.0",
-    "faker": "^6.6.6",
     "isomorphic-dompurify": "^2.14.0",
     "lucide-react": "^0.378.0",
     "marked": "^12.0.2",
