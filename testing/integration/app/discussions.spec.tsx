@@ -2,7 +2,7 @@ import type { Mock } from 'vitest';
 
 import { formatDate } from '@/utils/format';
 import { Discussions } from '@/app/app/discussions/_components/discussions';
-import { createDiscussion } from '@testing/shared/data-generators';
+import { createDiscussionData } from '@testing/shared/data-generators';
 import { renderApp, screen, userEvent, waitFor, waitForLoadingToFinish, within } from '@testing/integration/render';
 
 beforeAll(() => {
@@ -18,7 +18,7 @@ test('should create, render and delete discussions', { timeout: 10000 }, async (
 
   await waitForLoadingToFinish();
 
-  const newDiscussion = createDiscussion();
+  const newDiscussion = createDiscussionData();
 
   expect(await screen.findByText(/no entries/i)).toBeInTheDocument();
 

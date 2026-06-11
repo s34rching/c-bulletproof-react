@@ -1,7 +1,7 @@
 import { check } from 'k6';
 import http from 'k6/http';
 
-import { generateUser } from '../shared/data-generators.ts';
+import { generateUserData } from '../shared/data-generators.ts';
 
 import { u100s3d80s } from './configs/load.ts';
 import { abortEarly } from './service/abort-early.ts';
@@ -21,7 +21,7 @@ export const options = {
 export async function setup() {
   await abortEarly(API_URL);
 
-  const user = generateUser();
+  const user = generateUserData();
   const res = http.post(`${API_URL}/auth/register`, JSON.stringify(user), {
     headers: { 'Content-Type': 'application/json' },
   });

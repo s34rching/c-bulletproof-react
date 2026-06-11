@@ -4,8 +4,8 @@ import * as React from 'react';
 import { RegisterForm } from '@/features/auth/components/register-form';
 import { Team } from '@/types/api';
 import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
-import { createTeam as generateTeam, createUser as generateUser } from '@testing/shared/data-generators';
-import { createUser } from '@testing/shared/test-utils';
+import { createTeamData as generateTeam, createUserData as generateUser } from '@testing/shared/data-generators';
+import { seedUser } from '@testing/shared/test-utils';
 
 const testUser = {
   firstName: 'John',
@@ -200,7 +200,7 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-016: an API error for duplicate email triggers an error notification', async () => {
-      const existingUser = await createUser();
+      const existingUser = await seedUser();
       await renderApp(<RegisterForm onSuccess={vi.fn()} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
       });

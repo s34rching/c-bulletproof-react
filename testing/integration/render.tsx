@@ -2,7 +2,7 @@ import { render as rtlRender, waitForElementToBeRemoved, screen } from '@testing
 import userEvent from '@testing-library/user-event';
 
 import { AppProvider } from '@/app/provider';
-import { createUser, loginAsUser } from '@testing/shared/test-utils';
+import { seedUser, loginAsUser } from '@testing/shared/test-utils';
 
 export const waitForLoadingToFinish = () =>
   waitForElementToBeRemoved(() => [...screen.queryAllByTestId(/loading/i), ...screen.queryAllByText(/loading/i)], {
@@ -11,7 +11,7 @@ export const waitForLoadingToFinish = () =>
 
 const initializeUser = async (user: any) => {
   if (typeof user === 'undefined') {
-    const newUser = await createUser();
+    const newUser = await seedUser();
     return loginAsUser(newUser);
   } else if (user) {
     return loginAsUser(user);

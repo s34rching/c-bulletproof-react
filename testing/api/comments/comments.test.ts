@@ -5,16 +5,16 @@ import { createComment } from '@/features/comments/api/create-comment';
 import { deleteComment } from '@/features/comments/api/delete-comment';
 import { getComments } from '@/features/comments/api/get-comments';
 import { AUTH_COOKIE } from '@/fake-api/utils';
-import { createComment as seedComment, createDiscussion, createUser, loginAsUser } from '@testing/shared/test-utils';
-import { generateUser } from '@testing/shared/data-generators';
+import { seedComment as seedComment, seedDiscussion, seedUser, loginAsUser } from '@testing/shared/test-utils';
+import { generateUserData } from '@testing/shared/data-generators';
 
 import { createAuthoredTeamDiscussion, createTeamMemberComment } from '../../shared/compose-data';
 
 describe('Comments API', () => {
-  let user: ReturnType<typeof generateUser>;
+  let user: ReturnType<typeof generateUserData>;
 
   beforeEach(() => {
-    user = generateUser();
+    user = generateUserData();
   });
 
   afterEach(() => {
@@ -76,7 +76,7 @@ describe('Comments API', () => {
     });
 
     test('unauthenticated user should receive 401 when requesting comments for a private discussion', async () => {
-      const discussion = await createDiscussion({ public: false });
+      const discussion = await seedDiscussion({ public: false });
 
       await expect(getComments({ discussionId: discussion.id, page: 1 })).rejects.toThrow('Unauthorized');
     });
@@ -161,7 +161,7 @@ describe('Comments API', () => {
     test('USER role user should not be able to delete a comment authored by another user', async () => {
       const { commentId, discussionId } = await createTeamMemberComment(user, 'public', 'My comment');
 
-      const regularUser = await createUser({ role: 'USER' });
+      const regularUser = await seedUser({ role: 'USER' });
       await loginAsUser(regularUser);
 
       const response = await deleteComment({ commentId });
@@ -174,7 +174,7 @@ describe('Comments API', () => {
     test('ADMIN role user should be able to delete a comment authored by another user', async () => {
       const { commentId, discussionId } = await createTeamMemberComment(user, 'public', 'My comment');
 
-      const adminUser = await createUser({ role: 'ADMIN' });
+      const adminUser = await seedUser({ role: 'ADMIN' });
       await loginAsUser(adminUser);
 
       const response = await deleteComment({ commentId });

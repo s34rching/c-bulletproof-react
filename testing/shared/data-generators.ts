@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 const getRandomId = (): string => faker.string.uuid({ version: 7 });
 
-export const generateUser = () => ({
+export const generateUserData = () => ({
   id: getRandomId(),
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
@@ -15,22 +15,22 @@ export const generateUser = () => ({
   createdAt: Date.now(),
 });
 
-export const createUser = <T extends Partial<ReturnType<typeof generateUser>>>(overrides?: T) => {
-  return { ...generateUser(), ...overrides };
+export const createUserData = <T extends Partial<ReturnType<typeof generateUserData>>>(overrides?: T) => {
+  return { ...generateUserData(), ...overrides };
 };
 
-const generateTeam = () => ({
+const generateTeamData = () => ({
   id: getRandomId(),
   name: faker.company.name(),
   description: faker.company.catchPhrase(),
   createdAt: Date.now(),
 });
 
-export const createTeam = <T extends Partial<ReturnType<typeof generateTeam>>>(overrides?: T) => {
-  return { ...generateTeam(), ...overrides };
+export const createTeamData = <T extends Partial<ReturnType<typeof generateTeamData>>>(overrides?: T) => {
+  return { ...generateTeamData(), ...overrides };
 };
 
-const generateDiscussion = () => ({
+const generateDiscussionData = () => ({
   id: getRandomId(),
   title: `Discussion: ${faker.commerce.productName()}`,
   body: faker.word.words({ count: { min: 20, max: 40 } }),
@@ -38,26 +38,26 @@ const generateDiscussion = () => ({
   public: true,
 });
 
-export const createDiscussion = <T extends Partial<ReturnType<typeof generateDiscussion>>>(
+export const createDiscussionData = <T extends Partial<ReturnType<typeof generateDiscussionData>>>(
   overrides?: T & {
     authorId?: string;
     teamId?: string;
   },
 ) => {
-  return { ...generateDiscussion(), ...overrides };
+  return { ...generateDiscussionData(), ...overrides };
 };
 
-const generateComment = () => ({
+const generateCommentData = () => ({
   id: getRandomId(),
   body: faker.word.words({ count: { min: 10, max: 30 } }),
   createdAt: Date.now(),
 });
 
-export const createComment = <T extends Partial<ReturnType<typeof generateComment>>>(
+export const createCommentData = <T extends Partial<ReturnType<typeof generateCommentData>>>(
   overrides?: T & {
     authorId?: string;
     discussionId?: string;
   },
 ) => {
-  return { ...generateComment(), ...overrides };
+  return { ...generateCommentData(), ...overrides };
 };

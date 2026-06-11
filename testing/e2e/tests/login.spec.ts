@@ -1,10 +1,10 @@
 import { expect, test } from '../fixtures/pages';
-import { createUser } from '@testing/shared/data-generators';
+import { createUserData } from '@testing/shared/data-generators';
 import { registerUser } from '../support/api/register-user';
 
 test.describe('"Login" page', () => {
   test.describe('Registered user', () => {
-    let userData = createUser();
+    let userData = createUserData();
 
     test.beforeAll(async () => {
       await registerUser(userData);
@@ -33,7 +33,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-009: User should NOT be able to login with wrong password', async ({ loginPage }) => {
-      const { password: randomPassword } = createUser();
+      const { password: randomPassword } = createUserData();
 
       await loginPage.emailInput.fill(userData.email);
       await loginPage.passwordInput.fill(randomPassword);
@@ -45,7 +45,7 @@ test.describe('"Login" page', () => {
 
   test.describe('Validations', () => {
     test('TC-005: User should see validation error while submitting empty email', async ({ loginPage }) => {
-      const { password } = createUser();
+      const { password } = createUserData();
 
       await loginPage.open('/auth/login');
       await loginPage.passwordInput.fill(password);
@@ -55,7 +55,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-006: User should see validation error while submitting email in wrong format', async ({ loginPage }) => {
-      const { password } = createUser();
+      const { password } = createUserData();
       const withoutAtEmail = 'some.address';
 
       await loginPage.open('/auth/login');
@@ -69,7 +69,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-007: User should see validation error while submitting empty password', async ({ loginPage }) => {
-      const { email } = createUser();
+      const { email } = createUserData();
 
       await loginPage.open('/auth/login');
       await loginPage.emailInput.fill(email);
@@ -79,7 +79,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-010: User should NOT be able to login with non-existing email', async ({ loginPage }) => {
-      const { email: nonExistingEmail, password } = createUser();
+      const { email: nonExistingEmail, password } = createUserData();
 
       await loginPage.open('/auth/login');
       await loginPage.emailInput.fill(nonExistingEmail);

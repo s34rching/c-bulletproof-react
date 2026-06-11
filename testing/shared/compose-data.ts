@@ -1,4 +1,4 @@
-import { createComment, createDiscussion, createTeam, createUser } from '@testing/shared/test-utils';
+import { seedComment, seedDiscussion, seedTeam, seedUser } from '@testing/shared/test-utils';
 
 export type DiscussionType = 'private' | 'public';
 
@@ -24,8 +24,8 @@ export type TeamMemberComment = {
 };
 
 export const createTeamMember = async (userData: any): Promise<TeamMember> => {
-  const team = await createTeam();
-  const user = await createUser(userData);
+  const team = await seedTeam();
+  const user = await seedUser(userData);
 
   return {
     userId: user.id,
@@ -36,7 +36,7 @@ export const createTeamMember = async (userData: any): Promise<TeamMember> => {
 export const createAuthoredTeamDiscussion = async (userData: any, type: DiscussionType): Promise<TeamDiscussion> => {
   const teamMember = await createTeamMember(userData);
 
-  const discussion = await createDiscussion({
+  const discussion = await seedDiscussion({
     authorId: teamMember.userId,
     teamId: teamMember.teamId,
     public: type === 'public',
@@ -58,7 +58,7 @@ export const createTeamMemberComment = async (
 ): Promise<TeamMemberComment> => {
   const discussion = await createAuthoredTeamDiscussion(userData, discussionType);
 
-  const comment = await createComment({
+  const comment = await seedComment({
     discussionId: discussion.discussionId,
     ...(commentBody !== undefined ? { body: commentBody } : {}),
   });

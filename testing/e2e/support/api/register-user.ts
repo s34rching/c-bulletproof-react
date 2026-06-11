@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { generateUser } from '@testing/shared/data-generators';
+import { generateUserData } from '@testing/shared/data-generators';
 
-export const registerUser = async (userData: ReturnType<typeof generateUser>): Promise<void> => {
+export const registerUser = async (userData: ReturnType<typeof generateUserData>): Promise<void> => {
   const { firstName, lastName, email, password, teamName, role, bio, createdAt } = userData;
 
   const response = await axios.post(

@@ -1,14 +1,14 @@
 import { expect, test } from '../fixtures/pages';
-import { createUser, generateUser } from '@testing/shared/data-generators';
+import { createUserData, generateUserData } from '@testing/shared/data-generators';
 import { registerUser } from '@testing/e2e/support/api/register-user';
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team';
 
 test.describe('"Register" page', () => {
   test.describe('New user', () => {
-    let userData: ReturnType<typeof generateUser>;
+    let userData: ReturnType<typeof generateUserData>;
 
     test.beforeEach(async () => {
-      userData = createUser();
+      userData = createUserData();
     })
 
     test('TC-E-001: User should be able to register in app', async ({ registerPage, loginPage }) => {
@@ -50,10 +50,10 @@ test.describe('"Register" page', () => {
   });
 
   test.describe('Registered user', () => {
-    let userData: ReturnType<typeof generateUser>;
+    let userData: ReturnType<typeof generateUserData>;
 
     test.beforeEach(async () => {
-      userData = createUser();
+      userData = createUserData();
       await registerUser(userData);
     });
 
