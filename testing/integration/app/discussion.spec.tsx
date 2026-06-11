@@ -2,7 +2,9 @@ import { useParams } from 'next/navigation';
 
 import { Discussion } from '@/app/app/discussions/[discussionId]/_components/discussion';
 import { renderApp, screen, userEvent, waitFor, waitForLoadingToFinish, within } from '@testing/integration/render';
+import { generateUserData } from '@testing/shared/data-generators.ts';
 import { seedDiscussion, seedUser } from '@testing/shared/test-utils';
+import { UserRoles } from '@testing/shared/types.ts';
 
 vi.mock('next/navigation', async () => {
   const actual = await vi.importActual('next/navigation');
@@ -19,7 +21,7 @@ vi.mock('next/navigation', async () => {
 });
 
 const renderDiscussion = async () => {
-  const fakeUser = await seedUser();
+  const fakeUser = await seedUser(generateUserData(UserRoles.USER));
   const fakeDiscussion = await seedDiscussion({ teamId: fakeUser.teamId });
 
   vi.mocked(useParams).mockReturnValue({ discussionId: fakeDiscussion.id });

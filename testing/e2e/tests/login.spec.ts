@@ -1,11 +1,12 @@
 import { expect, test } from '../fixtures/pages';
-import { createUserData } from '@testing/shared/data-generators';
+import { generateUserData } from '@testing/shared/data-generators';
 import { registerUser } from '../support/api/register-user';
+import { UserRoles } from '@testing/shared/types.ts';
 
 test.describe('"Login" page', () => {
-  test.describe('Registered user', () => {
-    let userData = createUserData();
+  let userData = generateUserData(UserRoles.USER);
 
+  test.describe('Registered user', () => {
     test.beforeAll(async () => {
       await registerUser(userData);
     });
@@ -33,7 +34,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-009: User should NOT be able to login with wrong password', async ({ loginPage }) => {
-      const { password: randomPassword } = createUserData();
+      const { password: randomPassword } = generateUserData(UserRoles.USER);
 
       await loginPage.emailInput.fill(userData.email);
       await loginPage.passwordInput.fill(randomPassword);
@@ -45,17 +46,15 @@ test.describe('"Login" page', () => {
 
   test.describe('Validations', () => {
     test('TC-005: User should see validation error while submitting empty email', async ({ loginPage }) => {
-      const { password } = createUserData();
-
       await loginPage.open('/auth/login');
-      await loginPage.passwordInput.fill(password);
+      await loginPage.passwordInput.fill(userData.password);
       await loginPage.loginButton.click();
       await expect(loginPage.emailInputAlert).toBeVisible();
       await expect(loginPage.emailInputAlert).toContainText('Required');
     });
 
     test('TC-006: User should see validation error while submitting email in wrong format', async ({ loginPage }) => {
-      const { password } = createUserData();
+      const { password } = generateUserData(UserRoles.USER);
       const withoutAtEmail = 'some.address';
 
       await loginPage.open('/auth/login');
@@ -69,17 +68,15 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-007: User should see validation error while submitting empty password', async ({ loginPage }) => {
-      const { email } = createUserData();
-
       await loginPage.open('/auth/login');
-      await loginPage.emailInput.fill(email);
+      await loginPage.emailInput.fill(userData.email);
       await loginPage.loginButton.click();
       await expect(loginPage.passwordInputAlert).toBeVisible();
       await expect(loginPage.passwordInputAlert).toContainText('Required');
     });
 
     test('TC-010: User should NOT be able to login with non-existing email', async ({ loginPage }) => {
-      const { email: nonExistingEmail, password } = createUserData();
+      const { email: nonExistingEmail, password } = generateUserData(UserRoles.USER);
 
       await loginPage.open('/auth/login');
       await loginPage.emailInput.fill(nonExistingEmail);

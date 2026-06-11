@@ -1,15 +1,16 @@
 import { expect, test } from '../fixtures/pages';
-import { createUserData, generateUserData } from '@testing/shared/data-generators';
+import { generateUserData } from '@testing/shared/data-generators';
 import { registerUser } from '@testing/e2e/support/api/register-user';
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team';
+import { UserRoles } from '@testing/shared/types.ts';
 
 test.describe('"Register" page', () => {
   test.describe('New user', () => {
     let userData: ReturnType<typeof generateUserData>;
 
     test.beforeEach(async () => {
-      userData = createUserData();
-    })
+      userData = generateUserData(UserRoles.USER);
+    });
 
     test('TC-E-001: User should be able to register in app', async ({ registerPage, loginPage }) => {
       await loginPage.open('/auth/login');
@@ -20,7 +21,7 @@ test.describe('"Register" page', () => {
       await registerPage.lastNameInput.fill(userData.lastName);
       await registerPage.emailInput.fill(userData.email);
       await registerPage.passwordInput.fill(userData.password);
-      await registerPage.teamNameInput.fill(userData.teamName);
+      await registerPage.teamNameInput.fill(userData.teamName!);
       await registerPage.submitButton.click();
 
       await registerPage.waitUrlContains(/\/app/);
@@ -30,11 +31,10 @@ test.describe('"Register" page', () => {
     test('TC-E-004: Selecting a team from the dropdown and submitting valid data registers the user under the selected team', async ({
       registerPage,
     }) => {
-      const existingUser = createUserData();
-
+      const existingUser = generateUserData(UserRoles.ADMIN);
       const team = await createTeamViaApi(existingUser);
-      await registerPage.open('/auth/register');
 
+      await registerPage.open('/auth/register');
       await registerPage.firstNameInput.fill(userData.firstName);
       await registerPage.lastNameInput.fill(userData.lastName);
       await registerPage.emailInput.fill(userData.email);
@@ -55,7 +55,7 @@ test.describe('"Register" page', () => {
     let userData: ReturnType<typeof generateUserData>;
 
     test.beforeEach(async () => {
-      userData = createUserData();
+      userData = generateUserData(UserRoles.USER);
       await registerUser(userData);
     });
 
@@ -68,17 +68,17 @@ test.describe('"Register" page', () => {
       await registerPage.lastNameInput.fill(userData.lastName);
       await registerPage.emailInput.fill(userData.email);
       await registerPage.passwordInput.fill(userData.password);
-      await registerPage.teamNameInput.fill(userData.teamName);
+      await registerPage.teamNameInput.fill(userData.teamName!);
       await registerPage.submitButton.click();
 
       await expect(registerPage.eventAlert).toBeVisible();
       await expect(registerPage.eventAlert).toContainText('Error');
-      await expect(registerPage.eventAlert).toContainText(
-        'The user already exists',
-      );
+      await expect(registerPage.eventAlert).toContainText('The user already exists');
     });
 
-    test('TC-E-002: An already-authenticated user who navigates to `/auth/register` is immediately redirected to `/app`', async ({ registerPage }) => {
+    test('TC-E-002: An already-authenticated user who navigates to `/auth/register` is immediately redirected to `/app`', async ({
+      registerPage,
+    }) => {
       await registerPage.loginViaApi(userData);
 
       await registerPage.open('/auth/register');

@@ -1,9 +1,9 @@
 import type { Mock } from 'vitest';
 
-import { formatDate } from '@/utils/format';
 import { Discussions } from '@/app/app/discussions/_components/discussions';
-import { createDiscussionData } from '@testing/shared/data-generators';
+import { formatDate } from '@/utils/format';
 import { renderApp, screen, userEvent, waitFor, waitForLoadingToFinish, within } from '@testing/integration/render';
+import { createDiscussionData } from '@testing/shared/data-generators';
 
 beforeAll(() => {
   vi.spyOn(console, 'error').mockImplementation(() => {});

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { generateUserData } from '@testing/shared/data-generators';
+import { undefined } from 'zod';
 
 export const registerUser = async (userData: ReturnType<typeof generateUserData>): Promise<void> => {
-  const { firstName, lastName, email, password, teamName, role, bio, createdAt } = userData;
+  const { firstName, lastName, email, password, teamName, teamId, role, bio } = userData;
 
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
@@ -12,10 +13,9 @@ export const registerUser = async (userData: ReturnType<typeof generateUserData>
       email,
       password,
       teamName,
-      teamId: null,
+      teamId,
       role,
       bio,
-      createdAt,
     },
     {
       timeout: 5000,

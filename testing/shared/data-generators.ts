@@ -1,22 +1,26 @@
 import { faker } from '@faker-js/faker';
 
+import { User, UserData, UserRoles } from '@testing/shared/types.ts';
+
 const getRandomId = (): string => faker.string.uuid({ version: 7 });
 
-export const generateUserData = () => ({
-  id: getRandomId(),
-  firstName: faker.person.firstName(),
-  lastName: faker.person.lastName(),
-  email: faker.internet.exampleEmail(),
-  password: faker.internet.password(),
-  teamId: getRandomId(),
-  teamName: faker.company.name(),
-  role: 'ADMIN',
-  bio: faker.person.bio(),
-  createdAt: Date.now(),
+export const generateUserData = (role: UserRoles, overrides?: Partial<UserData>): UserData => ({
+  role,
+  firstName: overrides?.firstName || faker.person.firstName(),
+  lastName: overrides?.lastName || faker.person.lastName(),
+  email: overrides?.email || faker.internet.exampleEmail(),
+  password: overrides?.password || faker.internet.password(),
+  teamId: overrides?.teamId || undefined,
+  teamName: overrides?.teamName || faker.company.name(),
+  bio: overrides?.bio || faker.person.bio(),
 });
 
-export const createUserData = <T extends Partial<ReturnType<typeof generateUserData>>>(overrides?: T) => {
-  return { ...generateUserData(), ...overrides };
+export const generateUser = (role: UserRoles, overrides?: Partial<UserData>): User => {
+  return {
+    id: getRandomId(),
+    createdAt: Date.now(),
+    ...generateUserData(role, overrides),
+  };
 };
 
 const generateTeamData = () => ({
