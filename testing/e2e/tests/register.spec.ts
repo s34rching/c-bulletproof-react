@@ -54,7 +54,7 @@ test.describe('"Register" page', () => {
 
     test.beforeEach(async () => {
       userData = createUser();
-      await registerUser(userData, { team: 'existing' });
+      await registerUser(userData);
     });
 
     test('TC-E-003: Submitting the form with an email address already registered shows an error notification', async ({

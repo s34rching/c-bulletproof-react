@@ -1,17 +1,17 @@
-const getRandomString = (): string => Math.random().toString(36).slice(2, 10);
+import { faker } from '@faker-js/faker';
 
-const getRandomId = (): string => crypto.randomUUID();
+const getRandomId = (): string => faker.string.uuid({ version: 7 });
 
 export const generateUser = () => ({
   id: getRandomId(),
-  firstName: `User${getRandomString()}`,
-  lastName: `User${getRandomString()}`,
-  email: `${getRandomString()}@example.com`,
-  password: `Pwd${getRandomString()}!`,
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+  email: faker.internet.exampleEmail(),
+  password: faker.internet.password(),
   teamId: getRandomId(),
-  teamName: `Company${getRandomString()}`,
+  teamName: faker.company.name(),
   role: 'ADMIN',
-  bio: `Bio text ${getRandomString()}`,
+  bio: faker.person.bio(),
   createdAt: Date.now(),
 });
 
@@ -21,8 +21,8 @@ export const createUser = <T extends Partial<ReturnType<typeof generateUser>>>(o
 
 const generateTeam = () => ({
   id: getRandomId(),
-  name: `Company${getRandomString()}`,
-  description: `Description ${getRandomString()}`,
+  name: faker.company.name(),
+  description: faker.company.catchPhrase(),
   createdAt: Date.now(),
 });
 
@@ -32,8 +32,8 @@ export const createTeam = <T extends Partial<ReturnType<typeof generateTeam>>>(o
 
 const generateDiscussion = () => ({
   id: getRandomId(),
-  title: `Discussion ${getRandomString()}`,
-  body: `Body text ${getRandomString()}`,
+  title: `Discussion: ${faker.commerce.productName()}`,
+  body: faker.word.words({ count: { min: 20, max: 40 } }),
   createdAt: Date.now(),
   public: true,
 });
@@ -49,7 +49,7 @@ export const createDiscussion = <T extends Partial<ReturnType<typeof generateDis
 
 const generateComment = () => ({
   id: getRandomId(),
-  body: `Comment ${getRandomString()}`,
+  body: faker.word.words({ count: { min: 10, max: 30 } }),
   createdAt: Date.now(),
 });
 
