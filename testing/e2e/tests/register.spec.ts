@@ -30,7 +30,9 @@ test.describe('"Register" page', () => {
     test('TC-E-004: Selecting a team from the dropdown and submitting valid data registers the user under the selected team', async ({
       registerPage,
     }) => {
-      const team = await createTeamViaApi(userData.teamName);
+      const existingUser = createUserData();
+
+      const team = await createTeamViaApi(existingUser);
       await registerPage.open('/auth/register');
 
       await registerPage.firstNameInput.fill(userData.firstName);
