@@ -1,8 +1,8 @@
 import { useParams } from 'next/navigation';
 
 import { Discussion } from '@/app/app/discussions/[discussionId]/_components/discussion';
-import { seedDiscussion, seedUser } from '@testing/shared/test-utils';
 import { renderApp, screen, userEvent, waitFor, waitForLoadingToFinish, within } from '@testing/integration/render';
+import { seedDiscussion, seedUser } from '@testing/shared/test-utils';
 
 vi.mock('next/navigation', async () => {
   const actual = await vi.importActual('next/navigation');
