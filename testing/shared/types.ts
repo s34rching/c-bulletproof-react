@@ -1,3 +1,5 @@
+import {faker} from "@faker-js/faker";
+
 export type BaseEntity = {
   id: string;
   createdAt: number;
@@ -24,3 +26,15 @@ export type UserData = {
 };
 
 export type User = Omit<Entity<UserData>, 'teamName' | 'password'>;
+
+export type TeamData = {
+  name: string;
+  description: string;
+};
+
+export type Team = Entity<TeamData>;
+
+export type TeamMemberProperties = {
+  userId: string;
+  teamId: string;
+};

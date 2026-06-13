@@ -1,12 +1,8 @@
+import { generateTeamData } from '@testing/shared/data-generators.ts';
 import { seedComment, seedDiscussion, seedTeam, seedUser } from '@testing/shared/test-utils';
-import { UserData } from '@testing/shared/types.ts';
+import { TeamMemberProperties, UserData } from '@testing/shared/types.ts';
 
 export type DiscussionType = 'private' | 'public';
-
-export type TeamMember = {
-  userId: string;
-  teamId: string;
-};
 
 export type TeamDiscussion = {
   discussionId: string;
@@ -24,9 +20,9 @@ export type TeamMemberComment = {
   teamId: string;
 };
 
-export const createTeamMember = async (userData: UserData): Promise<TeamMember> => {
-  const team = await seedTeam();
-  const user = await seedUser(userData);
+export const createTeamMember = async (userData: UserData): Promise<TeamMemberProperties> => {
+  const team = await seedTeam(generateTeamData());
+  const user = await seedUser({ ...userData, teamId: team.id });
 
   return {
     userId: user.id,

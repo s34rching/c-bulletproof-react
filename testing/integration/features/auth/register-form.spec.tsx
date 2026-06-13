@@ -4,7 +4,7 @@ import * as React from 'react';
 import { RegisterForm } from '@/features/auth/components/register-form';
 import { Team } from '@/types/api';
 import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
-import { createTeamData as generateTeam, generateUserData } from '@testing/shared/data-generators';
+import { generateTeam, generateUserData } from '@testing/shared/data-generators';
 import { seedUser } from '@testing/shared/test-utils';
 import { UserRoles } from '@testing/shared/types.ts';
 
