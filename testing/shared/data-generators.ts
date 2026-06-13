@@ -35,7 +35,7 @@ export const generateTeam = (overrides?: Partial<TeamData>): Team => ({
 export const generateDiscussionData = (overrides?: Partial<DiscussionData>): DiscussionData => ({
   title: overrides?.title || faker.commerce.productName(),
   body: overrides?.body || faker.word.words({ count: { min: 20, max: 40 } }),
-  public: overrides?.public || true,
+  public: overrides?.public ?? true,
 });
 
 export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createdAt'>>): Discussion => ({
