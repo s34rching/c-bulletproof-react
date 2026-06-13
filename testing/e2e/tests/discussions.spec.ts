@@ -1,8 +1,8 @@
 import { expect, test } from '../fixtures/pages';
 import { generateDiscussion, generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
-import { Discussion, Team, UserRoles } from '@testing/shared/types.ts';
+import { Discussion, UserRoles } from '@testing/shared/types.ts';
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team.ts';
-import { createDiscussion } from '@testing/e2e/support/api/create-discussion.ts';
+import { createDiscussionViaApi } from '../support/api/create-discussion.ts';
 import { registerUser } from '@testing/e2e/support/api/register-user.ts';
 import { getDiscussions } from '@testing/e2e/support/api/get-discussion.ts';
 import { deleteDiscussion } from '@testing/e2e/support/api/delete-discussion.ts';
@@ -84,7 +84,7 @@ test.describe('"Discussions" page', () => {
       test.beforeAll(async () => {
         const team = await createTeamViaApi(adminData);
         await registerUser({ ...userData, teamId: team.id });
-        await Promise.all(discussions.map((d) => createDiscussion(adminData, d)));
+        await Promise.all(discussions.map((d) => createDiscussionViaApi(adminData, d)));
       });
 
       test('User with "ADMIN" role should be able to view discussions list', async ({ discussionsPage }) => {
@@ -123,12 +123,12 @@ test.describe('"Discussions" page', () => {
       test.beforeAll(async () => {
         const teamOne = await createTeamViaApi(teamOneAdminData);
         await registerUser({ ...teamOneUserData, teamId: teamOne.id });
-        await createDiscussion(teamOneAdminData, teamOnePrivateDiscussionData);
-        await createDiscussion(teamOneAdminData, teamOnePublicDiscussionData);
+        await createDiscussionViaApi(teamOneAdminData, teamOnePrivateDiscussionData);
+        await createDiscussionViaApi(teamOneAdminData, teamOnePublicDiscussionData);
 
         await createTeamViaApi(teamTwoAdminData);
-        await createDiscussion(teamTwoAdminData, teamTwoPrivateDiscussionData);
-        await createDiscussion(teamTwoAdminData, teamTwoPublicDiscussionData);
+        await createDiscussionViaApi(teamTwoAdminData, teamTwoPrivateDiscussionData);
+        await createDiscussionViaApi(teamTwoAdminData, teamTwoPublicDiscussionData);
       });
 
       test('User with "ADMIN" role should see only their team discussions', async ({ discussionsPage }) => {
@@ -172,7 +172,7 @@ test.describe('"Discussions" page', () => {
     });
 
     test.beforeEach(async () => {
-      discussion = await createDiscussion(adminData, generateDiscussion({ public: false }));
+      discussion = await createDiscussionViaApi(adminData, generateDiscussionData({ public: false }));
     });
 
     test('User with "ADMIN" role should be able to delete discussion in the list', async ({ discussionsPage }) => {

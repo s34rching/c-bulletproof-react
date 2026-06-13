@@ -2,7 +2,10 @@ import axios from 'axios';
 import { Discussion, DiscussionData, UserData } from '@testing/shared/types.ts';
 import { loginUser } from '@testing/e2e/support/api/login-user.ts';
 
-export const createDiscussion = async (userData: UserData, discussionParams: DiscussionData): Promise<Discussion> => {
+export const createDiscussionViaApi = async (
+  userData: UserData,
+  discussionParams: DiscussionData,
+): Promise<Discussion> => {
   const { title, body, public: isPublic } = discussionParams;
 
   const token = await loginUser(userData);
