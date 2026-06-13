@@ -2,11 +2,13 @@ import { test as base } from '@playwright/test';
 import { HeroPage } from '../pages/hero.page';
 import { LoginPage } from '../pages/login.page';
 import { RegisterPage } from '../pages/register.page';
+import { DiscussionsPage } from '@testing/e2e/pages/discussions.page.ts';
 
 type Pages = {
   heroPage: HeroPage;
   loginPage: LoginPage;
   registerPage: RegisterPage;
+  discussionsPage: DiscussionsPage
 };
 
 export const test = base.extend<Pages>({
@@ -18,6 +20,9 @@ export const test = base.extend<Pages>({
   },
   registerPage: async ({ page }, use) => {
     await use(new RegisterPage(page));
+  },
+  discussionsPage: async ({ page }, use) => {
+    await use(new DiscussionsPage(page));
   },
 });
 

@@ -38,7 +38,7 @@ export const generateTeam = (overrides?: Partial<TeamData>): Team => {
 
 export const generateDiscussionData = () => ({
   id: getRandomId(),
-  title: `Discussion: ${faker.commerce.productName()}`,
+  title: faker.commerce.productName(),
   body: faker.word.words({ count: { min: 20, max: 40 } }),
   createdAt: Date.now(),
   public: true,
