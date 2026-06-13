@@ -1,9 +1,11 @@
 import { expect, test } from '../fixtures/pages';
 import { generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
-import { UserRoles } from '@testing/shared/types.ts';
+import { Discussion, Team, UserRoles } from '@testing/shared/types.ts';
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team.ts';
 import { createDiscussion } from '@testing/e2e/support/api/create-discussion.ts';
 import { registerUser } from '@testing/e2e/support/api/register-user.ts';
+import { getDiscussions } from '@testing/e2e/support/api/get-discussion.ts';
+import { deleteDiscussion } from '@testing/e2e/support/api/delete-discussion.ts';
 
 test.describe('"Discussions" page', () => {
   test.describe('Create', () => {
@@ -20,7 +22,19 @@ test.describe('"Discussions" page', () => {
         await discussionsPage.initiateDiscussionCreation();
       });
 
-      test('TC-005: User with "ADMIN" role should be able to create a new public discussion', async ({ discussionsPage }) => {
+      test.afterAll(async () => {
+        const discussions: Discussion[] = await getDiscussions(adminData);
+
+        await Promise.all(
+          discussions.map(async (d) => {
+            const dd = await deleteDiscussion(adminData, d.id);
+          }),
+        );
+      });
+
+      test('TC-005: User with "ADMIN" role should be able to create a new public discussion', async ({
+        discussionsPage,
+      }) => {
         const discussionData = generateDiscussionData({ public: true });
 
         await discussionsPage.createDiscussionDialog.fillDiscussionForm(discussionData);
