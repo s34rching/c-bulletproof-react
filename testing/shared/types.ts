@@ -1,5 +1,3 @@
-import {faker} from "@faker-js/faker";
-
 export type BaseEntity = {
   id: string;
   createdAt: number;
