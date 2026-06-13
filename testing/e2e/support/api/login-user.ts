@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { generateUser } from '@testing/shared/data-generators';
+import { generateUserData } from '@testing/shared/data-generators';
 
 export const loginUser = async (
-  userData: Pick<ReturnType<typeof generateUser>, 'email' | 'password'>,
+  userData: Pick<ReturnType<typeof generateUserData>, 'email' | 'password'>,
 ): Promise<string> => {
   const { email, password } = userData;
   const response = await axios.post(

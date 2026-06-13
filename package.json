@@ -17,13 +17,14 @@
     "build-storybook": "storybook build",
     "run-mock-server": "tsx ./mock-server.ts",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}' 'testing/**/*.{ts,tsx,js,jsx,json,css,md}'",
-    "test-unit": "vitest ./src",
-    "test-integration": "vitest ./testing/integration",
-    "test-api": "vitest ./testing/api",
-    "test-e2e": "playwright test",
-    "test-performance": "dotenv -e .env -- k6 run testing/performance/smoke.ts"
+    "test:unit": "vitest ./src",
+    "test:integration": "vitest ./testing/integration",
+    "test:api": "vitest ./testing/api",
+    "test:e2e": "playwright test",
+    "test:performance": "dotenv -e .env -- k6 run testing/performance/smoke.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "@hookform/resolvers": "^3.3.4",
     "@next/env": "^14.2.5",
     "@ngneat/falso": "^7.2.0",

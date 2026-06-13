@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { generateUser } from '@testing/shared/data-generators';
+import { UserData } from '@testing/shared/types.ts';
 
-export const registerUser = async (userData: ReturnType<typeof generateUser>): Promise<void> => {
-  const { firstName, lastName, email, password, teamName } = userData;
+export const registerUser = async (userData: UserData): Promise<void> => {
+  const { firstName, lastName, email, password, teamName, teamId } = userData;
 
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
@@ -12,7 +12,7 @@ export const registerUser = async (userData: ReturnType<typeof generateUser>): P
       email,
       password,
       teamName,
-      teamId: null,
+      teamId
     },
     {
       timeout: 5000,

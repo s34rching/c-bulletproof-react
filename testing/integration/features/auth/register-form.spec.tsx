@@ -4,8 +4,9 @@ import * as React from 'react';
 import { RegisterForm } from '@/features/auth/components/register-form';
 import { Team } from '@/types/api';
 import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
-import { createTeam as generateTeam, createUser as generateUser } from '@testing/shared/data-generators';
-import { createUser } from '@testing/shared/test-utils';
+import { generateTeam, generateUserData } from '@testing/shared/data-generators';
+import { seedUser } from '@testing/shared/test-utils';
+import { UserRoles } from '@testing/shared/types.ts';
 
 const testUser = {
   firstName: 'John',
@@ -145,7 +146,7 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-009: submitting with a password of exactly 5 characters does not show a validation error', async () => {
-      const user = generateUser();
+      const user = generateUserData(UserRoles.USER);
       const onSuccess = vi.fn();
       await renderApp(<RegisterForm onSuccess={onSuccess} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
@@ -155,7 +156,7 @@ describe('RegisterForm', () => {
       await userEvent.type(screen.getByLabelText(/last name/i), user.lastName);
       await userEvent.type(screen.getByLabelText(/email address/i), user.email);
       await userEvent.type(screen.getByLabelText(/password/i), 'abcde');
-      await userEvent.type(screen.getByLabelText(/team name/i), user.teamName);
+      await userEvent.type(screen.getByLabelText(/team name/i), user.teamName!);
       await userEvent.click(screen.getByRole('button', { name: /register/i }));
 
       expect(screen.queryByRole('alert')).not.toBeInTheDocument();
@@ -165,7 +166,7 @@ describe('RegisterForm', () => {
 
   describe('Form submission', () => {
     test('TC-I-010: filling all fields with valid data and submitting calls onSuccess after a successful API response', async () => {
-      const user = generateUser();
+      const user = generateUserData(UserRoles.USER);
       const onSuccess = vi.fn();
       await renderApp(<RegisterForm onSuccess={onSuccess} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
@@ -175,14 +176,14 @@ describe('RegisterForm', () => {
       await userEvent.type(screen.getByLabelText(/last name/i), user.lastName);
       await userEvent.type(screen.getByLabelText(/email address/i), user.email);
       await userEvent.type(screen.getByLabelText(/password/i), user.password);
-      await userEvent.type(screen.getByLabelText(/team name/i), user.teamName);
+      await userEvent.type(screen.getByLabelText(/team name/i), user.teamName!);
       await userEvent.click(screen.getByRole('button', { name: /register/i }));
 
       await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));
     });
 
     test('TC-I-011: the Register button shows a loading spinner while the mutation is pending', async () => {
-      const user = generateUser();
+      const user = generateUserData(UserRoles.USER);
       const onSuccess = vi.fn();
       await renderApp(<RegisterForm onSuccess={onSuccess} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
@@ -192,7 +193,7 @@ describe('RegisterForm', () => {
       await userEvent.type(screen.getByLabelText(/last name/i), user.lastName);
       await userEvent.type(screen.getByLabelText(/email address/i), user.email);
       await userEvent.type(screen.getByLabelText(/password/i), user.password);
-      await userEvent.type(screen.getByLabelText(/team name/i), user.teamName);
+      await userEvent.type(screen.getByLabelText(/team name/i), user.teamName!);
       await userEvent.click(screen.getByRole('button', { name: /register/i }));
 
       expect(screen.getByText('Loading')).toBeInTheDocument();
@@ -200,7 +201,7 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-016: an API error for duplicate email triggers an error notification', async () => {
-      const existingUser = await createUser();
+      const existingUser = await seedUser(generateUserData(UserRoles.USER));
       await renderApp(<RegisterForm onSuccess={vi.fn()} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
       });

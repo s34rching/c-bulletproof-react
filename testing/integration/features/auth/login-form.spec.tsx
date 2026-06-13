@@ -1,9 +1,11 @@
 import { LoginForm } from '@/features/auth/components/login-form';
 import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
-import { createUser } from '@testing/shared/test-utils';
+import { generateUserData } from '@testing/shared/data-generators.ts';
+import { seedUser } from '@testing/shared/test-utils';
+import { UserRoles } from '@testing/shared/types.ts';
 
 test('should login new user and call onSuccess cb which should navigate the user to the app', async () => {
-  const newUser = await createUser({ teamId: undefined });
+  const newUser = await seedUser(generateUserData(UserRoles.USER));
 
   const onSuccess = vi.fn();
 

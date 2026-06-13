@@ -1,21 +1,13 @@
 import axios from 'axios';
-import { randEmail, randPassword, randUserName } from '@ngneat/falso';
+import { registerUser } from '@testing/e2e/support/api/register-user.ts';
+import { generateUserData } from '@testing/shared/data-generators.ts';
 
 export const createTeamViaApi = async (
-  teamName: string,
+  userData: ReturnType<typeof generateUserData>,
 ): Promise<{ id: string; name: string }> => {
-  await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-    {
-      firstName: randUserName({ withAccents: false }),
-      lastName: randUserName({ withAccents: false }),
-      email: randEmail(),
-      password: randPassword(),
-      teamName,
-      teamId: null,
-    },
-    { timeout: 5000 },
-  );
+  const { teamName } = userData;
+
+  await registerUser(userData);
 
   const { data } = await axios.get<{ data: Array<{ id: string; name: string }> }>(
     `${process.env.NEXT_PUBLIC_API_URL}/teams`,

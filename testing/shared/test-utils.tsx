@@ -2,31 +2,29 @@ import Cookies from 'js-cookie';
 
 import { db } from '@/fake-api/db';
 import { AUTH_COOKIE, authenticate, hash } from '@/fake-api/utils';
-import {
-  createDiscussion as generateDiscussion,
-  createUser as generateUser,
-  createTeam as generateTeam,
-  createComment as generateComment,
-} from '@testing/shared/data-generators';
+import { createDiscussionData, createCommentData } from '@testing/shared/data-generators';
+import { Entity, Team, TeamData, UserData, UserRoles } from '@testing/shared/types.ts';
 
-export const createTeam = async (teamProperties?: any): Promise<ReturnType<typeof generateTeam>> => {
-  const team = generateTeam(teamProperties) as any;
-  return db.team.create(team);
+export const seedTeam = async (teamProperties: TeamData): Promise<Team> => {
+  return db.team.create(teamProperties);
 };
 
-export const createUser = async (userProperties?: any) => {
-  const user = generateUser(userProperties) as any;
-  await db.user.create({ ...user, password: hash(user.password) });
-  return user;
+export const seedUser = async (userData: UserData): Promise<Omit<Entity<UserData>, 'teamName'>> => {
+  const user = await db.user.create({ ...userData, password: hash(userData.password) });
+  return {
+    ...user,
+    password: userData.password,
+    role: user.role as UserRoles,
+  };
 };
 
-export const createDiscussion = async (discussionProperties?: any) => {
-  const discussion = generateDiscussion(discussionProperties);
+export const seedDiscussion = async (discussionProperties?: any) => {
+  const discussion = createDiscussionData(discussionProperties);
   return db.discussion.create(discussion);
 };
 
-export const createComment = async (commentProperties?: any) => {
-  const comment = generateComment(commentProperties) as any;
+export const seedComment = async (commentProperties?: any) => {
+  const comment = createCommentData(commentProperties) as any;
   return db.comment.create(comment);
 };
 

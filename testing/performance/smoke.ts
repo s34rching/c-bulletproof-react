@@ -1,10 +1,11 @@
 import { check } from 'k6';
 import http from 'k6/http';
 
-import { generateUser } from '../shared/data-generators.ts';
+import { generateUserData } from '../shared/data-generators.ts';
 
 import { u100s3d80s } from './configs/load.ts';
 import { abortEarly } from './service/abort-early.ts';
+import { UserRoles } from '@testing/shared/types.ts';
 
 const API_URL = __ENV.NEXT_PUBLIC_API_URL;
 const AUTH_COOKIE = __ENV.NEXT_PUBLIC_AUTH_COOKIE;
@@ -21,7 +22,7 @@ export const options = {
 export async function setup() {
   await abortEarly(API_URL);
 
-  const user = generateUser();
+  const user = generateUserData(UserRoles.USER);
   const res = http.post(`${API_URL}/auth/register`, JSON.stringify(user), {
     headers: { 'Content-Type': 'application/json' },
   });

@@ -1,20 +1,21 @@
 import Cookies from 'js-cookie';
-import { expect, test, describe, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
+import { AUTH_COOKIE } from '@/fake-api/utils';
 import { createComment } from '@/features/comments/api/create-comment';
 import { deleteComment } from '@/features/comments/api/delete-comment';
 import { getComments } from '@/features/comments/api/get-comments';
-import { AUTH_COOKIE } from '@/fake-api/utils';
-import { createComment as seedComment, createDiscussion, createUser, loginAsUser } from '@testing/shared/test-utils';
-import { generateUser } from '@testing/shared/data-generators';
+import { generateUserData } from '@testing/shared/data-generators';
+import { loginAsUser, seedComment as seedComment, seedDiscussion, seedUser } from '@testing/shared/test-utils';
+import { UserData, UserRoles } from '@testing/shared/types.ts';
 
 import { createAuthoredTeamDiscussion, createTeamMemberComment } from '../../shared/compose-data';
 
 describe('Comments API', () => {
-  let user: ReturnType<typeof generateUser>;
+  let userData: UserData;
 
   beforeEach(() => {
-    user = generateUser();
+    userData = generateUserData(UserRoles.USER);
   });
 
   afterEach(() => {
@@ -23,10 +24,10 @@ describe('Comments API', () => {
 
   describe('createComment', () => {
     test('authorized user should be able to create comment', async () => {
-      const { discussionId } = await createAuthoredTeamDiscussion(user, 'public');
-      await loginAsUser(user);
+      const { discussionId, authorId } = await createAuthoredTeamDiscussion(userData, 'public');
+      await loginAsUser(userData);
 
-      const commentBody = `${user.id} user comment`;
+      const commentBody = `${authorId} user comment`;
 
       const commentData = await createComment({
         data: {
@@ -36,12 +37,12 @@ describe('Comments API', () => {
       });
 
       expect(commentData).toHaveProperty('discussionId', discussionId);
-      expect(commentData).toHaveProperty('authorId', user.id);
+      expect(commentData).toHaveProperty('authorId', authorId);
       expect(commentData).toHaveProperty('body', commentBody);
     });
 
     test('unauthenticated user should receive 401 when creating a comment', async () => {
-      const { discussionId } = await createAuthoredTeamDiscussion(user, 'public');
+      const { discussionId } = await createAuthoredTeamDiscussion(userData, 'public');
 
       await expect(createComment({ data: { body: 'hello', discussionId } })).rejects.toThrow('Unauthorized');
     });
@@ -49,8 +50,8 @@ describe('Comments API', () => {
 
   describe('getComments', () => {
     test('authorized user should be able to get comments', async () => {
-      const comment = await createTeamMemberComment(user, 'private', 'My comment');
-      await loginAsUser(user);
+      const comment = await createTeamMemberComment(userData, 'private', 'My comment');
+      await loginAsUser(userData);
 
       const { data, meta } = await getComments({
         discussionId: comment.discussionId,
@@ -64,8 +65,8 @@ describe('Comments API', () => {
     });
 
     test('should return empty data and zero totals for a discussion with no comments', async () => {
-      const { discussionId } = await createAuthoredTeamDiscussion(user, 'public');
-      await loginAsUser(user);
+      const { discussionId } = await createAuthoredTeamDiscussion(userData, 'public');
+      await loginAsUser(userData);
 
       const { data, meta } = await getComments({ discussionId, page: 1 });
 
@@ -76,13 +77,13 @@ describe('Comments API', () => {
     });
 
     test('unauthenticated user should receive 401 when requesting comments for a private discussion', async () => {
-      const discussion = await createDiscussion({ public: false });
+      const discussion = await seedDiscussion({ public: false });
 
       await expect(getComments({ discussionId: discussion.id, page: 1 })).rejects.toThrow('Unauthorized');
     });
 
     test('unauthenticated user should receive comments for a public discussion', async () => {
-      const { discussionId } = await createTeamMemberComment(user, 'public', 'Public comment');
+      const { discussionId } = await createTeamMemberComment(userData, 'public', 'Public comment');
 
       const { data, meta } = await getComments({ discussionId, page: 1 });
 
@@ -91,8 +92,8 @@ describe('Comments API', () => {
     });
 
     test('should return correct page 2 results when a discussion has more than 10 comments', async () => {
-      const { discussionId } = await createAuthoredTeamDiscussion(user, 'public');
-      await loginAsUser(user);
+      const { discussionId } = await createAuthoredTeamDiscussion(userData, 'public');
+      await loginAsUser(userData);
 
       for (let i = 0; i < 11; i++) {
         await seedComment({ discussionId, body: `Comment ${i}` });
@@ -107,8 +108,8 @@ describe('Comments API', () => {
     });
 
     test('each comment should include a nested author object instead of a plain authorId', async () => {
-      const { discussionId } = await createAuthoredTeamDiscussion(user, 'private');
-      await loginAsUser(user);
+      const { discussionId } = await createAuthoredTeamDiscussion(userData, 'private');
+      await loginAsUser(userData);
       await createComment({ data: { body: 'Test comment', discussionId } });
 
       const { data } = await getComments({ discussionId, page: 1 });
@@ -121,8 +122,8 @@ describe('Comments API', () => {
 
   describe('deleteComment', () => {
     test('authorized user should be able to delete comment', async () => {
-      const { commentId, discussionId } = await createTeamMemberComment(user, 'public', 'My comment');
-      await loginAsUser(user);
+      const { commentId, discussionId } = await createTeamMemberComment(userData, 'public', 'My comment');
+      await loginAsUser(userData);
 
       const { data: initialData, meta: initialMeta } = await getComments({
         discussionId,
@@ -153,15 +154,15 @@ describe('Comments API', () => {
     });
 
     test('unauthenticated user should receive 401 when deleting a comment', async () => {
-      const { commentId } = await createTeamMemberComment(user, 'public', 'My comment');
+      const { commentId } = await createTeamMemberComment(userData, 'public', 'My comment');
 
       await expect(deleteComment({ commentId })).rejects.toThrow('Unauthorized');
     });
 
     test('USER role user should not be able to delete a comment authored by another user', async () => {
-      const { commentId, discussionId } = await createTeamMemberComment(user, 'public', 'My comment');
+      const { commentId, discussionId } = await createTeamMemberComment(userData, 'public', 'My comment');
 
-      const regularUser = await createUser({ role: 'USER' });
+      const regularUser = await seedUser(generateUserData(UserRoles.USER));
       await loginAsUser(regularUser);
 
       const response = await deleteComment({ commentId });
@@ -172,9 +173,9 @@ describe('Comments API', () => {
     });
 
     test('ADMIN role user should be able to delete a comment authored by another user', async () => {
-      const { commentId, discussionId } = await createTeamMemberComment(user, 'public', 'My comment');
+      const { commentId, discussionId } = await createTeamMemberComment(userData, 'public', 'My comment');
 
-      const adminUser = await createUser({ role: 'ADMIN' });
+      const adminUser = await seedUser(generateUserData(UserRoles.ADMIN));
       await loginAsUser(adminUser);
 
       const response = await deleteComment({ commentId });
