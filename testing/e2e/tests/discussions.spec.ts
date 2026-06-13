@@ -20,7 +20,7 @@ test.describe('"Discussions" page', () => {
         await discussionsPage.initiateDiscussionCreation();
       });
 
-      test('TC-005: "Admin" user should be able to create a new public discussion', async ({ discussionsPage }) => {
+      test('TC-005: User with "ADMIN" role should be able to create a new public discussion', async ({ discussionsPage }) => {
         const discussionData = generateDiscussionData({ public: true });
 
         await discussionsPage.createDiscussionDialog.fillDiscussionForm(discussionData);
@@ -30,7 +30,9 @@ test.describe('"Discussions" page', () => {
         await expect(discussionRow).toBeVisible();
       });
 
-      test('TC-006: "Admin" user should be able to create a new private discussion', async ({ discussionsPage }) => {
+      test('TC-006: User with "ADMIN" role should be able to create a new private discussion', async ({
+        discussionsPage,
+      }) => {
         const discussionData = generateDiscussionData({ public: false });
 
         await discussionsPage.createDiscussionDialog.fillDiscussionForm(discussionData);
@@ -71,7 +73,7 @@ test.describe('"Discussions" page', () => {
         await Promise.all(discussions.map((d) => createDiscussion(adminData, d)));
       });
 
-      test('"Admin" user should be able to view discussions list', async ({ discussionsPage }) => {
+      test('User with "ADMIN" role should be able to view discussions list', async ({ discussionsPage }) => {
         await discussionsPage.loginViaApi(adminData);
         await discussionsPage.open('/app/discussions');
         await Promise.all(
@@ -83,7 +85,7 @@ test.describe('"Discussions" page', () => {
         );
       });
 
-      test('"User" user should be able to view discussions list', async ({ discussionsPage }) => {
+      test('User with "USER" role should be able to view discussions list', async ({ discussionsPage }) => {
         await discussionsPage.loginViaApi(userData);
         await discussionsPage.open('/app/discussions');
         await Promise.all(
@@ -117,7 +119,7 @@ test.describe('"Discussions" page', () => {
         await createDiscussion(teamTwoAdminData, teamTwoPublicDiscussionData);
       });
 
-      test('Team "ADMIN" should see only their team discussions', async ({ discussionsPage }) => {
+      test('User with "ADMIN" role should see only their team discussions', async ({ discussionsPage }) => {
         await discussionsPage.loginViaApi(teamOneAdminData);
         await discussionsPage.open('/app/discussions');
 
@@ -131,7 +133,7 @@ test.describe('"Discussions" page', () => {
         await expect(teamTwoPublicDiscussion).toHaveCount(0);
       });
 
-      test('Team "USER" should see only their team discussions', async ({ discussionsPage }) => {
+      test('User with "USER" role should see only their team discussions', async ({ discussionsPage }) => {
         await discussionsPage.loginViaApi(teamOneUserData);
         await discussionsPage.open('/app/discussions');
 
