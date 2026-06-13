@@ -117,10 +117,10 @@ test.describe('"Discussions" page', () => {
       const teamTwoAdminData = generateUserData(UserRoles.ADMIN);
       const teamOneUserData = generateUserData(UserRoles.USER);
 
-      const teamOnePrivateDiscussionData = generateDiscussionData({ public: true });
-      const teamOnePublicDiscussionData = generateDiscussionData({ public: false });
-      const teamTwoPrivateDiscussionData = generateDiscussionData({ public: true });
-      const teamTwoPublicDiscussionData = generateDiscussionData({ public: false });
+      const teamOnePrivateDiscussionData = generateDiscussionData({ public: false });
+      const teamOnePublicDiscussionData = generateDiscussionData({ public: true });
+      const teamTwoPrivateDiscussionData = generateDiscussionData({ public: false });
+      const teamTwoPublicDiscussionData = generateDiscussionData({ public: true });
 
       test.beforeAll(async () => {
         const teamOne = await createTeamViaApi(teamOneAdminData);
