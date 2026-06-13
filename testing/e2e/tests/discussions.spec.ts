@@ -26,8 +26,8 @@ test.describe('"Discussions" page', () => {
         const discussions: Discussion[] = await getDiscussions(adminData);
 
         await Promise.all(
-          discussions.map(async (d) => {
-            const dd = await deleteDiscussion(adminData, d.id);
+          discussions.map(async (discussion) => {
+            await deleteDiscussion(adminData, discussion.id);
           }),
         );
       });
