@@ -12,7 +12,7 @@ test.describe('"Discussions" page', () => {
     });
 
     test('"Admin" user should be able to create a new public discussion', async ({ discussionsPage }) => {
-      const discussionData = generateDiscussionData();
+      const discussionData = generateDiscussionData({ public: true });
       const teamAdminData = generateUserData(UserRoles.ADMIN);
 
       await registerUser(teamAdminData);

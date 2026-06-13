@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 export type BaseEntity = {
   id: string;
   createdAt: number;
@@ -36,3 +38,14 @@ export type TeamMemberProperties = {
   userId: string;
   teamId: string;
 };
+
+export type DiscussionData = {
+  title: string;
+  body: string;
+  public: boolean;
+};
+
+export type Discussion = {
+  authorId: string;
+  teamId: string;
+} & Entity<DiscussionData>;

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { Team, TeamData, User, UserData, UserRoles } from '@testing/shared/types.ts';
+import { DiscussionData, Discussion, Team, TeamData, User, UserData, UserRoles } from '@testing/shared/types.ts';
 
 const getRandomId = (): string => faker.string.uuid({ version: 7 });
 
@@ -36,21 +36,20 @@ export const generateTeam = (overrides?: Partial<TeamData>): Team => {
   };
 };
 
-export const generateDiscussionData = () => ({
-  id: getRandomId(),
-  title: faker.commerce.productName(),
-  body: faker.word.words({ count: { min: 20, max: 40 } }),
-  createdAt: Date.now(),
-  public: true,
+export const generateDiscussionData = (overrides?: Partial<DiscussionData>): DiscussionData => ({
+  title: overrides?.title || faker.commerce.productName(),
+  body: overrides?.body || faker.word.words({ count: { min: 20, max: 40 } }),
+  public: overrides?.public || true,
 });
 
-export const createDiscussionData = <T extends Partial<ReturnType<typeof generateDiscussionData>>>(
-  overrides?: T & {
-    authorId?: string;
-    teamId?: string;
-  },
-) => {
-  return { ...generateDiscussionData(), ...overrides };
+export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createAt'>>): Discussion => {
+  return {
+    id: getRandomId(),
+    createdAt: Date.now(),
+    authorId: overrides?.authorId || getRandomId(),
+    teamId: overrides?.teamId || getRandomId(),
+    ...generateDiscussionData(overrides),
+  };
 };
 
 export const generateCommentData = () => ({
