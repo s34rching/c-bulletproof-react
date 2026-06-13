@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { generateUserData } from '@testing/shared/data-generators';
+import { UserData } from '@testing/shared/types.ts';
 
-export const loginUser = async (
-  userData: Pick<ReturnType<typeof generateUserData>, 'email' | 'password'>,
-): Promise<string> => {
+export const loginUser = async (userData: UserData): Promise<string> => {
   const { email, password } = userData;
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,

@@ -3,7 +3,7 @@ import type { Mock } from 'vitest';
 import { Discussions } from '@/app/app/discussions/_components/discussions';
 import { formatDate } from '@/utils/format';
 import { renderApp, screen, userEvent, waitFor, waitForLoadingToFinish, within } from '@testing/integration/render';
-import { createDiscussionData } from '@testing/shared/data-generators';
+import { generateDiscussion } from '@testing/shared/data-generators';
 
 beforeAll(() => {
   vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -18,7 +18,7 @@ test('should create, render and delete discussions', { timeout: 10000 }, async (
 
   await waitForLoadingToFinish();
 
-  const newDiscussion = createDiscussionData();
+  const newDiscussion = generateDiscussion();
 
   expect(await screen.findByText(/no entries/i)).toBeInTheDocument();
 
