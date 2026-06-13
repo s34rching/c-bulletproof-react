@@ -1,5 +1,6 @@
 import { type Locator, type Page } from '@playwright/test';
 import { expect } from '@testing/e2e/fixtures/pages.ts';
+import { DiscussionData } from '@testing/shared/types.ts';
 
 export class CreateDiscussionDialog {
   readonly page: Page;
@@ -28,7 +29,7 @@ export class CreateDiscussionDialog {
     await this.discardDiscussionCreationButton.click();
   }
 
-  async fillDiscussionForm(discussionData: any): Promise<void> {
+  async fillDiscussionForm(discussionData: DiscussionData): Promise<void> {
     await this.container.waitFor({ state: 'visible' });
     await this.nameInput.fill(discussionData.title);
     await this.bodyTextarea.fill(discussionData.body);

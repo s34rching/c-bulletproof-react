@@ -42,7 +42,7 @@ export const generateDiscussionData = (overrides?: Partial<DiscussionData>): Dis
   public: overrides?.public || true,
 });
 
-export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createAt'>>): Discussion => {
+export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createdAt'>>): Discussion => {
   return {
     id: getRandomId(),
     createdAt: Date.now(),
