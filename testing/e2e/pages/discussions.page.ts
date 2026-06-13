@@ -7,6 +7,7 @@ export class DiscussionsPage extends BasePage {
   readonly createDiscussionButton: Locator;
   readonly createDiscussionDialog: CreateDiscussionDialog
   readonly discussionsList: Locator;
+  readonly noDiscussionsBanner: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -15,6 +16,7 @@ export class DiscussionsPage extends BasePage {
     this.createDiscussionButton = page.getByRole('button', { name: 'Create Discussion' });
     this.createDiscussionDialog = new CreateDiscussionDialog(page);
     this.discussionsList = page.getByRole('table');
+    this.noDiscussionsBanner = page.getByRole('heading', { name: 'No Entries Found' });
   }
 
   async initiateDiscussionCreation(): Promise<void> {

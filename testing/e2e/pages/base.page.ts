@@ -1,5 +1,6 @@
 import { type Locator, type Page } from '@playwright/test';
 import { loginUser } from '@testing/e2e/support/api/login-user';
+import { UserData } from "@testing/shared/types.ts";
 
 export class BasePage {
   readonly page: Page;
@@ -18,7 +19,7 @@ export class BasePage {
     await this.page.waitForURL(path);
   }
 
-  async loginViaApi(userData: { email: string; password: string }) {
+  async loginViaApi(userData: UserData) {
     const jwt = await loginUser(userData);
     await this.page.context().addCookies([
       {
