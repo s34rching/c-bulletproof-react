@@ -32,7 +32,7 @@ jobs:
           echo "Waiting for server on port 8080..."
           npx wait-on http://localhost:8080/api/health --timeout 60000
       - name: Run API tests
-        run: yarn test-api
+        run: yarn test:api
 
   e2e-tests:
     timeout-minutes: 60
@@ -65,7 +65,7 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install chromium
       - name: Run e2e tests
-        run: yarn test-e2e
+        run: yarn test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

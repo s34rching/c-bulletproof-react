@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Run unit tests
-        run: yarn test-unit
+        run: yarn test:unit
 
   component-integration-tests:
     needs: [ install-dependencies ]
@@ -53,4 +53,4 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Run unit tests
-        run: yarn test-integration
+        run: yarn test:integration
