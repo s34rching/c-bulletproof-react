@@ -1,5 +1,5 @@
 import { expect, test } from '../fixtures/pages';
-import { generateDiscussion, generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
+import { generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
 import { Discussion, UserRoles } from '@testing/shared/types.ts';
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team.ts';
 import { createDiscussionViaApi } from '../support/api/create-discussion.ts';

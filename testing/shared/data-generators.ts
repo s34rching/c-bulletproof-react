@@ -15,26 +15,22 @@ export const generateUserData = (role: UserRoles, overrides?: Partial<UserData>)
   bio: overrides?.bio || faker.person.bio(),
 });
 
-export const generateUser = (role: UserRoles, overrides?: Partial<UserData>): User => {
-  return {
-    id: getRandomId(),
-    createdAt: Date.now(),
-    ...generateUserData(role, overrides),
-  };
-};
+export const generateUser = (role: UserRoles, overrides?: Partial<UserData>): User => ({
+  id: getRandomId(),
+  createdAt: Date.now(),
+  ...generateUserData(role, overrides),
+});
 
 export const generateTeamData = (overrides?: Partial<TeamData>): TeamData => ({
   name: overrides?.name || faker.company.name(),
   description: overrides?.description || faker.company.catchPhrase(),
 });
 
-export const generateTeam = (overrides?: Partial<TeamData>): Team => {
-  return {
-    id: getRandomId(),
-    createdAt: Date.now(),
-    ...generateTeamData(overrides),
-  };
-};
+export const generateTeam = (overrides?: Partial<TeamData>): Team => ({
+  id: getRandomId(),
+  createdAt: Date.now(),
+  ...generateTeamData(overrides),
+});
 
 export const generateDiscussionData = (overrides?: Partial<DiscussionData>): DiscussionData => ({
   title: overrides?.title || faker.commerce.productName(),
@@ -42,15 +38,13 @@ export const generateDiscussionData = (overrides?: Partial<DiscussionData>): Dis
   public: overrides?.public || true,
 });
 
-export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createdAt'>>): Discussion => {
-  return {
-    id: getRandomId(),
-    createdAt: Date.now(),
-    authorId: overrides?.authorId || getRandomId(),
-    teamId: overrides?.teamId || getRandomId(),
-    ...generateDiscussionData(overrides),
-  };
-};
+export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createdAt'>>): Discussion => ({
+  id: getRandomId(),
+  createdAt: Date.now(),
+  authorId: overrides?.authorId || getRandomId(),
+  teamId: overrides?.teamId || getRandomId(),
+  ...generateDiscussionData(overrides),
+});
 
 export const generateCommentData = () => ({
   id: getRandomId(),
