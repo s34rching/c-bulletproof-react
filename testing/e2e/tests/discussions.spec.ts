@@ -1,5 +1,5 @@
 import { expect, test } from '../fixtures/pages';
-import { generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
+import { generateDiscussion, generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
 import { Discussion, Team, UserRoles } from '@testing/shared/types.ts';
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team.ts';
 import { createDiscussion } from '@testing/e2e/support/api/create-discussion.ts';
@@ -92,8 +92,7 @@ test.describe('"Discussions" page', () => {
         await discussionsPage.open('/app/discussions');
         await Promise.all(
           discussions.map(async (dt) => {
-            const discussionRow = await discussionsPage.getDiscussionByName(dt.title);
-
+            const discussionRow = discussionsPage.getDiscussionByName(dt.title);
             await expect(discussionRow).toBeVisible();
           }),
         );
@@ -104,8 +103,7 @@ test.describe('"Discussions" page', () => {
         await discussionsPage.open('/app/discussions');
         await Promise.all(
           discussions.map(async (dt) => {
-            const discussionRow = await discussionsPage.getDiscussionByName(dt.title);
-
+            const discussionRow = discussionsPage.getDiscussionByName(dt.title);
             await expect(discussionRow).toBeVisible();
           }),
         );
@@ -137,13 +135,13 @@ test.describe('"Discussions" page', () => {
         await discussionsPage.loginViaApi(teamOneAdminData);
         await discussionsPage.open('/app/discussions');
 
-        const teamOnePrivateDiscussion = await discussionsPage.getDiscussionByName(teamOnePrivateDiscussionData.title);
+        const teamOnePrivateDiscussion = discussionsPage.getDiscussionByName(teamOnePrivateDiscussionData.title);
         await expect(teamOnePrivateDiscussion).toBeVisible();
-        const teamOnePublicDiscussion = await discussionsPage.getDiscussionByName(teamOnePublicDiscussionData.title);
+        const teamOnePublicDiscussion = discussionsPage.getDiscussionByName(teamOnePublicDiscussionData.title);
         await expect(teamOnePublicDiscussion).toBeVisible();
-        const teamTwoPrivateDiscussion = await discussionsPage.getDiscussionByName(teamTwoPrivateDiscussionData.title);
+        const teamTwoPrivateDiscussion = discussionsPage.getDiscussionByName(teamTwoPrivateDiscussionData.title);
         await expect(teamTwoPrivateDiscussion).toHaveCount(0);
-        const teamTwoPublicDiscussion = await discussionsPage.getDiscussionByName(teamTwoPublicDiscussionData.title);
+        const teamTwoPublicDiscussion = discussionsPage.getDiscussionByName(teamTwoPublicDiscussionData.title);
         await expect(teamTwoPublicDiscussion).toHaveCount(0);
       });
 
@@ -151,15 +149,50 @@ test.describe('"Discussions" page', () => {
         await discussionsPage.loginViaApi(teamOneUserData);
         await discussionsPage.open('/app/discussions');
 
-        const teamOnePrivateDiscussion = await discussionsPage.getDiscussionByName(teamOnePrivateDiscussionData.title);
+        const teamOnePrivateDiscussion = discussionsPage.getDiscussionByName(teamOnePrivateDiscussionData.title);
         await expect(teamOnePrivateDiscussion).toBeVisible();
-        const teamOnePublicDiscussion = await discussionsPage.getDiscussionByName(teamOnePublicDiscussionData.title);
+        const teamOnePublicDiscussion = discussionsPage.getDiscussionByName(teamOnePublicDiscussionData.title);
         await expect(teamOnePublicDiscussion).toBeVisible();
-        const teamTwoPrivateDiscussion = await discussionsPage.getDiscussionByName(teamTwoPrivateDiscussionData.title);
+        const teamTwoPrivateDiscussion = discussionsPage.getDiscussionByName(teamTwoPrivateDiscussionData.title);
         await expect(teamTwoPrivateDiscussion).toHaveCount(0);
-        const teamTwoPublicDiscussion = await discussionsPage.getDiscussionByName(teamTwoPublicDiscussionData.title);
+        const teamTwoPublicDiscussion = discussionsPage.getDiscussionByName(teamTwoPublicDiscussionData.title);
         await expect(teamTwoPublicDiscussion).toHaveCount(0);
       });
+    });
+  });
+
+  test.describe('Delete', () => {
+    let discussion: Discussion;
+    let adminData = generateUserData(UserRoles.ADMIN);
+    let userData = generateUserData(UserRoles.USER);
+
+    test.beforeAll(async () => {
+      const team = await createTeamViaApi(adminData);
+      await registerUser({ ...userData, teamId: team.id });
+    });
+
+    test.beforeEach(async () => {
+      discussion = await createDiscussion(adminData, generateDiscussion({ public: false }));
+    });
+
+    test('User with "ADMIN" role should be able to delete discussion in the list', async ({ discussionsPage }) => {
+      const deleteDiscussionUrl = `${process.env.NEXT_PUBLIC_API_URL}/discussions/${discussion.id}`;
+
+      await discussionsPage.loginViaApi(adminData);
+      await discussionsPage.open('/app/discussions');
+
+      const deleteDiscussionPromise = discussionsPage.page.waitForResponse(deleteDiscussionUrl);
+      await discussionsPage.deleteDiscussion(discussion.title);
+      await deleteDiscussionPromise;
+      await expect(discussionsPage.noDiscussionsBanner).toBeVisible();
+    });
+
+    test('User with "USER" role should NOT be able to delete discussion in the list', async ({ discussionsPage }) => {
+      await discussionsPage.loginViaApi(userData);
+      await discussionsPage.open('/app/discussions');
+
+      const discussionRow = discussionsPage.getDeleteDiscussionButtonByName(discussion.title);
+      await expect(discussionRow).toHaveCount(0);
     });
   });
 });

@@ -1,5 +1,4 @@
 import { type Locator, type Page } from '@playwright/test';
-import { expect } from '@testing/e2e/fixtures/pages.ts';
 import { DiscussionData } from '@testing/shared/types.ts';
 
 export class CreateDiscussionDialog {
@@ -33,6 +32,6 @@ export class CreateDiscussionDialog {
     await this.container.waitFor({ state: 'visible' });
     await this.nameInput.fill(discussionData.title);
     await this.bodyTextarea.fill(discussionData.body);
-    await this.isPublicCheckbox.click({ "clickCount": discussionData.public ? 1 : 0 });
+    await this.isPublicCheckbox.click({ clickCount: discussionData.public ? 1 : 0 });
   }
 }
