@@ -101,36 +101,48 @@ test.describe('"Discussions" page', () => {
       const teamTwoAdminData = generateUserData(UserRoles.ADMIN);
       const teamOneUserData = generateUserData(UserRoles.USER);
 
-      const teamOneDiscussionData = generateDiscussionData({ public: true });
-      const teamTwoDiscussionData = generateDiscussionData({ public: true });
+      const teamOnePrivateDiscussionData = generateDiscussionData({ public: true });
+      const teamOnePublicDiscussionData = generateDiscussionData({ public: false });
+      const teamTwoPrivateDiscussionData = generateDiscussionData({ public: true });
+      const teamTwoPublicDiscussionData = generateDiscussionData({ public: false });
 
       test.beforeAll(async () => {
         const teamOne = await createTeamViaApi(teamOneAdminData);
         await registerUser({ ...teamOneUserData, teamId: teamOne.id });
-        await createDiscussion(teamOneAdminData, teamOneDiscussionData);
+        await createDiscussion(teamOneAdminData, teamOnePrivateDiscussionData);
+        await createDiscussion(teamOneAdminData, teamOnePublicDiscussionData);
 
         await createTeamViaApi(teamTwoAdminData);
-        await createDiscussion(teamTwoAdminData, teamTwoDiscussionData);
+        await createDiscussion(teamTwoAdminData, teamTwoPrivateDiscussionData);
+        await createDiscussion(teamTwoAdminData, teamTwoPublicDiscussionData);
       });
 
       test('Team "ADMIN" should see only their team discussions', async ({ discussionsPage }) => {
         await discussionsPage.loginViaApi(teamOneAdminData);
         await discussionsPage.open('/app/discussions');
 
-        const teamOneDiscussion = await discussionsPage.getDiscussionByName(teamOneDiscussionData.title);
-        await expect(teamOneDiscussion).toBeVisible();
-        const teamTwoDiscussion = await discussionsPage.getDiscussionByName(teamTwoDiscussionData.title);
-        await expect(teamTwoDiscussion).toHaveCount(0);
+        const teamOnePrivateDiscussion = await discussionsPage.getDiscussionByName(teamOnePrivateDiscussionData.title);
+        await expect(teamOnePrivateDiscussion).toBeVisible();
+        const teamOnePublicDiscussion = await discussionsPage.getDiscussionByName(teamOnePublicDiscussionData.title);
+        await expect(teamOnePublicDiscussion).toBeVisible();
+        const teamTwoPrivateDiscussion = await discussionsPage.getDiscussionByName(teamTwoPrivateDiscussionData.title);
+        await expect(teamTwoPrivateDiscussion).toHaveCount(0);
+        const teamTwoPublicDiscussion = await discussionsPage.getDiscussionByName(teamTwoPublicDiscussionData.title);
+        await expect(teamTwoPublicDiscussion).toHaveCount(0);
       });
 
       test('Team "USER" should see only their team discussions', async ({ discussionsPage }) => {
         await discussionsPage.loginViaApi(teamOneUserData);
         await discussionsPage.open('/app/discussions');
 
-        const teamOneDiscussion = await discussionsPage.getDiscussionByName(teamOneDiscussionData.title);
-        await expect(teamOneDiscussion).toBeVisible();
-        const teamTwoDiscussion = await discussionsPage.getDiscussionByName(teamTwoDiscussionData.title);
-        await expect(teamTwoDiscussion).toHaveCount(0);
+        const teamOnePrivateDiscussion = await discussionsPage.getDiscussionByName(teamOnePrivateDiscussionData.title);
+        await expect(teamOnePrivateDiscussion).toBeVisible();
+        const teamOnePublicDiscussion = await discussionsPage.getDiscussionByName(teamOnePublicDiscussionData.title);
+        await expect(teamOnePublicDiscussion).toBeVisible();
+        const teamTwoPrivateDiscussion = await discussionsPage.getDiscussionByName(teamTwoPrivateDiscussionData.title);
+        await expect(teamTwoPrivateDiscussion).toHaveCount(0);
+        const teamTwoPublicDiscussion = await discussionsPage.getDiscussionByName(teamTwoPublicDiscussionData.title);
+        await expect(teamTwoPublicDiscussion).toHaveCount(0);
       });
     });
   });
