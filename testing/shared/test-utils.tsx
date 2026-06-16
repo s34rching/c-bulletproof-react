@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { db } from '@/fake-api/db';
 import { AUTH_COOKIE, authenticate, hash } from '@/fake-api/utils';
 import { createDiscussionData, createCommentData } from '@testing/shared/data-generators';
-import { Entity, Team, TeamData, UserData, UserRoles } from '@testing/shared/types.ts';
+import { Credentials, Entity, Team, TeamData, UserData, UserRoles } from '@testing/shared/types.ts';
 
 export const seedTeam = async (teamProperties: TeamData): Promise<Team> => {
   return db.team.create(teamProperties);
@@ -28,7 +28,7 @@ export const seedComment = async (commentProperties?: any) => {
   return db.comment.create(comment);
 };
 
-export const loginAsUser = async (user: any) => {
+export const loginAsUser = async (user: Credentials) => {
   const authUser = await authenticate(user);
   Cookies.set(AUTH_COOKIE, authUser.jwt);
   return authUser;

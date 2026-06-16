@@ -4,14 +4,14 @@ import userEvent from '@testing-library/user-event';
 import { AppProvider } from '@/app/provider';
 import { generateUserData } from '@testing/shared/data-generators.ts';
 import { loginAsUser, seedUser } from '@testing/shared/test-utils';
-import { UserRoles } from '@testing/shared/types.ts';
+import { UserData, UserRoles } from '@testing/shared/types.ts';
 
 export const waitForLoadingToFinish = () =>
   waitForElementToBeRemoved(() => [...screen.queryAllByTestId(/loading/i), ...screen.queryAllByText(/loading/i)], {
     timeout: 4000,
   });
 
-const initializeUser = async (user: any) => {
+const initializeUser = async (user: UserData) => {
   if (typeof user === 'undefined') {
     const newUser = await seedUser(generateUserData(UserRoles.ADMIN));
     return loginAsUser(newUser);
@@ -21,7 +21,7 @@ const initializeUser = async (user: any) => {
   return null;
 };
 
-export const renderApp = async (ui: any, { user, ...renderOptions }: Record<string, any> = {}) => {
+export const renderApp = async (ui: React.JSX.Element, { user, ...renderOptions }: Record<string, unknown> = {}) => {
   const initializedUser = await initializeUser(user);
 
   return {

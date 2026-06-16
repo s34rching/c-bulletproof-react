@@ -127,7 +127,7 @@ describe('RegisterForm', () => {
       await userEvent.type(screen.getByLabelText(/password/i), testUser.password);
       await userEvent.click(screen.getByRole('button', { name: /register/i }));
 
-      await screen.findByRole('alert');
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
     });
 
     test('TC-I-008: submitting with a password shorter than 5 characters shows a validation error', async () => {
@@ -142,7 +142,7 @@ describe('RegisterForm', () => {
       await userEvent.type(screen.getByLabelText(/team name/i), testUser.teamName);
       await userEvent.click(screen.getByRole('button', { name: /register/i }));
 
-      await screen.findByRole('alert');
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
     });
 
     test('TC-I-009: submitting with a password of exactly 5 characters does not show a validation error', async () => {
@@ -213,7 +213,7 @@ describe('RegisterForm', () => {
       await userEvent.type(screen.getByLabelText(/team name/i), testUser.teamName);
       await userEvent.click(screen.getByRole('button', { name: /register/i }));
 
-      await screen.findByRole('alert', { name: /error/i });
+      expect(await screen.findByRole('alert', { name: /error/i })).toBeInTheDocument();
     });
   });
 
