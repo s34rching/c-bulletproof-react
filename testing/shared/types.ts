@@ -48,7 +48,20 @@ export type DiscussionData = {
   public: boolean;
 };
 
-export type Discussion = {
+export type DiscussionSeedData = {
   authorId: string;
   teamId: string;
-} & Entity<DiscussionData>;
+} & DiscussionData;
+
+export type Discussion = DiscussionSeedData & Entity<DiscussionData>;
+
+export type CommentData = {
+  body: string;
+};
+
+export type CommentSeedData = {
+  authorId: string;
+  discussionId: string;
+} & CommentData;
+
+export type Comment = CommentSeedData & Entity<CommentSeedData>;

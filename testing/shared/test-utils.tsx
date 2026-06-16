@@ -2,8 +2,18 @@ import Cookies from 'js-cookie';
 
 import { db } from '@/fake-api/db';
 import { AUTH_COOKIE, authenticate, hash } from '@/fake-api/utils';
-import { createCommentData } from '@testing/shared/data-generators';
-import { Credentials, DiscussionData, Entity, Team, TeamData, UserData, UserRoles } from '@testing/shared/types.ts';
+import {
+  Comment,
+  CommentSeedData,
+  Credentials,
+  Discussion,
+  DiscussionSeedData,
+  Entity,
+  Team,
+  TeamData,
+  UserData,
+  UserRoles,
+} from '@testing/shared/types.ts';
 
 export const seedTeam = async (teamProperties: TeamData): Promise<Team> => {
   return db.team.create(teamProperties);
@@ -18,13 +28,12 @@ export const seedUser = async (userData: UserData): Promise<Omit<Entity<UserData
   };
 };
 
-export const seedDiscussion = async (discussionData: DiscussionData) => {
+export const seedDiscussion = async (discussionData: DiscussionSeedData): Promise<Discussion> => {
   return db.discussion.create(discussionData);
 };
 
-export const seedComment = async (commentProperties?: any) => {
-  const comment = createCommentData(commentProperties) as any;
-  return db.comment.create(comment);
+export const seedComment = async (commentData: CommentSeedData): Promise<Comment> => {
+  return db.comment.create(commentData);
 };
 
 export const loginAsUser = async (user: Credentials) => {

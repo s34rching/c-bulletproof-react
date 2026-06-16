@@ -271,9 +271,11 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-018: the Log In link href preserves the redirectTo query param', async () => {
-      const spy = vi.spyOn(nextNavigation, 'useSearchParams').mockReturnValue({
-        get: (key: string) => (key === 'redirectTo' ? '/app/dashboard' : null),
-      } as any);
+      const spy = vi
+        .spyOn(nextNavigation, 'useSearchParams')
+        .mockReturnValue(
+          new URLSearchParams({ redirectTo: '/app/dashboard' }) as ReturnType<typeof nextNavigation.useSearchParams>,
+        );
 
       await renderApp(<RegisterForm onSuccess={vi.fn()} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,

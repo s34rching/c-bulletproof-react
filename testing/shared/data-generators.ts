@@ -1,6 +1,18 @@
 import { faker } from '@faker-js/faker';
 
-import { DiscussionData, Discussion, Team, TeamData, User, UserData, UserRoles } from '@testing/shared/types.ts';
+import {
+  DiscussionData,
+  Discussion,
+  Team,
+  TeamData,
+  User,
+  UserData,
+  UserRoles,
+  DiscussionSeedData,
+  CommentData,
+  CommentSeedData,
+  Comment,
+} from '@testing/shared/types.ts';
 
 const getRandomId = (): string => faker.string.uuid({ version: 7 });
 
@@ -38,25 +50,30 @@ export const generateDiscussionData = (overrides?: Partial<DiscussionData>): Dis
   public: overrides?.public ?? true,
 });
 
-export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createdAt'>>): Discussion => ({
-  id: getRandomId(),
-  createdAt: Date.now(),
+export const generateDiscussionSeedData = (overrides?: Partial<DiscussionSeedData>): DiscussionSeedData => ({
   authorId: overrides?.authorId || getRandomId(),
   teamId: overrides?.teamId || getRandomId(),
   ...generateDiscussionData(overrides),
 });
 
-export const generateCommentData = () => ({
+export const generateDiscussion = (overrides?: Partial<Omit<Discussion, 'id' | 'createdAt'>>): Discussion => ({
   id: getRandomId(),
-  body: faker.word.words({ count: { min: 10, max: 30 } }),
   createdAt: Date.now(),
+  ...generateDiscussionSeedData(overrides),
 });
 
-export const createCommentData = <T extends Partial<ReturnType<typeof generateCommentData>>>(
-  overrides?: T & {
-    authorId?: string;
-    discussionId?: string;
-  },
-) => {
-  return { ...generateCommentData(), ...overrides };
-};
+export const generateCommentData = (overrides?: Partial<CommentData>): CommentData => ({
+  body: overrides?.body || faker.word.words({ count: { min: 10, max: 30 } }),
+});
+
+export const generateCommentSeedData = (overrides?: Partial<CommentSeedData>): CommentSeedData => ({
+  authorId: overrides?.authorId || getRandomId(),
+  discussionId: overrides?.discussionId || getRandomId(),
+  ...generateCommentData(overrides),
+});
+
+export const generateComment = (overrides?: Partial<Omit<Comment, 'id' | 'createdAt'>>): Comment => ({
+  id: getRandomId(),
+  createdAt: Date.now(),
+  ...generateCommentSeedData(overrides),
+});

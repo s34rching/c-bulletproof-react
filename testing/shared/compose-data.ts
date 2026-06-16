@@ -1,4 +1,8 @@
-import { generateTeamData } from '@testing/shared/data-generators.ts';
+import {
+  generateCommentSeedData,
+  generateDiscussionSeedData,
+  generateTeamData,
+} from '@testing/shared/data-generators.ts';
 import { seedComment, seedDiscussion, seedTeam, seedUser } from '@testing/shared/test-utils';
 import { TeamMemberProperties, UserData } from '@testing/shared/types.ts';
 
@@ -35,12 +39,13 @@ export const createAuthoredTeamDiscussion = async (
   type: DiscussionType,
 ): Promise<TeamDiscussion> => {
   const teamMember = await createTeamMember(userData);
-
-  const discussion = await seedDiscussion({
+  const discussionSeedData = generateDiscussionSeedData({
     authorId: teamMember.userId,
     teamId: teamMember.teamId,
     public: type === 'public',
   });
+
+  const discussion = await seedDiscussion(discussionSeedData);
 
   return {
     discussionId: discussion.id,
@@ -57,12 +62,13 @@ export const createTeamMemberComment = async (
   commentBody?: string,
 ): Promise<TeamMemberComment> => {
   const { discussionId, teamId, authorId } = await createAuthoredTeamDiscussion(userData, discussionType);
-
-  const comment = await seedComment({
+  const commentSeedData = generateCommentSeedData({
     authorId,
     discussionId,
     ...(commentBody !== undefined ? { body: commentBody } : {}),
   });
+
+  const comment = await seedComment(commentSeedData);
 
   return {
     commentId: comment.id,

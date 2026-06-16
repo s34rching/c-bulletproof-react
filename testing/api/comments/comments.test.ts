@@ -5,7 +5,7 @@ import { AUTH_COOKIE } from '@/fake-api/utils';
 import { createComment } from '@/features/comments/api/create-comment';
 import { deleteComment } from '@/features/comments/api/delete-comment';
 import { getComments } from '@/features/comments/api/get-comments';
-import { generateUserData } from '@testing/shared/data-generators';
+import { generateCommentSeedData, generateDiscussionSeedData, generateUserData } from '@testing/shared/data-generators';
 import { loginAsUser, seedComment as seedComment, seedDiscussion, seedUser } from '@testing/shared/test-utils';
 import { UserData, UserRoles } from '@testing/shared/types.ts';
 
@@ -77,7 +77,7 @@ describe('Comments API', () => {
     });
 
     test('unauthenticated user should receive 401 when requesting comments for a private discussion', async () => {
-      const discussion = await seedDiscussion({ public: false });
+      const discussion = await seedDiscussion(generateDiscussionSeedData({ public: false }));
 
       await expect(getComments({ discussionId: discussion.id, page: 1 })).rejects.toThrow('Unauthorized');
     });
@@ -96,7 +96,7 @@ describe('Comments API', () => {
       await loginAsUser(userData);
 
       for (let i = 0; i < 11; i++) {
-        await seedComment({ discussionId, body: `Comment ${i}` });
+        await seedComment(generateCommentSeedData({ discussionId, body: `Comment ${i}` }));
       }
 
       const { data, meta } = await getComments({ discussionId, page: 2 });

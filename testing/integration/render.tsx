@@ -11,7 +11,7 @@ export const waitForLoadingToFinish = () =>
     timeout: 4000,
   });
 
-const initializeUser = async (user: UserData) => {
+const initializeUser = async (user?: UserData | null) => {
   if (typeof user === 'undefined') {
     const newUser = await seedUser(generateUserData(UserRoles.ADMIN));
     return loginAsUser(newUser);
@@ -21,7 +21,10 @@ const initializeUser = async (user: UserData) => {
   return null;
 };
 
-export const renderApp = async (ui: React.JSX.Element, { user, ...renderOptions }: Record<string, unknown> = {}) => {
+export const renderApp = async (
+  ui: React.JSX.Element,
+  { user, ...renderOptions }: { user?: UserData | null } & Record<string, unknown> = {},
+) => {
   const initializedUser = await initializeUser(user);
 
   return {
