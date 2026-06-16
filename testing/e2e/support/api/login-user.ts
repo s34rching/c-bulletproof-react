@@ -1,6 +1,8 @@
 import axios from 'axios';
+
 import { UserData } from '@testing/shared/types.ts';
 
+// TODO: Rename to 'signInViaApi'
 export const loginUser = async (userData: UserData): Promise<string> => {
   const { email, password } = userData;
   const response = await axios.post(

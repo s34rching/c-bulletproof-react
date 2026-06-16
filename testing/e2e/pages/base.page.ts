@@ -1,6 +1,7 @@
 import { type Locator, type Page } from '@playwright/test';
+
 import { loginUser } from '@testing/e2e/support/api/login-user';
-import { UserData } from "@testing/shared/types.ts";
+import { UserData } from '@testing/shared/types.ts';
 
 export class BasePage {
   readonly page: Page;

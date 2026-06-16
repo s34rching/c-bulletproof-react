@@ -1,10 +1,11 @@
-import { expect, test } from '../fixtures/pages';
 import { generateUserData } from '@testing/shared/data-generators';
-import { registerUser } from '../support/api/register-user';
 import { UserRoles } from '@testing/shared/types.ts';
 
+import { expect, test } from '../fixtures/pages';
+import { registerUser } from '../support/api/register-user';
+
 test.describe('"Login" page', () => {
-  let userData = generateUserData(UserRoles.USER);
+  const userData = generateUserData(UserRoles.USER);
 
   test.describe('Registered user', () => {
     test.beforeAll(async () => {
