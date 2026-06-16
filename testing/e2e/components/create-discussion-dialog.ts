@@ -1,4 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
+
 import { DiscussionData } from '@testing/shared/types.ts';
 
 export class CreateDiscussionDialog {

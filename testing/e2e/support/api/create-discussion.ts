@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { Discussion, DiscussionData, UserData } from '@testing/shared/types.ts';
+
 import { loginUser } from '@testing/e2e/support/api/login-user.ts';
+import { Discussion, DiscussionData, UserData } from '@testing/shared/types.ts';
 
 export const createDiscussionViaApi = async (
   userData: UserData,

@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { Discussion, UserData } from '@testing/shared/types.ts';
+
 import { loginUser } from '@testing/e2e/support/api/login-user.ts';
+import { Discussion, UserData } from '@testing/shared/types.ts';
 
 export const deleteDiscussion = async (userData: UserData, discussionId: string): Promise<Discussion> => {
   const token = await loginUser(userData);

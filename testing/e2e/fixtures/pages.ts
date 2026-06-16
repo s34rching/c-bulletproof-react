@@ -1,9 +1,10 @@
 import { test as base } from '@playwright/test';
 
+import { DiscussionsPage } from '@testing/e2e/pages/discussions.page.ts';
+
 import { HeroPage } from '../pages/hero.page';
 import { LoginPage } from '../pages/login.page';
 import { RegisterPage } from '../pages/register.page';
-import { DiscussionsPage } from '@testing/e2e/pages/discussions.page.ts';
 
 type Pages = {
   heroPage: HeroPage;

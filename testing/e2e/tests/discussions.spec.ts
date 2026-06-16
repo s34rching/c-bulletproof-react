@@ -1,16 +1,17 @@
-import { expect, test } from '../fixtures/pages';
+import { createTeamViaApi } from '@testing/e2e/support/api/create-team.ts';
+import { deleteDiscussion } from '@testing/e2e/support/api/delete-discussion.ts';
+import { getDiscussions } from '@testing/e2e/support/api/get-discussion.ts';
+import { registerUser } from '@testing/e2e/support/api/register-user.ts';
 import { generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
 import { Discussion, UserRoles } from '@testing/shared/types.ts';
-import { createTeamViaApi } from '@testing/e2e/support/api/create-team.ts';
+
+import { expect, test } from '../fixtures/pages';
 import { createDiscussionViaApi } from '../support/api/create-discussion.ts';
-import { registerUser } from '@testing/e2e/support/api/register-user.ts';
-import { getDiscussions } from '@testing/e2e/support/api/get-discussion.ts';
-import { deleteDiscussion } from '@testing/e2e/support/api/delete-discussion.ts';
 
 test.describe('"Discussions" page', () => {
   test.describe('Create', () => {
     test.describe('Admin', () => {
-      let adminData = generateUserData(UserRoles.ADMIN);
+      const adminData = generateUserData(UserRoles.ADMIN);
 
       test.beforeAll(async () => {
         await createTeamViaApi(adminData);
@@ -58,8 +59,8 @@ test.describe('"Discussions" page', () => {
     });
 
     test.describe('User', () => {
-      let adminData = generateUserData(UserRoles.ADMIN);
-      let userData = generateUserData(UserRoles.USER);
+      const adminData = generateUserData(UserRoles.ADMIN);
+      const userData = generateUserData(UserRoles.USER);
 
       test.beforeAll(async () => {
         const team = await createTeamViaApi(adminData);
@@ -77,9 +78,9 @@ test.describe('"Discussions" page', () => {
 
   test.describe('View', () => {
     test.describe('Single team', () => {
-      let adminData = generateUserData(UserRoles.ADMIN);
-      let userData = generateUserData(UserRoles.USER);
-      let discussions = Array.from({ length: 10 }, () => generateDiscussionData());
+      const adminData = generateUserData(UserRoles.ADMIN);
+      const userData = generateUserData(UserRoles.USER);
+      const discussions = Array.from({ length: 10 }, () => generateDiscussionData());
 
       test.beforeAll(async () => {
         const team = await createTeamViaApi(adminData);
@@ -163,8 +164,8 @@ test.describe('"Discussions" page', () => {
 
   test.describe('Delete', () => {
     let discussion: Discussion;
-    let adminData = generateUserData(UserRoles.ADMIN);
-    let userData = generateUserData(UserRoles.USER);
+    const adminData = generateUserData(UserRoles.ADMIN);
+    const userData = generateUserData(UserRoles.USER);
 
     test.beforeAll(async () => {
       const team = await createTeamViaApi(adminData);

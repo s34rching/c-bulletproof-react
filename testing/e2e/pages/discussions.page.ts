@@ -1,7 +1,9 @@
-import { BasePage } from './base.page';
 import { type Locator, type Page } from '@playwright/test';
+
 import { CreateDiscussionDialog } from '@testing/e2e/components/create-discussion-dialog';
 import { DeleteDiscussionDialog } from '@testing/e2e/components/delete-discussion-dialog';
+
+import { BasePage } from './base.page';
 
 export class DiscussionsPage extends BasePage {
   readonly page: Page;
