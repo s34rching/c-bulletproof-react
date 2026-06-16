@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { registerUser } from '@testing/e2e/support/api/register-user.ts';
 import { generateUserData } from '@testing/shared/data-generators.ts';
 

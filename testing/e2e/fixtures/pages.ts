@@ -1,4 +1,5 @@
 import { test as base } from '@playwright/test';
+
 import { HeroPage } from '../pages/hero.page';
 import { LoginPage } from '../pages/login.page';
 import { RegisterPage } from '../pages/register.page';

@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { UserData } from '@testing/shared/types.ts';
 
 export const registerUser = async (userData: UserData): Promise<void> => {
@@ -12,7 +13,7 @@ export const registerUser = async (userData: UserData): Promise<void> => {
       email,
       password,
       teamName,
-      teamId
+      teamId,
     },
     {
       timeout: 5000,

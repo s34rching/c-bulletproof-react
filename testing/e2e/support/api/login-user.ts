@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { generateUserData } from '@testing/shared/data-generators';
 
 export const loginUser = async (

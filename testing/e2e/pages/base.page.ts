@@ -1,4 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
+
 import { loginUser } from '@testing/e2e/support/api/login-user';
 
 export class BasePage {
