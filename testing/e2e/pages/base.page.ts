@@ -1,6 +1,6 @@
 import { type Locator, type Page } from '@playwright/test';
 
-import { signInViaApi } from '@testing/shared/helpers/api/sign-in.ts';
+import { getJwtToken } from '@testing/shared/helpers/api/sign-in.ts';
 import { UserData } from '@testing/shared/types.ts';
 
 export class BasePage {
@@ -21,7 +21,7 @@ export class BasePage {
   }
 
   async loginViaApi(userData: UserData) {
-    const jwt = await signInViaApi(userData);
+    const jwt = await getJwtToken(userData);
 
     await this.page.context().addCookies([
       {

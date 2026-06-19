@@ -3,7 +3,7 @@ import { request } from '@playwright/test';
 import { RequestHandler } from '@testing/shared/request-handler.ts';
 import { User } from '@testing/shared/types.ts';
 
-export const signInViaApi = async (userData: { email: string; password: string }) => {
+export const getJwtToken = async (userData: { email: string; password: string }) => {
   const context = await request.newContext();
   const handler = new RequestHandler(process.env.NEXT_PUBLIC_API_URL!, context);
 
@@ -13,7 +13,7 @@ export const signInViaApi = async (userData: { email: string; password: string }
     return response.jwt;
   } catch (e: unknown) {
     if (e instanceof Object) {
-      Error.captureStackTrace(e, signInViaApi);
+      Error.captureStackTrace(e, getJwtToken);
     }
     throw e;
   } finally {
