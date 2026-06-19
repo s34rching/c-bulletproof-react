@@ -18,14 +18,14 @@ export default defineConfig({
   projects: [
     {
       name: 'e2e-tests',
-      testMatch: /testing\/e2e\/.*\.spec\.ts/,
+      testMatch: /e2e\/.*\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
       },
     },
     {
       name: 'api-tests',
-      testMatch: /testing\/api\/.*\.spec\.ts/,
+      testMatch: /api\/.*\.spec\.ts/,
     },
   ],
 });
