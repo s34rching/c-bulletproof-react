@@ -12,7 +12,6 @@ import {
   Team,
   TeamData,
   UserData,
-  UserRoles,
 } from '@testing/shared/types.ts';
 
 export const seedTeam = async (teamProperties: TeamData): Promise<Team> => {
@@ -24,7 +23,6 @@ export const seedUser = async (userData: UserData): Promise<Omit<Entity<UserData
   return {
     ...user,
     password: userData.password,
-    role: user.role as UserRoles,
   };
 };
 
