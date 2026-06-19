@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import 'dotenv/config';
 
 export default defineConfig({
-  testDir: './testing/e2e',
+  testDir: './testing',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -17,11 +17,15 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'chromium',
-      testMatch: /.*\.spec\.ts/,
+      name: 'e2e-tests',
+      testMatch: /e2e\/.*\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
       },
+    },
+    {
+      name: 'api-tests',
+      testMatch: /api\/.*\.spec\.ts/,
     },
   ],
 });
