@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getJwtToken } from '@testing/shared/helpers/api/sign-in';
+import { getJwtToken } from '../../../shared/helpers/api/get-jwt-token';
 import { Discussion, UserData } from '@testing/shared/types';
 
 export const getDiscussions = async (userData: UserData): Promise<Discussion[]> => {
