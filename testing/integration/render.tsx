@@ -21,7 +21,7 @@ const initializeUser = async (user: UserData) => {
   return null;
 };
 
-export const renderApp = async (ui: React.JSX.Element, { user, ...renderOptions }: Record<string, unknown> = {}) => {
+export const renderApp = async (ui: React.JSX.Element, { user, ...renderOptions }: Record<string, never> = {}) => {
   const initializedUser = await initializeUser(user);
 
   return {
