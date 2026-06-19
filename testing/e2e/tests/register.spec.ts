@@ -1,7 +1,6 @@
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team';
 import { registerUser } from '@testing/e2e/support/api/register-user';
 import { generateUserData } from '@testing/shared/data-generators';
-import { UserRoles } from '@testing/shared/types';
 
 import { expect, test } from '../../shared/fixtures';
 
@@ -10,7 +9,7 @@ test.describe('"Register" page', () => {
     let userData: ReturnType<typeof generateUserData>;
 
     test.beforeEach(async () => {
-      userData = generateUserData(UserRoles.USER);
+      userData = generateUserData();
     });
 
     test('TC-E-001: User should be able to register in app', async ({ registerPage, loginPage }) => {
@@ -32,7 +31,7 @@ test.describe('"Register" page', () => {
     test('TC-E-004: Selecting a team from the dropdown and submitting valid data registers the user under the selected team', async ({
       registerPage,
     }) => {
-      const existingUser = generateUserData(UserRoles.ADMIN);
+      const existingUser = generateUserData();
       const team = await createTeamViaApi(existingUser);
 
       await registerPage.open('/auth/register');
@@ -56,7 +55,7 @@ test.describe('"Register" page', () => {
     let userData: ReturnType<typeof generateUserData>;
 
     test.beforeEach(async () => {
-      userData = generateUserData(UserRoles.USER);
+      userData = generateUserData();
       await registerUser(userData);
     });
 

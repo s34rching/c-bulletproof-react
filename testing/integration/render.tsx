@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { AppProvider } from '@/app/provider';
 import { generateUserData } from '@testing/shared/data-generators.ts';
 import { loginAsUser, seedUser } from '@testing/shared/test-utils';
-import { UserData, UserRoles } from '@testing/shared/types.ts';
+import { UserData } from '@testing/shared/types.ts';
 
 export const waitForLoadingToFinish = () =>
   waitForElementToBeRemoved(() => [...screen.queryAllByTestId(/loading/i), ...screen.queryAllByText(/loading/i)], {
@@ -13,7 +13,7 @@ export const waitForLoadingToFinish = () =>
 
 const initializeUser = async (user?: UserData | null) => {
   if (typeof user === 'undefined') {
-    const newUser = await seedUser(generateUserData(UserRoles.ADMIN));
+    const newUser = await seedUser(generateUserData());
     return loginAsUser(newUser);
   } else if (user) {
     return loginAsUser(user);

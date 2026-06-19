@@ -24,7 +24,6 @@ export type UserData = {
   password: string;
   teamId: string | undefined;
   teamName: string | undefined;
-  role: UserRoles;
   bio: string;
 };
 

@@ -7,7 +7,6 @@ import {
   TeamData,
   User,
   UserData,
-  UserRoles,
   DiscussionSeedData,
   CommentData,
   CommentSeedData,
@@ -16,8 +15,7 @@ import {
 
 const getRandomId = (): string => faker.string.uuid({ version: 7 });
 
-export const generateUserData = (role: UserRoles, overrides?: Partial<UserData>): UserData => ({
-  role,
+export const generateUserData = (overrides?: Partial<UserData>): UserData => ({
   firstName: overrides?.firstName || faker.person.firstName(),
   lastName: overrides?.lastName || faker.person.lastName(),
   email: overrides?.email || faker.internet.exampleEmail(),
@@ -27,10 +25,10 @@ export const generateUserData = (role: UserRoles, overrides?: Partial<UserData>)
   bio: overrides?.bio || faker.person.bio(),
 });
 
-export const generateUser = (role: UserRoles, overrides?: Partial<UserData>): User => ({
+export const generateUser = (overrides?: Partial<UserData>): User => ({
   id: getRandomId(),
   createdAt: Date.now(),
-  ...generateUserData(role, overrides),
+  ...generateUserData(overrides),
 });
 
 export const generateTeamData = (overrides?: Partial<TeamData>): TeamData => ({

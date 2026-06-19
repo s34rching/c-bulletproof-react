@@ -3,11 +3,10 @@ import { expect } from '@playwright/test';
 import { generateCommentData, generateUserData } from '@testing/shared/data-generators';
 import { test } from '@testing/shared/fixtures';
 import { postCommentSchema } from '@testing/shared/schemas/comments/POST_comment';
-import { UserRoles } from '@testing/shared/types';
 
 test.describe('Comments API', () => {
   test('user with "ADMIN" role should be able to create a comment', async ({ requestHandler }) => {
-    const adminUserData = generateUserData(UserRoles.ADMIN);
+    const adminUserData = generateUserData();
 
     const admin = await requestHandler
       .url(process.env.NEXT_PUBLIC_API_URL!)

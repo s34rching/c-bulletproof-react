@@ -1,11 +1,10 @@
 import { generateUserData } from '@testing/shared/data-generators';
-import { UserRoles } from '@testing/shared/types';
 
 import { expect, test } from '../../shared/fixtures';
 import { registerUser } from '../support/api/register-user';
 
 test.describe('"Login" page', () => {
-  const userData = generateUserData(UserRoles.USER);
+  const userData = generateUserData();
 
   test.describe('Registered user', () => {
     test.beforeAll(async () => {
@@ -35,7 +34,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-009: User should NOT be able to login with wrong password', async ({ loginPage }) => {
-      const { password: randomPassword } = generateUserData(UserRoles.USER);
+      const { password: randomPassword } = generateUserData();
 
       await loginPage.emailInput.fill(userData.email);
       await loginPage.passwordInput.fill(randomPassword);
@@ -55,7 +54,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-006: User should see validation error while submitting email in wrong format', async ({ loginPage }) => {
-      const { password } = generateUserData(UserRoles.USER);
+      const { password } = generateUserData();
       const withoutAtEmail = 'some.address';
 
       await loginPage.open('/auth/login');
@@ -77,7 +76,7 @@ test.describe('"Login" page', () => {
     });
 
     test('TC-010: User should NOT be able to login with non-existing email', async ({ loginPage }) => {
-      const { email: nonExistingEmail, password } = generateUserData(UserRoles.USER);
+      const { email: nonExistingEmail, password } = generateUserData();
 
       await loginPage.open('/auth/login');
       await loginPage.emailInput.fill(nonExistingEmail);
