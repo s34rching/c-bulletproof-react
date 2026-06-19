@@ -18,8 +18,8 @@
     "run-mock-server": "tsx ./mock-server.ts",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}' 'testing/**/*.{ts,tsx,js,jsx,json,css,md}'",
     "test:unit": "vitest ./src",
-    "test:integration": "playwright test --project=api-tests",
-    "test:api": "vitest ./testing/api",
+    "test:integration": "vitest ./testing/api",
+    "test:api": "playwright test --project=api-tests",
     "test:e2e": "playwright test --project=e2e-tests",
     "test:performance": "dotenv -e .env -- k6 run testing/performance/smoke.ts"
   },
