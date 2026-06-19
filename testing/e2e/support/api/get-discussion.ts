@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { loginUser } from '@testing/e2e/support/api/login-user.ts';
-import { Discussion, UserData } from '@testing/shared/types.ts';
+import { signInViaApi } from '@testing/shared/helpers/api/sign-in';
+import { Discussion, UserData } from '@testing/shared/types';
 
 export const getDiscussions = async (userData: UserData): Promise<Discussion[]> => {
-  const token = await loginUser(userData);
+  const token = await signInViaApi(userData);
 
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/discussions`, {
     headers: { Cookie: `${process.env.NEXT_PUBLIC_AUTH_COOKIE}=${token}` },

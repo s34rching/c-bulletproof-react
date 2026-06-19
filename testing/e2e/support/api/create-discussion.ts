@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { loginUser } from '@testing/e2e/support/api/login-user.ts';
-import { Discussion, DiscussionData, UserData } from '@testing/shared/types.ts';
+import { signInViaApi } from '@testing/shared/helpers/api/sign-in';
+import { Discussion, DiscussionData, UserData } from '@testing/shared/types';
 
 export const createDiscussionViaApi = async (
   userData: UserData,
@@ -9,7 +9,7 @@ export const createDiscussionViaApi = async (
 ): Promise<Discussion> => {
   const { title, body, public: isPublic } = discussionParams;
 
-  const token = await loginUser(userData);
+  const token = await signInViaApi(userData);
 
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/discussions`,
