@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-import { getJwtToken } from '../../../shared/helpers/api/get-jwt-token';
 import { Discussion, UserData } from '@testing/shared/types';
+
+import { getJwtToken } from '../../../shared/helpers/api/get-jwt-token';
 
 export const deleteDiscussion = async (userData: UserData, discussionId: string): Promise<Discussion> => {
   const token = await getJwtToken(userData);

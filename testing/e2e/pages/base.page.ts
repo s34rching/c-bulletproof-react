@@ -1,7 +1,8 @@
 import { type Locator, type Page } from '@playwright/test';
 
-import { getJwtToken } from '../../shared/helpers/api/get-jwt-token.ts';
 import { UserData } from '@testing/shared/types.ts';
+
+import { getJwtToken } from '../../shared/helpers/api/get-jwt-token';
 
 export class BasePage {
   readonly page: Page;
