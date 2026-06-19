@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-import { loginUser } from '@testing/e2e/support/api/login-user.ts';
-import { Discussion, DiscussionData, UserData } from '@testing/shared/types.ts';
+import { Discussion, DiscussionData, UserData } from '@testing/shared/types';
+
+import { getJwtToken } from '../../../shared/helpers/api/get-jwt-token';
 
 export const createDiscussionViaApi = async (
   userData: UserData,
@@ -9,7 +10,7 @@ export const createDiscussionViaApi = async (
 ): Promise<Discussion> => {
   const { title, body, public: isPublic } = discussionParams;
 
-  const token = await loginUser(userData);
+  const token = await getJwtToken(userData);
 
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/discussions`,

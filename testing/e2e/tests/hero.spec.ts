@@ -1,4 +1,4 @@
-import { expect, test } from '../fixtures/pages';
+import { expect, test } from '../../shared/fixtures';
 
 test.describe('"Hero" page', () => {
   test.beforeEach(async ({ heroPage }) => {

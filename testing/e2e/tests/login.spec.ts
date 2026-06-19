@@ -1,7 +1,7 @@
 import { generateUserData } from '@testing/shared/data-generators';
-import { UserRoles } from '@testing/shared/types.ts';
+import { UserRoles } from '@testing/shared/types';
 
-import { expect, test } from '../fixtures/pages';
+import { expect, test } from '../../shared/fixtures';
 import { registerUser } from '../support/api/register-user';
 
 test.describe('"Login" page', () => {

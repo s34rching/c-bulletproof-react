@@ -1,9 +1,9 @@
 import { createTeamViaApi } from '@testing/e2e/support/api/create-team';
 import { registerUser } from '@testing/e2e/support/api/register-user';
 import { generateUserData } from '@testing/shared/data-generators';
-import { UserRoles } from '@testing/shared/types.ts';
+import { UserRoles } from '@testing/shared/types';
 
-import { expect, test } from '../fixtures/pages';
+import { expect, test } from '../../shared/fixtures';
 
 test.describe('"Register" page', () => {
   test.describe('New user', () => {

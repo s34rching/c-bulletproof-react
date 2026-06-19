@@ -1,7 +1,8 @@
 import { type Locator, type Page } from '@playwright/test';
 
-import { loginUser } from '@testing/e2e/support/api/login-user';
 import { UserData } from '@testing/shared/types.ts';
+
+import { getJwtToken } from '../../shared/helpers/api/get-jwt-token';
 
 export class BasePage {
   readonly page: Page;
@@ -21,10 +22,11 @@ export class BasePage {
   }
 
   async loginViaApi(userData: UserData) {
-    const jwt = await loginUser(userData);
+    const jwt = await getJwtToken(userData);
+
     await this.page.context().addCookies([
       {
-        name: 'bulletproof_react_app_token',
+        name: process.env.NEXT_PUBLIC_AUTH_COOKIE!,
         value: jwt,
         url: process.env.NEXT_PUBLIC_URL,
       },

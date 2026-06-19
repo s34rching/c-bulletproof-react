@@ -1,12 +1,12 @@
-import { createTeamViaApi } from '@testing/e2e/support/api/create-team.ts';
-import { deleteDiscussion } from '@testing/e2e/support/api/delete-discussion.ts';
-import { getDiscussions } from '@testing/e2e/support/api/get-discussion.ts';
-import { registerUser } from '@testing/e2e/support/api/register-user.ts';
+import { createTeamViaApi } from '@testing/e2e/support/api/create-team';
+import { deleteDiscussion } from '@testing/e2e/support/api/delete-discussion';
+import { getDiscussions } from '@testing/e2e/support/api/get-discussion';
+import { registerUser } from '@testing/e2e/support/api/register-user';
 import { generateDiscussionData, generateUserData } from '@testing/shared/data-generators';
-import { Discussion, UserRoles } from '@testing/shared/types.ts';
+import { Discussion, UserRoles } from '@testing/shared/types';
 
-import { expect, test } from '../fixtures/pages';
-import { createDiscussionViaApi } from '../support/api/create-discussion.ts';
+import { expect, test } from '../../shared/fixtures';
+import { createDiscussionViaApi } from '../support/api/create-discussion';
 
 test.describe('"Discussions" page', () => {
   test.describe('Create', () => {
