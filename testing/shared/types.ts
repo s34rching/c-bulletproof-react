@@ -52,7 +52,10 @@ export type DiscussionSeedData = {
   teamId: string;
 } & DiscussionData;
 
-export type Discussion = DiscussionSeedData & Entity<DiscussionData>;
+export type Discussion = {
+  author: User;
+  teamId: string;
+} & Entity<DiscussionData>;
 
 export type CommentData = {
   body: string;

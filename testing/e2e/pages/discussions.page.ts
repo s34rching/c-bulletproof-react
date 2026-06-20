@@ -28,6 +28,10 @@ export class DiscussionsPage extends BasePage {
     return this.page.locator('tr', { has: this.page.locator('td', { hasText: name }) });
   }
 
+  getDiscussions(): Locator {
+    return this.page.locator('tr', { has: this.page.getByRole('link', { name: 'View' }) });
+  }
+
   getDeleteDiscussionButtonByName(name: string): Locator {
     return this.getDiscussionByName(name).getByRole('button', { name: 'Delete Discussion' });
   }
