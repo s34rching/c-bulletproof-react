@@ -20,7 +20,7 @@
     "test:unit": "vitest ./src",
     "test:integration": "vitest ./testing/integration",
     "test:api": "playwright test --project=api-tests",
-    "test:e2e": "playwright test --project=e2e-tests",
+    "test:e2e": "playwright test --project=e2e-tests --workers=1",
     "test:performance": "dotenv -e .env -- k6 run testing/performance/smoke.ts"
   },
   "dependencies": {

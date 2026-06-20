@@ -27,6 +27,10 @@ export type UserData = {
   bio: string;
 };
 
+export type UserSeedData = {
+  role: UserRoles;
+} & UserData;
+
 export type User = Omit<Entity<UserData>, 'teamName' | 'password'>;
 
 export type TeamData = {

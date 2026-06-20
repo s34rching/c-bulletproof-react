@@ -11,6 +11,8 @@ import {
   CommentData,
   CommentSeedData,
   Comment,
+  UserRoles,
+  UserSeedData,
 } from '@testing/shared/types.ts';
 
 const getRandomId = (): string => faker.string.uuid({ version: 7 });
@@ -23,6 +25,11 @@ export const generateUserData = (overrides?: Partial<UserData>): UserData => ({
   teamId: overrides?.teamId || undefined,
   teamName: overrides?.teamName || faker.company.name(),
   bio: overrides?.bio || faker.person.bio(),
+});
+
+export const generateUserSeedData = (role: UserRoles, overrides?: Partial<UserSeedData>): UserSeedData => ({
+  ...generateUserData(overrides),
+  role,
 });
 
 export const generateUser = (overrides?: Partial<UserData>): User => ({
