@@ -23,8 +23,8 @@ test.describe('Comments API', () => {
       .payload(generateCommentData())
       .postRequest(200);
 
-    const result = postCommentSchema.safeParse(createCommentResponse);
+    const result = postCommentSchema.parse(createCommentResponse);
 
-    expect(result.success).toBeTruthy();
+    expect(result).toBeTruthy();
   });
 });

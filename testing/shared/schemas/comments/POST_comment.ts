@@ -5,5 +5,5 @@ export const postCommentSchema = z.object({
   body: z.string(),
   authorId: z.string(),
   discussionId: z.string(),
-  createdAt: z.boolean(),
+  createdAt: z.number(),
 });
