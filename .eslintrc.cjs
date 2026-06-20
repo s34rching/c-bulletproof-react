@@ -125,8 +125,14 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': ['off'],
         '@typescript-eslint/explicit-module-boundary-types': ['off'],
         '@typescript-eslint/no-empty-function': ['off'],
-        '@typescript-eslint/no-explicit-any': ['error'],
+        '@typescript-eslint/no-explicit-any': ['off'],
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+      },
+    },
+    {
+      files: ['testing/**/*.ts', 'testing/**/*.tsx'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': ['error'],
       },
     },
     {

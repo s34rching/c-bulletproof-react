@@ -2,13 +2,16 @@ import { useParams } from 'next/navigation';
 
 import { Discussion } from '@/app/app/discussions/[discussionId]/_components/discussion';
 import { renderApp, screen, userEvent, waitFor, waitForLoadingToFinish, within } from '@testing/integration/render';
-import { generateUserData } from '@testing/shared/data-generators.ts';
-import { seedDiscussion, seedUser } from '@testing/shared/test-utils';
+import { generateDiscussionSeedData, generateTeamData, generateUserSeedData } from '@testing/shared/data-generators.ts';
+import { seedDiscussion, seedTeam, seedUser } from '@testing/shared/test-utils';
 import { UserRoles } from '@testing/shared/types.ts';
 
 const renderDiscussion = async () => {
-  const fakeUser = await seedUser(generateUserData(UserRoles.ADMIN));
-  const fakeDiscussion = await seedDiscussion({ teamId: fakeUser.teamId });
+  const fakeTeam = await seedTeam(generateTeamData());
+  const fakeUser = await seedUser(generateUserSeedData(UserRoles.ADMIN, { teamId: fakeTeam.id }));
+  const fakeDiscussion = await seedDiscussion(
+    generateDiscussionSeedData({ authorId: fakeUser.id, teamId: fakeTeam.id }),
+  );
 
   vi.mocked(useParams).mockReturnValue({ discussionId: fakeDiscussion.id });
 
@@ -67,13 +70,13 @@ describe('Discussion', () => {
       name: /update discussion/i,
     });
 
-    const titleField = within(drawer).getByText(/title/i);
-    const bodyField = within(drawer).getByText(/body/i);
+    const titleField = within(drawer).getByLabelText(/title/i);
+    const bodyField = within(drawer).getByLabelText(/body/i);
 
     const newTitle = `${fakeDiscussion.title}${titleUpdate}`;
     const newBody = `${fakeDiscussion.body}${bodyUpdate}`;
 
-    await userEvent.type(titleField, newTitle);
+    await userEvent.type(titleField, titleUpdate);
     await userEvent.type(bodyField, bodyUpdate);
 
     const submitButton = within(drawer).getByRole('button', {

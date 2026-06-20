@@ -6,7 +6,6 @@ import { Team } from '@/types/api';
 import { renderApp, screen, userEvent, waitFor } from '@testing/integration/render';
 import { generateTeam, generateUserData } from '@testing/shared/data-generators';
 import { seedUser } from '@testing/shared/test-utils';
-import { UserRoles } from '@testing/shared/types.ts';
 
 const testUser = {
   firstName: 'John',
@@ -146,7 +145,7 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-009: submitting with a password of exactly 5 characters does not show a validation error', async () => {
-      const user = generateUserData(UserRoles.USER);
+      const user = generateUserData();
       const onSuccess = vi.fn();
       await renderApp(<RegisterForm onSuccess={onSuccess} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
@@ -166,7 +165,7 @@ describe('RegisterForm', () => {
 
   describe('Form submission', () => {
     test('TC-I-010: filling all fields with valid data and submitting calls onSuccess after a successful API response', async () => {
-      const user = generateUserData(UserRoles.USER);
+      const user = generateUserData();
       const onSuccess = vi.fn();
       await renderApp(<RegisterForm onSuccess={onSuccess} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
@@ -183,7 +182,7 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-011: the Register button shows a loading spinner while the mutation is pending', async () => {
-      const user = generateUserData(UserRoles.USER);
+      const user = generateUserData();
       const onSuccess = vi.fn();
       await renderApp(<RegisterForm onSuccess={onSuccess} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
@@ -201,7 +200,7 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-016: an API error for duplicate email triggers an error notification', async () => {
-      const existingUser = await seedUser(generateUserData(UserRoles.USER));
+      const existingUser = await seedUser(generateUserData());
       await renderApp(<RegisterForm onSuccess={vi.fn()} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,
       });
@@ -271,9 +270,11 @@ describe('RegisterForm', () => {
     });
 
     test('TC-I-018: the Log In link href preserves the redirectTo query param', async () => {
-      const spy = vi.spyOn(nextNavigation, 'useSearchParams').mockReturnValue({
-        get: (key: string) => (key === 'redirectTo' ? '/app/dashboard' : null),
-      } as any);
+      const spy = vi
+        .spyOn(nextNavigation, 'useSearchParams')
+        .mockReturnValue(
+          new URLSearchParams({ redirectTo: '/app/dashboard' }) as ReturnType<typeof nextNavigation.useSearchParams>,
+        );
 
       await renderApp(<RegisterForm onSuccess={vi.fn()} chooseTeam={false} setChooseTeam={vi.fn()} teams={[]} />, {
         user: null,

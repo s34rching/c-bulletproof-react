@@ -24,9 +24,12 @@ export type UserData = {
   password: string;
   teamId: string | undefined;
   teamName: string | undefined;
-  role: UserRoles;
   bio: string;
 };
+
+export type UserSeedData = {
+  role: UserRoles;
+} & UserData;
 
 export type User = Omit<Entity<UserData>, 'teamName' | 'password'>;
 
@@ -41,3 +44,30 @@ export type TeamMemberProperties = {
   userId: string;
   teamId: string;
 };
+
+export type DiscussionData = {
+  title: string;
+  body: string;
+  public: boolean;
+};
+
+export type DiscussionSeedData = {
+  authorId: string;
+  teamId: string;
+} & DiscussionData;
+
+export type Discussion = {
+  author: User;
+  teamId: string;
+} & Entity<DiscussionData>;
+
+export type CommentData = {
+  body: string;
+};
+
+export type CommentSeedData = {
+  authorId: string;
+  discussionId: string;
+} & CommentData;
+
+export type Comment = CommentSeedData & Entity<CommentSeedData>;

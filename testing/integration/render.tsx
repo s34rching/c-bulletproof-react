@@ -2,8 +2,8 @@ import { render as rtlRender, screen, waitForElementToBeRemoved } from '@testing
 import userEvent from '@testing-library/user-event';
 
 import { AppProvider } from '@/app/provider';
-import { generateUserData } from '@testing/shared/data-generators.ts';
-import { loginAsUser, seedUser } from '@testing/shared/test-utils';
+import { generateTeamData, generateUserSeedData } from '@testing/shared/data-generators.ts';
+import { loginAsUser, seedTeam, seedUser } from '@testing/shared/test-utils';
 import { UserData, UserRoles } from '@testing/shared/types.ts';
 
 export const waitForLoadingToFinish = () =>
@@ -11,9 +11,10 @@ export const waitForLoadingToFinish = () =>
     timeout: 4000,
   });
 
-const initializeUser = async (user: UserData) => {
+const initializeUser = async (user?: Omit<UserData, 'teamName'> | null) => {
   if (typeof user === 'undefined') {
-    const newUser = await seedUser(generateUserData(UserRoles.ADMIN));
+    const fakeTeam = await seedTeam(generateTeamData());
+    const newUser = await seedUser(generateUserSeedData(UserRoles.ADMIN, { teamId: fakeTeam.id }));
     return loginAsUser(newUser);
   } else if (user) {
     return loginAsUser(user);
@@ -21,7 +22,10 @@ const initializeUser = async (user: UserData) => {
   return null;
 };
 
-export const renderApp = async (ui: React.JSX.Element, { user, ...renderOptions }: Record<string, never> = {}) => {
+export const renderApp = async (
+  ui: React.JSX.Element,
+  { user, ...renderOptions }: { user?: Omit<UserData, 'teamName'> | null } & Record<string, unknown> = {},
+) => {
   const initializedUser = await initializeUser(user);
 
   return {

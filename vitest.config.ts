@@ -8,6 +8,7 @@ export default defineConfig({
   base: './',
   plugins: [react(), viteTsconfigPaths()],
   test: {
+    fileParallelism: false,
     globals: true,
     environment: 'jsdom',
     setupFiles: './testing/shared/setup-tests.ts',
